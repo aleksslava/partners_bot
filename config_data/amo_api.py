@@ -1,3 +1,5 @@
+import pprint
+
 import dotenv
 import jwt
 import requests
@@ -75,7 +77,7 @@ class AmoCRMWrapper:
 
         _save_tokens(access_token, refresh_token)
 
-    def _base_request(self, **kwargs):
+    def _base_request(self, **kwargs) -> dict:
         if _is_expire(_get_access_token()):
             _get_new_tokens()
 
@@ -107,12 +109,20 @@ class AmoCRMWrapper:
         return self._base_request(endpoint=url, type="get")
 
     def get_user_by_id(self, user_id):
-        url = '/api/v4/users/' + str(user_id)
+        url = '/api/v4/user/' + str(user_id)
         return self._base_request(endpoint=url, type="get")
 
     def get_user_by_phone(self, phone_number):
-        url = "/api/v4/contacts" + str(phone_number)
-        return self._base_request(endpoint=)
+        phone_number = str(phone_number)[2:]
+        url = '/api/v4/contacts'
+        query = str(f'query={phone_number}')
+        response = self._base_request(endpoint=url, type="get_param", parameters=query)
+        response = response['_embedded']['contacts'][0]['custom_fields_values']
+        phone_list = [phones['values'] for phones in response if phones['field_code'] == 'PHONE']
+        pprint.pprint(phone_list, indent=4)
+        return response
+
+
 
 
 
@@ -121,7 +131,9 @@ if __name__ == "__main__":
     # amocrm_wrapper_1.init_oauth2()
 
     # print(amocrm_wrapper_1.get_lead_by_id(27280193))
-    print(amocrm_wrapper_1.get_user_by_id(12307274))
+    pprint.pprint(amocrm_wrapper_1.get_user_by_phone(9878217816), indent=4)
+
+
 
 
 
