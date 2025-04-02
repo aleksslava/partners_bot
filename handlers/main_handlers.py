@@ -10,17 +10,16 @@ main_router = Router()
 
 # Хэндлер обрабатывающий команду start
 @main_router.message(Command(commands='start'))
-async def start_handler(message: Message):
+async def start_handler(message: Message, amo_api:AmoCRMWrapper):
     # Отправка приветственного текста и главной клавиатуры
     id = message.from_user.id
     last_name = message.from_user.last_name
 
-
     # Проверка на наличие tg_id в бд бота, если есть, то запрос в амо на данные для личного кабинета
     if id in database.keys():
-        partner = database[id]
+        partner = database[str(id)]
         phone = partner.phone_number
-        response = AmoCRMWrapper().get_user_by_phone(phone)
+        response = amo_api.get_user_by_phone(phone)
         await message.answer(text=str(response))
 
     # Если id в бд нет, то запрашиваем номер телефона партнёра, для запроса в амо по номеру телефона
@@ -32,8 +31,8 @@ async def start_handler(message: Message):
 
 
 @main_router.message(F.contact)
-async def get_contact(message: Message):
+async def get_contact(message: Message, amo_api: AmoCRMWrapper):
     contact = message.contact
-
-    response = AmoCRMWrapper().get_user_by_phone(contact.phone_number)
+    print(contact.phone_number)
+    response = amo_api.get_user_by_phone(contact.phone_number)
     await message.answer(text=str(response))

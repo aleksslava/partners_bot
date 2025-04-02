@@ -6,11 +6,14 @@ from config_data.config import load_config, Config
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from handlers.main_handlers import main_router
+from config_data.amo_api import AmoCRMWrapper
+from outer_middleware.outer_middleware import OuterMiddleware
 
 # Инициализация логера
 logger = logging.getLogger(__name__)
 
-async def main(storage: MemoryStorage | None = MemoryStorage()):
+
+async def main():
     # Конфигурируем логгер
     logging.basicConfig(
         level=logging.INFO,
@@ -27,9 +30,22 @@ async def main(storage: MemoryStorage | None = MemoryStorage()):
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
 
-    dp = Dispatcher(storage=storage)
+    amo_api = AmoCRMWrapper(
+        path=config.amo_config.path_to_env,
+        amocrm_subdomain=config.amo_config.amocrm_subdomain,
+        amocrm_client_id=config.amo_config.amocrm_client_id,
+        amocrm_redirect_url=config.amo_config.amocrm_redirect_url,
+        amocrm_client_secret=config.amo_config.amocrm_client_secret,
+        amocrm_secret_code=config.amo_config.amocrm_secret_code,
+        amocrm_access_token=config.amo_config.amocrm_access_token,
+        amocrm_refresh_token=config.amo_config.amocrm_refresh_token
+    )
+
+    dp = Dispatcher()
+
 
     dp.include_router(main_router)
+    dp.update.middleware(OuterMiddleware(amo_api))
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
