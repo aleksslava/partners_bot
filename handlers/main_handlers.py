@@ -3,7 +3,8 @@ from aiogram.filters import Command
 from aiogram.types import Message, Contact
 from data.database import database, Partner
 from keybooards.main_keyboards import reply_phone_number
-from config_data.amo_api import AmoCRMWrapper
+from config_data.amo_api import AmoCRMWrapper, Customer
+
 
 main_router = Router()
 
@@ -17,9 +18,9 @@ async def start_handler(message: Message, amo_api:AmoCRMWrapper):
 
     # Проверка на наличие tg_id в бд бота, если есть, то запрос в амо на данные для личного кабинета
     if id in database.keys():
-        partner = database[str(id)]
-        phone = partner.phone_number
-        response = amo_api.get_user_by_phone(phone)
+        partner: Partner = database[str(id)]
+        customer_id = partner.customer_id
+        customer_params = amo_api.get_customer_by_id(customer_id)
         await message.answer(text=str(response))
 
     # Если id в бд нет, то запрашиваем номер телефона партнёра, для запроса в амо по номеру телефона
@@ -33,6 +34,8 @@ async def start_handler(message: Message, amo_api:AmoCRMWrapper):
 @main_router.message(F.contact)
 async def get_contact(message: Message, amo_api: AmoCRMWrapper):
     contact = message.contact
-    print(contact.phone_number)
-    response = amo_api.get_user_by_phone(contact.phone_number)
-    await message.answer(text=str(response))
+    # print(contact.phone_number)
+    # response = amo_api.get_user_by_phone(contact.phone_number)
+
+    # await message.answer(text=str(response))
+    amo_api.get_customer_by_phone(contact.phone_number)

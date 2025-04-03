@@ -20,7 +20,7 @@ class OuterMiddleware(BaseMiddleware):
         data: Dict[str, Any],
     ) -> Any:
 
-        logger.debug(
+        logger.info(
             'Вошли в миддлварь %s, тип события %s',
             __class__.__name__,
             event.__class__.__name__
@@ -30,6 +30,6 @@ class OuterMiddleware(BaseMiddleware):
 
         result = await handler(event, data)
 
-        logger.debug('Выходим из миддлвари  %s', __class__.__name__)
+        logger.info('Выходим из миддлвари  %s', __class__.__name__)
 
         return result
