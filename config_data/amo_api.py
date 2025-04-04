@@ -8,10 +8,12 @@ import logging
 from requests.exceptions import JSONDecodeError
 from config_data.config import load_config
 
+logger = logging.getLogger(__name__)
+
 
 class Customer:
-    def __call__(self, customer_dct):
-        self.id = customer_dct['id']
+    def __call__(self, customer_dct: dict):
+        self.id = customer_dct.get('id')
         self.name = customer_dct['name']
         self.custom_fields = customer_dct['custom_fields_values']
         self.kval = Customer.get_kval(self.custom_fields)
@@ -26,40 +28,46 @@ class Customer:
 
     @staticmethod
     def get_kval(values: list):
-        kval = [res for res in values if res['field_id'] == '1506993'][0]
-        return kval
+        kval = [res for res in values if res['field_id'] == 1506993][0]
+        kval_value = kval.get('values')[0].get('value')
+        is_kval = 'Активен' if kval_value == 'Да' else 'Не активен'
+        return is_kval
 
     @staticmethod
     def get_manager(values: list):
-        manager = [res for res in values if res['field_id'] == '1506979'][0]
-        return manager
+        manager = [res for res in values if res['field_id'] == 1506979][0]
+        manager_value = manager.get('values')[0].get('value')
+        return manager_value
 
     @staticmethod
     def get_status(values: list):
-        status = [res for res in values if res['field_id'] == '1506981'][0]
-        return status
+        status = [res for res in values if res['field_id'] == 1506981][0]
+        status_value = status.get('values')[0].get('value')
+        return status_value
 
     @staticmethod
     def get_bye_after_first_april(values: list):
-        summ = [res for res in values if res['field_id'] == '1506983'][0]
-        return summ
+        summ = [res for res in values if res['field_id'] == 1506983][0]
+        summ_value = summ.get('values')[0].get('value')
+        return summ_value
 
     @staticmethod
     def get_bonuses(values: list):
-        bonuses = [res for res in values if res['field_id'] == '1506985'][0]
-        return bonuses
+        bonuses = [res for res in values if res['field_id'] == 1506985][0]
+        bonuses_value = bonuses.get('values')[0].get('value')
+        return bonuses_value
 
     @staticmethod
     def get_payout_summ(values: list):
-        payout = [res for res in values if res['field_id'] == '1506987'][0]
-        return payout
+        payout = [res for res in values if res['field_id'] == 1506987][0]
+        payout_value = payout.get('values')[0].get('value')
+        return payout_value
 
     @staticmethod
     def get_town(values: list):
-        town = [res for res in values if res['field_id'] == '1506989'][0]
-        return town
-
-
+        town = [res for res in values if res['field_id'] == 1506989][0]
+        town_value = town.get('values')[0].get('value')
+        return town_value
 
 
 class AmoCRMWrapper:
@@ -180,13 +188,13 @@ class AmoCRMWrapper:
         customer_id = contact['_embedded']['customers'][0]['id']
         url = f'/api/v4/customers/{customer_id}'
         customer = self._base_request(endpoint=url, type='get')
-        pprint.pprint(customer, indent=4)
+
         return customer
 
-    def get_customer_by_id(self, customer_id):
+    def get_customer_by_id(self, customer_id) -> dict[str, any]:
         url = f'/api/v4/customers/{customer_id}'
         customer = self._base_request(endpoint=url, type='get')
-        pprint.pprint(customer, indent=4)
+
         return customer
 
     @staticmethod
