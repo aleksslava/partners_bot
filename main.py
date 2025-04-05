@@ -1,13 +1,13 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher
-from aiogram.fsm.storage.memory import MemoryStorage
 from config_data.config import load_config, Config
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from handlers.main_handlers import main_router
 from config_data.amo_api import AmoCRMWrapper
 from outer_middleware.outer_middleware import OuterMiddleware
+from keybooards.main_keyboards import set_main_menu
 
 # Инициализация логера
 logger = logging.getLogger(__name__)
@@ -29,7 +29,9 @@ async def main():
         token=config.tg_bot.token,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
+    await set_main_menu(bot)
 
+    # Создаём объект связи с API AMOCRM
     amo_api = AmoCRMWrapper(
         path=config.amo_config.path_to_env,
         amocrm_subdomain=config.amo_config.amocrm_subdomain,
@@ -42,7 +44,6 @@ async def main():
     )
 
     dp = Dispatcher()
-
 
     dp.include_router(main_router)
     dp.update.middleware(OuterMiddleware(amo_api))

@@ -5,6 +5,8 @@ import jwt
 import requests
 from datetime import datetime
 import logging
+
+from pydantic import json
 from requests.exceptions import JSONDecodeError
 from config_data.config import load_config
 
@@ -137,7 +139,7 @@ class AmoCRMWrapper:
 
         self._save_tokens(access_token, refresh_token)
 
-    def _base_request(self, **kwargs) -> dict:
+    def _base_request(self, **kwargs) -> json:
         if self._is_expire(self._get_access_token()):
             self._get_new_tokens()
 
@@ -147,55 +149,66 @@ class AmoCRMWrapper:
         req_type = kwargs.get("type")
         response = ""
         if req_type == "get":
-            try:
-                response = requests.get("https://{}.amocrm.ru{}".format(
-                    self.amocrm_subdomain, kwargs.get("endpoint")), headers=headers).json()
-            except JSONDecodeError as e:
-                logging.exception(e)
+            response = requests.get("https://{}.amocrm.ru{}".format(
+                self.amocrm_subdomain, kwargs.get("endpoint")), headers=headers)
 
         elif req_type == "get_param":
             url = "https://{}.amocrm.ru{}?{}".format(
                 self.amocrm_subdomain,
                 kwargs.get("endpoint"), kwargs.get("parameters"))
-            response = requests.get(str(url), headers=headers).json()
+            response = requests.get(str(url), headers=headers)
+
         elif req_type == "post":
             response = requests.post("https://{}.amocrm.ru{}".format(
                 self.amocrm_subdomain,
-                kwargs.get("endpoint")), headers=headers, json=kwargs.get("data")).json()
+                kwargs.get("endpoint")), headers=headers, json=kwargs.get("data"))
         return response
 
-    def get_lead_by_id(self, lead_id):
-        url = "/api/v4/leads/" + str(lead_id)
-        return self._base_request(endpoint=url, type="get")
+    # def get_lead_by_id(self, lead_id):
+    #     url = "/api/v4/leads/" + str(lead_id)
+    #     return self._base_request(endpoint=url, type="get")
 
-    def get_user_by_id(self, user_id):
-        url = '/api/v4/user/' + str(user_id)
-        return self._base_request(endpoint=url, type="get")
-
-    def get_contact_by_phone(self, phone_number, with_customer=False):
+    # def get_user_by_id(self, user_id):
+    #     url = '/api/v4/user/' + str(user_id)
+    #     return self._base_request(endpoint=url, type="get")
+    def get_contact_by_phone(self, phone_number, with_customer=False) -> tuple:
         phone_number = str(phone_number)[2:]
         url = '/api/v4/contacts'
         if with_customer:
             query = str(f'query={phone_number}&with=customers')
         else:
             query = str(f'query={phone_number}')
-        contact = self._base_request(endpoint=url, type="get_param", parameters=query)['_embedded']['contacts'][0]
+        contact = self._base_request(endpoint=url, type="get_param", parameters=query)
+        if contact.status_code == 200:
+            return True, contact.json()['_embedded']['contacts'][0]
+        elif contact.status_code == 204:
+            return False, 'Контакт не найден'
+        else:
+            logger.error('Нет авторизации в AMO_API')
+            return False, 'Произошла ошибка на сервере!'
 
-        return contact
-
-    def get_customer_by_phone(self, phone_number):
+    def get_customer_by_phone(self, phone_number) -> tuple:
         contact = self.get_contact_by_phone(phone_number, with_customer=True)
-        customer_id = contact['_embedded']['customers'][0]['id']
+        if contact[0]:
+            contact = contact[1]
+            customer_id = contact['_embedded']['customers'][0]['id']
+            url = f'/api/v4/customers/{customer_id}'
+            customer = self._base_request(endpoint=url, type='get').json()
+
+            return True, customer
+        else:
+            return contact
+
+    def get_customer_by_id(self, customer_id) -> tuple:
         url = f'/api/v4/customers/{customer_id}'
         customer = self._base_request(endpoint=url, type='get')
-
-        return customer
-
-    def get_customer_by_id(self, customer_id) -> dict[str, any]:
-        url = f'/api/v4/customers/{customer_id}'
-        customer = self._base_request(endpoint=url, type='get')
-
-        return customer
+        if customer.status_code == 200:
+            return True, customer.json()
+        elif customer.status_code == 204:
+            return False, 'Контакт не найден!'
+        else:
+            logger.error('Нет авторизации в AMO_API')
+            return False, 'Произошла ошибка на сервере!'
 
     @staticmethod
     def get_customer_params(customer_dct: dict[str, str]) -> Customer:
@@ -206,8 +219,6 @@ class AmoCRMWrapper:
 
 if __name__ == "__main__":
     pass
-    # amocrm_wrapper_1 = AmoCRMWrapper()
-    # amocrm_wrapper_1.init_oauth2()
 
-    # print(amocrm_wrapper_1.get_lead_by_id(27280193))
-    # pprint.pprint(amocrm_wrapper_1.get_user_by_phone(9878217816), indent=4)
+
+
