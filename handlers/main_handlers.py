@@ -17,8 +17,8 @@ async def start_handler(message: Message, amo_api: AmoCRMWrapper):
     # Проверка на наличие tg_id в бд бота, если есть, то запрос в амо на данные для личного кабинета
     if str(tg_id) in database.keys():
         partner: Partner = database[str(tg_id)]
-        customer_id = partner.customer_id
-        response = amo_api.get_customer_by_id(customer_id)
+        phone_number = partner.phone_number
+        response = amo_api.get_customer_by_phone(phone_number)
         if response[0]:
             customer_params = amo_api.get_customer_params(response[1])
             await message.answer(text=f'<b><u>Данные Вашей учетной записи партнёра:</u></b>\n\n'
