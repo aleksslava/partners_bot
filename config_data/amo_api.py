@@ -217,8 +217,7 @@ class AmoCRMWrapper:
         return customer
 
 
-if __name__ == "__main__":
-    pass
+
 
 
 

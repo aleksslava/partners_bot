@@ -13,6 +13,8 @@ async def set_main_menu(bot: Bot):
 
     # Создаем список с командами и их описанием для кнопки menu
     main_menu_commands = [
+        BotCommand(command='/start',
+                   description='Начать работу с чат ботом'),
         BotCommand(command='/info',
                    description='Получить информацию об аккаунте партнёра'),
         BotCommand(command='/connect',
