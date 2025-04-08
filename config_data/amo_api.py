@@ -103,6 +103,8 @@ class AmoCRMWrapper:
     def _save_tokens(self, access_token: str, refresh_token: str):
         dotenv.set_key(self.path_to_env, "AMOCRM_ACCESS_TOKEN", access_token)
         dotenv.set_key(self.path_to_env, "AMOCRM_REFRESH_TOKEN", refresh_token)
+        self.amocrm_access_token = access_token
+        self.amocrm_refresh_token = refresh_token
 
     def _get_access_token(self):
         return self.amocrm_access_token
