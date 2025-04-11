@@ -1,5 +1,5 @@
 from aiogram import Bot
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, BotCommand
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, BotCommand, InlineKeyboardMarkup, InlineKeyboardButton
 
 
 async def reply_phone_number():
@@ -31,3 +31,10 @@ async def set_main_menu(bot: Bot):
     ]
 
     await bot.set_my_commands(main_menu_commands)
+
+
+def get_contacts_list(customer_id):
+    button = InlineKeyboardButton(text='Список связанных контактов', callback_data=f'contacts_list_{customer_id}')
+    markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
+
+    return markup

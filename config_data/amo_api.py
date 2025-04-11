@@ -226,13 +226,17 @@ class AmoCRMWrapper:
         else:
             return contact
 
-    def get_customer_by_id(self, customer_id) -> tuple:
+    def get_customer_by_id(self, customer_id, with_contacts=False) -> tuple:
         url = f'/api/v4/customers/{customer_id}'
-        customer = self._base_request(endpoint=url, type='get')
+        if with_contacts:
+            query = str(f'with=contacts')
+            customer = self._base_request(endpoint=url, type='get_param', parameters=query)
+        else:
+            customer = self._base_request(endpoint=url, type='get')
         if customer.status_code == 200:
             return True, customer.json()
         elif customer.status_code == 204:
-            return False, 'Контакт не найден!'
+            return False, 'Партнёр не найден!'
         else:
             logger.error('Нет авторизации в AMO_API')
             return False, 'Произошла ошибка на сервере!'

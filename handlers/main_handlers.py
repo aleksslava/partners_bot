@@ -1,7 +1,9 @@
+import pprint
+
 from aiogram import Router, F
 from aiogram.filters import Command
-from aiogram.types import Message, ReplyKeyboardRemove
-from keybooards.main_keyboards import reply_phone_number
+from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
+from keybooards.main_keyboards import reply_phone_number, get_contacts_list
 from config_data.amo_api import AmoCRMWrapper
 from lexicon.lexicon_ru import account_info, contact_message, message_in_dev
 
@@ -56,6 +58,17 @@ async def contacts(message: Message):
 @main_router.message(Command(commands=['connect', 'support', 'registration', 'education']))
 async def in_dev(message: Message):
     await message.answer(text=message_in_dev)
+
+
+# @main_router.callback_query(F.data.startswith('contacts_list'))
+# async def open_contacts_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
+#     last_message = callback.message.text
+#     customer_id = callback.data.split('_')[2]
+#     customer = amo_api.get_customer_by_id(customer_id, with_contacts=True)
+#     contacts_list = [{contact.get('id') for contact in customer[1]['_embedded']['contacts']]
+
+
+
 
 
 
