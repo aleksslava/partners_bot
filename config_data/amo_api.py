@@ -1,5 +1,3 @@
-import pprint
-
 import dotenv
 import jwt
 import requests
@@ -14,26 +12,35 @@ logger = logging.getLogger(__name__)
 
 
 class Customer:
+    # Список доступных статусов партнёра
+    partner_status_dct: dict[str, list] = {
+        'Старт': ['скидка 15%', 0],
+        'Бронза': ['скидка 20%', 100],
+        'Серебро': ['скидка 30%', 500000],
+        'Золото': ['скидка 35%',],
+        'Платина': ['скидка 40%',],
+        'Бизнес': ['скидка 40%',]
+    }
+
+    partner_status_list: list = [
+        'Старт', 'Бронза', 'Серебро', 'Золото', 'Платина', 'Бизнес'
+    ]
+
     def __call__(self, customer_dct: dict):
         self.id = customer_dct.get('id')
         self.name = customer_dct['name']
+        self.itv = customer_dct.get('itv')  # Сумма покупок партнёра
         self.custom_fields = customer_dct['custom_fields_values']
-        self.kval = Customer.get_kval(self.custom_fields)
         self.manager = Customer.get_manager(self.custom_fields)
-        self.status = Customer.get_status(self.custom_fields)
-        self.bye_after_first_april = Customer.get_bye_after_first_april(self.custom_fields)
+        self.status = self.get_status(self.custom_fields)
+        self.bye_in_this_period = Customer.bye_this_period(self.custom_fields)
         self.bonuses = Customer.get_bonuses(self.custom_fields)
-        self.payout = Customer.get_payout_summ(self.custom_fields)
         self.town = Customer.get_town(self.custom_fields)
+        self.next_status = self.get_next_status(self.status)
+        # self.bye_for_next_status = pass
 
         return self
 
-    @staticmethod
-    def get_kval(values: list):
-        kval = [res for res in values if res['field_id'] == 1506993][0]
-        kval_value = kval.get('values')[0].get('value')
-        is_kval = 'Активен' if kval_value == 'Да' else 'Не активен'
-        return is_kval
 
     @staticmethod
     def get_manager(values: list):
@@ -41,14 +48,13 @@ class Customer:
         manager_value = manager.get('values')[0].get('value')
         return manager_value
 
-    @staticmethod
-    def get_status(values: list):
+    def get_status(self, values: list):
         status = [res for res in values if res['field_id'] == 1506981][0]
-        status_value = status.get('values')[0].get('value')
-        return status_value
+        status_value: str = status.get('values')[0].get('value').split()[0]
+        return f'{status_value}, {self.partner_status_dct.get(status_value)[0]}'
 
     @staticmethod
-    def get_bye_after_first_april(values: list):
+    def bye_this_period(values: list):
         summ = [res for res in values if res['field_id'] == 1506983][0]
         summ_value = summ.get('values')[0].get('value')
         return summ_value
@@ -60,16 +66,22 @@ class Customer:
         return bonuses_value
 
     @staticmethod
-    def get_payout_summ(values: list):
-        payout = [res for res in values if res['field_id'] == 1506987][0]
-        payout_value = payout.get('values')[0].get('value')
-        return payout_value
-
-    @staticmethod
     def get_town(values: list):
         town = [res for res in values if res['field_id'] == 1506989][0]
         town_value = town.get('values')[0].get('value')
         return town_value
+
+    def get_next_status(self, partner_status):
+        for index, status in enumerate(self.partner_status_list):
+            if status in partner_status.split()[0]:
+                ind = index
+
+        if len(self.partner_status_list) == ind + 1:
+            next_status = partner_status
+        else:
+            next_status = self.partner_status_list[ind+1]
+
+        return f'{next_status}, {self.partner_status_dct.get(next_status)[0]}'
 
 
 class AmoCRMWrapper:
@@ -164,6 +176,11 @@ class AmoCRMWrapper:
             response = requests.post("https://{}.amocrm.ru{}".format(
                 self.amocrm_subdomain,
                 kwargs.get("endpoint")), headers=headers, json=kwargs.get("data"))
+
+        elif req_type == 'patch':
+            response = requests.patch("https://{}.amocrm.ru{}".format(
+                self.amocrm_subdomain,
+                kwargs.get("endpoint")), headers=headers, json=kwargs.get("data"))
         return response
 
     # def get_lead_by_id(self, lead_id):
@@ -182,7 +199,12 @@ class AmoCRMWrapper:
             query = str(f'query={phone_number}')
         contact = self._base_request(endpoint=url, type="get_param", parameters=query)
         if contact.status_code == 200:
-            return True, contact.json()['_embedded']['contacts'][0]
+            contacts_list = contact.json()['_embedded']['contacts']
+            if len(contacts_list) > 1:  # Проверка на дубли номера телефона в контактах
+                return False, ('Найдено более одного контакта с номером телефона\n'
+                               'Обратитесь к менеджеру отдела продаж!')
+            else:
+                return True, contacts_list[0]
         elif contact.status_code == 204:
             return False, 'Контакт не найден'
         else:
@@ -191,9 +213,12 @@ class AmoCRMWrapper:
 
     def get_customer_by_phone(self, phone_number) -> tuple:
         contact = self.get_contact_by_phone(phone_number, with_customer=True)
-        if contact[0]:
+        if contact[0]:  # Проверка, что ответ от сервера получен
             contact = contact[1]
-            customer_id = contact['_embedded']['customers'][0]['id']
+            customer_list = contact['_embedded']['customers']
+            if len(customer_list) > 1:
+                return False, 'К номеру телефона привязано более одного партнёра'
+            customer_id = customer_list[0]['id']
             url = f'/api/v4/customers/{customer_id}'
             customer = self._base_request(endpoint=url, type='get').json()
 
@@ -211,6 +236,50 @@ class AmoCRMWrapper:
         else:
             logger.error('Нет авторизации в AMO_API')
             return False, 'Произошла ошибка на сервере!'
+
+    def get_customer_by_tg_id(self, tg_id: int) -> dict:  # Нужно убрать все id полей амо в конфиг
+        url = '/api/v4/customers'
+        field_id = '1519847'
+        query = str(f'filter[custom_fields_values][{field_id}][]={tg_id}')
+        response = self._base_request(endpoint=url, type='get_param', parameters=query)
+
+        if response.status_code == 200:
+            customer_list = response.json()['_embedded']['customers']
+            if len(customer_list) > 1:
+                return {'status_code': False,
+                        'tg_id_in_db': False,
+                        'response': 'Найдено более одного номера tg_id в базе данных\n'
+                                    'Обратитесь к Вашему менеджеру'
+                        }
+            return {'status_code': True,
+                    'tg_id_in_db': True,
+                    'response': customer_list[0]
+                    }
+
+        elif response.status_code == 204:
+            return {'status_code': True,
+                    'tg_id_in_db': False,
+                    'response': 'Телеграмм id не найден в базе данных'
+                    }
+
+        elif response.status_code == 401:
+            return {'status_code': False,
+                    'tg_id_in_db': False,
+                    'response': 'Произошла ошибка на сервере'
+                    }
+
+    def put_tg_id_to_customer(self, id_customer, tg_id):
+        url = f'/api/v4/customers/{id_customer}'
+        data = {"custom_fields_values": [
+            {"field_id": 1519847,
+             "values": [
+                 {"value": f"{tg_id}"},
+                 ]
+             }]}
+        response = self._base_request(type='patch', endpoint=url, data=data)
+        print(response.status_code)
+
+
 
     @staticmethod
     def get_customer_params(customer_dct: dict[str, str]) -> Customer:
