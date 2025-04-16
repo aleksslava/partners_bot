@@ -10,8 +10,10 @@ logger = logging.getLogger(__name__)
 
 class OuterMiddleware(BaseMiddleware):
     def __init__(self,
-                 amo_api: AmoCRMWrapper):
+                 amo_api: AmoCRMWrapper,
+                 fields_id: dict):
         self.amo_api = amo_api
+        self.fields_id = fields_id
 
     async def __call__(
         self,
@@ -27,6 +29,7 @@ class OuterMiddleware(BaseMiddleware):
         )
 
         data['amo_api'] = self.amo_api
+        data['fields_id'] = self.fields_id
 
         result = await handler(event, data)
 

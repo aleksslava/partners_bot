@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher
-from config_data.config import load_config, Config
+from config_data.config import load_config, Config, fields_id
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from handlers.main_handlers import main_router
@@ -46,7 +46,7 @@ async def main():
     dp = Dispatcher()
 
     dp.include_router(main_router)
-    dp.update.middleware(OuterMiddleware(amo_api))
+    dp.update.middleware(OuterMiddleware(amo_api, fields_id))
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

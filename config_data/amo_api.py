@@ -1,3 +1,5 @@
+import pprint
+
 import dotenv
 import jwt
 import requests
@@ -14,22 +16,41 @@ logger = logging.getLogger(__name__)
 class Contact:
     def __init__(self, **kwargs):
         self.name = kwargs.get('name')
-        self.custom_fields = kwargs.get('custom_fields_values')
-        self.phone_list = None
-        self.mail_list = None
+        self.custom_fields_values = kwargs.get('custom_fields_values')
+        self.phone_list = self._get_contact_data_list(field_name='Телефон')
+        self.mail_list = self._get_contact_data_list(field_name='Email')
 
-    def _get_phone_number_list(self, custom_fields_dict):
-        pass
+    def _get_contact_data_list(self, field_name) -> list:
+        data = []
+        for field in self.custom_fields_values:
+            if field.get('field_name') == field_name:
+                for arg in field.get('values'):
+                    data.append(arg.get('value'))
 
-    def _get_mail_list(self, custom_fields_dict):
-        pass
+        return data
+
+    def __str__(self):
+        contact_message = f'\n\nИмя контакта: {self.name}\n'
+
+        for number in self.phone_list:
+            value = f'Телефон: {number}\n'
+            contact_message = contact_message + value
+
+        contact_message = contact_message + '\n'
+
+        for email in self.mail_list:
+            value = f'Почта: {email}\n'
+            contact_message = contact_message + value
+
+        return contact_message
 
 
 class Customer:
     # Список доступных статусов партнёра
     partner_status_dct: dict[str, list] = {
         'Старт': ['скидка 15%', 0],
-        'Бронза': ['скидка 20%', 100],
+        'База': ['скидка 20%', 100000],
+        'Бронза': ['скидка 25%', 200000],
         'Серебро': ['скидка 30%', 500000],
         'Золото': ['скидка 35%',],
         'Платина': ['скидка 40%',],
@@ -37,51 +58,44 @@ class Customer:
     }
 
     partner_status_list: list = [
-        'Старт', 'Бронза', 'Серебро', 'Золото', 'Платина', 'Бизнес'
+        'Старт', 'База', 'Бронза', 'Серебро', 'Золото', 'Платина', 'Бизнес'
     ]
+
+    def __init__(self, fields_id: dict[str, int]):
+        self.fields_id = fields_id
 
     def __call__(self, customer_dct: dict):
         self.id = customer_dct.get('id')
         self.name = customer_dct['name']
         self.itv = customer_dct.get('itv')  # Сумма покупок партнёра
         self.custom_fields = customer_dct['custom_fields_values']
-        self.manager = Customer.get_manager(self.custom_fields)
+        self.manager = customer_dct.get('manager').get('name')
         self.status = self.get_status(self.custom_fields)
-        self.bye_in_this_period = Customer.bye_this_period(self.custom_fields)
-        self.bonuses = Customer.get_bonuses(self.custom_fields)
-        self.town = Customer.get_town(self.custom_fields)
+        self.bye_in_this_period = self.bye_this_period(self.custom_fields)
+        self.bonuses = self.get_bonuses(self.custom_fields)
+        self.town = self.get_town(self.custom_fields)
         self.next_status = self.get_next_status(self.status)
         # self.bye_for_next_status = pass
 
         return self
 
-
-    @staticmethod
-    def get_manager(values: list):
-        manager = [res for res in values if res['field_id'] == 1506979][0]
-        manager_value = manager.get('values')[0].get('value')
-        return manager_value
-
     def get_status(self, values: list):
-        status = [res for res in values if res['field_id'] == 1506981][0]
+        status = [res for res in values if res['field_id'] == self.fields_id.get('status_id_field')][0]
         status_value: str = status.get('values')[0].get('value').split()[0]
         return f'{status_value}, {self.partner_status_dct.get(status_value)[0]}'
 
-    @staticmethod
-    def bye_this_period(values: list):
-        summ = [res for res in values if res['field_id'] == 1506983][0]
+    def bye_this_period(self, values: list):
+        summ = [res for res in values if res['field_id'] == self.fields_id.get('by_this_period_id_field')][0]
         summ_value = summ.get('values')[0].get('value')
         return summ_value
 
-    @staticmethod
-    def get_bonuses(values: list):
-        bonuses = [res for res in values if res['field_id'] == 1506985][0]
+    def get_bonuses(self, values: list):
+        bonuses = [res for res in values if res['field_id'] == self.fields_id.get('bonuses_id_field')][0]
         bonuses_value = bonuses.get('values')[0].get('value')
         return bonuses_value
 
-    @staticmethod
-    def get_town(values: list):
-        town = [res for res in values if res['field_id'] == 1506989][0]
+    def get_town(self, values: list):
+        town = [res for res in values if res['field_id'] == self.fields_id.get('town_id_field')][0]
         town_value = town.get('values')[0].get('value')
         return town_value
 
@@ -117,6 +131,7 @@ class AmoCRMWrapper:
         self.amocrm_access_token = amocrm_access_token
         self.amocrm_refresh_token = amocrm_refresh_token
         self.amocrm_secret_code = amocrm_secret_code
+
 
     @staticmethod
     def _is_expire(token: str):
@@ -250,7 +265,7 @@ class AmoCRMWrapper:
 
     def get_customer_by_tg_id(self, tg_id: int) -> dict:  # Нужно убрать все id полей амо в конфиг
         url = '/api/v4/customers'
-        field_id = '1519847'
+        field_id = '1104992'
         query = str(f'filter[custom_fields_values][{field_id}][]={tg_id}')
         response = self._base_request(endpoint=url, type='get_param', parameters=query)
 
@@ -273,7 +288,7 @@ class AmoCRMWrapper:
                     'response': 'Телеграмм id не найден в базе данных'
                     }
 
-        elif response.status_code == 401:
+        else:
             return {'status_code': False,
                     'tg_id_in_db': False,
                     'response': 'Произошла ошибка на сервере'
@@ -290,21 +305,47 @@ class AmoCRMWrapper:
         response = self._base_request(type='patch', endpoint=url, data=data)
         print(response.status_code)
 
-    def get_contact_by_id(self, contact_id):
+    def get_contact_by_id(self, contact_id) -> dict:
         url = f'/api/v4/contacts/{contact_id}'
         response = self._base_request(type='get', endpoint=url)
 
         return response.json()
 
+    def get_responsible_user_by_id(self, manager_id: int):
+        url = f'/api/v4/users/{manager_id}'
+
+        responsible_manager = self._base_request(endpoint=url, type='get')
+        if responsible_manager.status_code == 200:
+            return responsible_manager.json()
+        else:
+            raise JSONDecodeError
 
 
 
 
     @staticmethod
-    def get_customer_params(customer_dct: dict[str, str]) -> Customer:
-        customer = Customer()
+    def get_customer_params(customer_dct: dict[str, str], fields_id: dict) -> Customer:
+        customer = Customer(fields_id)
         customer = customer(customer_dct)
         return customer
+
+
+if __name__ == '__main__':
+    from config_data.config import load_config, Config
+    config: Config = load_config()
+
+    amo_api = AmoCRMWrapper(
+        path=config.amo_config.path_to_env,
+        amocrm_subdomain=config.amo_config.amocrm_subdomain,
+        amocrm_client_id=config.amo_config.amocrm_client_id,
+        amocrm_redirect_url=config.amo_config.amocrm_redirect_url,
+        amocrm_client_secret=config.amo_config.amocrm_client_secret,
+        amocrm_secret_code=config.amo_config.amocrm_secret_code,
+        amocrm_access_token=config.amo_config.amocrm_access_token,
+        amocrm_refresh_token=config.amo_config.amocrm_refresh_token
+    )
+    response = amo_api.get_responsible_user_by_id(12376093)
+    pprint.pprint(response.json().get('name'), indent=4)
 
 
 

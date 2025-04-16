@@ -4,6 +4,14 @@ import dotenv
 import environs
 from environs import Env
 
+fields_id = {
+    'manager_id_field': 1506979,
+    'tg_id_field': 1104992,
+    'status_id_field': 972634,
+    'by_this_period_id_field': 1104934,
+    'bonuses_id_field': 971580,
+    'town_id_field': 972054,
+}
 
 # Класс с токеном бота телеграмм
 @dataclass
@@ -52,6 +60,8 @@ def load_config(path: str | None = os.path.abspath('./.env')):
             amocrm_refresh_token=env("AMOCRM_REFRESH_TOKEN"),
             amocrm_secret_code=env("AMOCRM_SECRET")
         ))
+
+
 
 
 
