@@ -11,6 +11,20 @@ from config_data.config import load_config
 logger = logging.getLogger(__name__)
 
 
+class Contact:
+    def __init__(self, **kwargs):
+        self.name = kwargs.get('name')
+        self.custom_fields = kwargs.get('custom_fields_values')
+        self.phone_list = None
+        self.mail_list = None
+
+    def _get_phone_number_list(self, custom_fields_dict):
+        pass
+
+    def _get_mail_list(self, custom_fields_dict):
+        pass
+
+
 class Customer:
     # Список доступных статусов партнёра
     partner_status_dct: dict[str, list] = {
@@ -183,13 +197,6 @@ class AmoCRMWrapper:
                 kwargs.get("endpoint")), headers=headers, json=kwargs.get("data"))
         return response
 
-    # def get_lead_by_id(self, lead_id):
-    #     url = "/api/v4/leads/" + str(lead_id)
-    #     return self._base_request(endpoint=url, type="get")
-
-    # def get_user_by_id(self, user_id):
-    #     url = '/api/v4/user/' + str(user_id)
-    #     return self._base_request(endpoint=url, type="get")
     def get_contact_by_phone(self, phone_number, with_customer=False) -> tuple:
         phone_number = str(phone_number)[2:]
         url = '/api/v4/contacts'
@@ -282,6 +289,14 @@ class AmoCRMWrapper:
              }]}
         response = self._base_request(type='patch', endpoint=url, data=data)
         print(response.status_code)
+
+    def get_contact_by_id(self, contact_id):
+        url = f'/api/v4/contacts/{contact_id}'
+        response = self._base_request(type='get', endpoint=url)
+
+        return response.json()
+
+
 
 
 

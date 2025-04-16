@@ -22,7 +22,8 @@ async def start_handler(message: Message, amo_api: AmoCRMWrapper):
     if customer.get('status_code'):
         if customer.get('tg_id_in_db'):
             customer_params = amo_api.get_customer_params(customer.get('response'))
-            await message.answer(text=account_info(customer_params))
+            await message.answer(text=account_info(customer_params),
+                                 reply_markup=get_contacts_list(customer_params.id))
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона и добавляем если нашли покупателя
             name = message.from_user.first_name
@@ -39,11 +40,12 @@ async def get_contact(message: Message, amo_api: AmoCRMWrapper):
     contact = message.contact
     response = amo_api.get_customer_by_phone(contact.phone_number)
     if response[0]:
+        pprint.pprint(response[1])
         customer_params = amo_api.get_customer_params(response[1])
         amo_api.put_tg_id_to_customer(customer_params.id, message.from_user.id)
 
         await message.answer(text=account_info(customer_params),
-                             reply_markup=ReplyKeyboardRemove()
+                             reply_markup=get_contacts_list(customer_params.id)
                              )
     else:
         await message.answer(text=response[1])
@@ -60,12 +62,16 @@ async def in_dev(message: Message):
     await message.answer(text=message_in_dev)
 
 
-# @main_router.callback_query(F.data.startswith('contacts_list'))
-# async def open_contacts_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
-#     last_message = callback.message.text
-#     customer_id = callback.data.split('_')[2]
-#     customer = amo_api.get_customer_by_id(customer_id, with_contacts=True)
-#     contacts_list = [{contact.get('id') for contact in customer[1]['_embedded']['contacts']]
+@main_router.callback_query(F.data.startswith('contacts_list'))
+async def open_contacts_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
+    last_message = callback.message.text
+    customer_id = callback.data.split('_')[2]
+    customer = amo_api.get_customer_by_id(customer_id, with_contacts=True)
+    contacts_list = [contact.get('id') for contact in customer[1]['_embedded']['contacts']]
+    for contact_id in contacts_list:
+        contact_data = amo_api.get_contact_by_id(contact_id)
+        pprint.pprint(contact_data, indent=4)
+
 
 
 
