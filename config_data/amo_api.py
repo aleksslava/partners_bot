@@ -46,6 +46,7 @@ class Contact:
 class Customer:
     # Список доступных статусов партнёра
     partner_status_dct: dict[str, list] = {
+        'Отсутствует': ['скидка 0%', 0],
         'Старт': ['скидка 15%', 0],
         'База': ['скидка 20%', 100000],
         'Бронза': ['скидка 25%', 200000],
@@ -56,7 +57,7 @@ class Customer:
     }
 
     partner_status_list: list = [
-        'Старт', 'База', 'Бронза', 'Серебро', 'Золото', 'Платина', 'Бизнес'
+        'Отсутствует', 'Старт', 'База', 'Бронза', 'Серебро', 'Золото', 'Платина', 'Бизнес'
     ]
 
     def __init__(self, fields_id: dict[str, int]):
@@ -78,23 +79,31 @@ class Customer:
         return self
 
     def get_status(self, values: list):
-        status = [res for res in values if res['field_id'] == self.fields_id.get('status_id_field')][0]
-        status_value: str = status.get('values')[0].get('value').split()[0]
+        status = [res for res in values if res['field_id'] == self.fields_id.get('status_id_field')]
+        if not status:
+            return f'Отсутствует, {self.partner_status_dct.get("Отсутствует")[0]}'
+        status_value: str = status[0].get('values')[0].get('value').split()[0]
         return f'{status_value}, {self.partner_status_dct.get(status_value)[0]}'
 
     def bye_this_period(self, values: list):
-        summ = [res for res in values if res['field_id'] == self.fields_id.get('by_this_period_id_field')][0]
-        summ_value = summ.get('values')[0].get('value')
+        summ = [res for res in values if res['field_id'] == self.fields_id.get('by_this_period_id_field')]
+        if not summ:
+            return 0
+        summ_value = summ[0].get('values')[0].get('value')
         return summ_value
 
     def get_bonuses(self, values: list):
-        bonuses = [res for res in values if res['field_id'] == self.fields_id.get('bonuses_id_field')][0]
-        bonuses_value = bonuses.get('values')[0].get('value')
+        bonuses = [res for res in values if res['field_id'] == self.fields_id.get('bonuses_id_field')]
+        if not bonuses:
+            return 0
+        bonuses_value = bonuses[0].get('values')[0].get('value')
         return bonuses_value
 
     def get_town(self, values: list):
-        town = [res for res in values if res['field_id'] == self.fields_id.get('town_id_field')][0]
-        town_value = town.get('values')[0].get('value')
+        town = [res for res in values if res['field_id'] == self.fields_id.get('town_id_field')]
+        if not town:
+            return 'Отсутствует'
+        town_value = town[0].get('values')[0].get('value')
         return town_value
 
     def get_next_status(self, partner_status):
@@ -239,6 +248,8 @@ class AmoCRMWrapper:
             customer_list = contact['_embedded']['customers']
             if len(customer_list) > 1:
                 return False, 'К номеру телефона привязано более одного партнёра'
+            elif not customer_list:
+                return False, 'К номеру телефона не привязано ни одного партнёра'
             customer_id = customer_list[0]['id']
             url = f'/api/v4/customers/{customer_id}'
             customer = self._base_request(endpoint=url, type='get').json()
