@@ -40,8 +40,6 @@ class Contact:
             value = f'📧 <b>Электронная почта</b> : {email}\n'
             contact_message = contact_message + value
 
-        contact_message = contact_message + '\n'
-
         return contact_message
 
 
