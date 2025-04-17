@@ -79,6 +79,8 @@ class Customer:
         return self
 
     def get_status(self, values: list):
+        if values is None:
+            return f'Отсутствует, {self.partner_status_dct.get("Отсутствует")[0]}'
         status = [res for res in values if res['field_id'] == self.fields_id.get('status_id_field')]
         if not status:
             return f'Отсутствует, {self.partner_status_dct.get("Отсутствует")[0]}'
@@ -86,6 +88,8 @@ class Customer:
         return f'{status_value}, {self.partner_status_dct.get(status_value)[0]}'
 
     def bye_this_period(self, values: list):
+        if values is None:
+            return 0
         summ = [res for res in values if res['field_id'] == self.fields_id.get('by_this_period_id_field')]
         if not summ:
             return 0
@@ -93,6 +97,8 @@ class Customer:
         return summ_value
 
     def get_bonuses(self, values: list):
+        if values is None:
+            return 0
         bonuses = [res for res in values if res['field_id'] == self.fields_id.get('bonuses_id_field')]
         if not bonuses:
             return 0
@@ -100,6 +106,8 @@ class Customer:
         return bonuses_value
 
     def get_town(self, values: list):
+        if values is None:
+            return 'Отсутствует'
         town = [res for res in values if res['field_id'] == self.fields_id.get('town_id_field')]
         if not town:
             return 'Отсутствует'
