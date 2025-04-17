@@ -98,12 +98,13 @@ class Customer:
         return town_value
 
     def get_next_status(self, partner_status):
+        ind = 1
         for index, status in enumerate(self.partner_status_list):
             if status in partner_status.split()[0]:
                 ind = index
 
         if len(self.partner_status_list) == ind + 1:
-            next_status = partner_status
+            next_status = self.partner_status_list[ind]
         else:
             next_status = self.partner_status_list[ind+1]
 
