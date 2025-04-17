@@ -38,3 +38,10 @@ def get_contacts_list(customer_id):
     markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
 
     return markup
+
+
+def hide_contacts_list(customer_id):
+    button = InlineKeyboardButton(text='Скрыть список конактов', callback_data=f'hide_contacts_list_{customer_id}')
+    markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
+
+    return markup

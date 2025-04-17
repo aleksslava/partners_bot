@@ -33,14 +33,14 @@ class Contact:
         contact_message = f'\n\nИмя контакта: {self.name}\n'
 
         for number in self.phone_list:
-            value = f'Телефон: {number}\n'
+            value = f'📞 <b>Телефон</b> : {number}\n'
+            contact_message = contact_message + value
+
+        for email in self.mail_list:
+            value = f'📧 <b>Электронная почта</b> : {email}\n'
             contact_message = contact_message + value
 
         contact_message = contact_message + '\n'
-
-        for email in self.mail_list:
-            value = f'Почта: {email}\n'
-            contact_message = contact_message + value
 
         return contact_message
 
@@ -297,13 +297,14 @@ class AmoCRMWrapper:
     def put_tg_id_to_customer(self, id_customer, tg_id):
         url = f'/api/v4/customers/{id_customer}'
         data = {"custom_fields_values": [
-            {"field_id": 1519847,
+            {"field_id": 1104992,
              "values": [
                  {"value": f"{tg_id}"},
                  ]
              }]}
         response = self._base_request(type='patch', endpoint=url, data=data)
-        print(response.status_code)
+        logger.info(f'Запись ID_telegram: {tg_id} в карту партнёра: {id_customer}\n'
+                    f'Статус операции: {response.status_code}')
 
     def get_contact_by_id(self, contact_id) -> dict:
         url = f'/api/v4/contacts/{contact_id}'

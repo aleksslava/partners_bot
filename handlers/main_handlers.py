@@ -3,7 +3,7 @@ import pprint
 from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
-from keybooards.main_keyboards import reply_phone_number, get_contacts_list
+from keybooards.main_keyboards import reply_phone_number, get_contacts_list, hide_contacts_list
 from config_data.amo_api import AmoCRMWrapper, Contact
 from lexicon.lexicon_ru import account_info, contact_message, message_in_dev
 
@@ -45,7 +45,7 @@ async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict)
         responsible_manager = amo_api.get_responsible_user_by_id(int(customer[1].get('responsible_user_id')))
         customer[1]['manager'] = responsible_manager
         customer_params = amo_api.get_customer_params(customer[1], fields_id=fields_id)
-        # amo_api.put_tg_id_to_customer(customer_params.id, message.from_user.id)
+        amo_api.put_tg_id_to_customer(customer_params.id, message.from_user.id)
 
         await message.answer(text=account_info(customer_params),
                              reply_markup=get_contacts_list(customer_params.id)
@@ -60,12 +60,22 @@ async def open_contacts_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
     customer_id = callback.data.split('_')[2]
     customer = amo_api.get_customer_by_id(customer_id, with_contacts=True)
     contacts_list_id = [contact.get('id') for contact in customer[1]['_embedded']['contacts']]
+    last_message = last_message + '\n\n<b>Контакты</b> :'
 
     for contact_id in contacts_list_id:
         contact_data = Contact(**amo_api.get_contact_by_id(contact_id))
         last_message = last_message + str(contact_data)
 
-    await callback.message.edit_text(text=last_message)
+    await callback.message.edit_text(text=last_message, reply_markup=hide_contacts_list(customer_id))
+
+
+@main_router.callback_query(F.data.startswith('hide_contacts_list'))
+async def hide_contact_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
+    customer_id = callback.data.split('_')[3]
+    last_text = callback.message.text
+    hide_index = last_text.find('Контакты :')
+    new_text = last_text[:hide_index]
+    await callback.message.edit_text(text=new_text, reply_markup=get_contacts_list(customer_id))
 
 
 @main_router.message(Command(commands='contacts'))

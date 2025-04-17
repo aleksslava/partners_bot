@@ -10,7 +10,7 @@ def account_info(customer: Customer):
                f'🎁 Бонусы на балансе: {customer.bonuses}\n'
                f'🌆 Город работы: {customer.town}\n'
                f'👥 Ваш менеджер: {customer.manager}\n\n'
-               f'------------------------------\n\n'
+               f'------------------------------\n'
                f'Следующий статус {customer.next_status}\n'
                # f'Чистый выкуп до след статуса: {customer.sales_for_next_status}'
                )
