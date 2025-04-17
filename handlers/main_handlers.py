@@ -21,9 +21,10 @@ async def start_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
     customer = amo_api.get_customer_by_tg_id(tg_id)
     if customer.get('status_code'):
         if customer.get('tg_id_in_db'):
+            customer = customer.get('response')
             responsible_manager = amo_api.get_responsible_user_by_id(int(customer.get('responsible_user_id')))
-            customer['manager'] = str(responsible_manager)
-            customer_params = amo_api.get_customer_params(customer.get('response'), fields_id=fields_id)
+            customer['manager'] = responsible_manager
+            customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
             await message.answer(text=account_info(customer_params),
                                  reply_markup=get_contacts_list(customer_params.id))
         else:
