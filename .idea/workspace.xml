@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Оптимизирован по основной аккаунт амоCRM">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keybooards/main_keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/keybooards/main_keyboards.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexicon/lexicon_ru.py" beforeDir="false" afterPath="$PROJECT_DIR$/lexicon/lexicon_ru.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,7 +278,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744801272937</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости.">
+      <option name="closed" value="true" />
+      <created>1744873892064</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1744873892064</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -307,7 +311,8 @@
     <MESSAGE value="add changes to amo_api.py -&gt; def _save_tokens" />
     <MESSAGE value="Теперь проверка пользователя в амо происходит по номеру tg_id. &#10;Если номера нет, то по телефону и при успехе tg_id добавляется в карточку пользователя" />
     <MESSAGE value="Оптимизирован по основной аккаунт амоCRM" />
-    <option name="LAST_COMMIT_MESSAGE" value="Оптимизирован по основной аккаунт амоCRM" />
+    <MESSAGE value="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
