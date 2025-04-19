@@ -8,6 +8,7 @@ from handlers.main_handlers import main_router
 from config_data.amo_api import AmoCRMWrapper
 from outer_middleware.outer_middleware import OuterMiddleware
 from keybooards.main_keyboards import set_main_menu
+from lexicon.lexicon_ru import start_menu
 
 # Инициализация логера
 logger = logging.getLogger(__name__)
@@ -29,7 +30,7 @@ async def main():
         token=config.tg_bot.token,
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
-    await set_main_menu(bot)
+    await set_main_menu(bot, start_menu)
 
     # Создаём объект связи с API AMOCRM
     amo_api = AmoCRMWrapper(
@@ -47,11 +48,11 @@ async def main():
 
     dp.include_router(main_router)
     dp.update.middleware(OuterMiddleware(amo_api, fields_id))
+    logger.info("partners_bot started succesful")
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
-    logger.info("partners_bot started succesful")
 
 if __name__ == "__main__":
     asyncio.run(main())
