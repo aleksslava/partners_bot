@@ -46,7 +46,7 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
 
 @main_router.callback_query(F.data == '/info')
 async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict):
-    tg_id = callback.message.from_user.id
+    tg_id = callback.message.chat.id
 
     # Проверка наличия партнёра в бд по tg_id
 
@@ -58,13 +58,13 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
             customer['manager'] = responsible_manager
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
             await callback.message.answer(text=account_info(customer_params),
-                                             reply_markup=await get_contacts_list(customer_params.id))
+                                          reply_markup=await get_contacts_list(customer_params.id))
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
-            name = callback.message.from_user.first_name
+            name = callback.message.chat.first_name
             await callback.message.answer(text=f'{name}, здравствуйте.\n'
-                                                  f'Поделитесь своим номером телефона для использования бота.',
-                                             reply_markup=await reply_phone_number())
+                                               f'Поделитесь своим номером телефона для использования бота.',
+                                          reply_markup=await reply_phone_number())
     else:
         await callback.message.answer(text=customer.get('response'))
 
