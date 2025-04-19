@@ -63,8 +63,8 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.message.from_user.first_name
             await callback.message.edit_text(text=f'{name}, здравствуйте.\n'
-                                      f'Поделитесь своим номером телефона для использования бота.',
-                                 reply_markup=await reply_phone_number())
+                                                  f'Поделитесь своим номером телефона для использования бота.',
+                                             reply_markup=await reply_phone_number())
     else:
         await callback.message.edit_text(text=customer.get('response'))
 
