@@ -47,6 +47,7 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
 
 @main_router.callback_query(F.data == '/info')  # Обработка инлайн кнопки "Мой профиль"
 async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict):
+    await callback.answer()
     tg_id = callback.message.chat.id
 
     # Проверка наличия партнёра в амо по tg_id
