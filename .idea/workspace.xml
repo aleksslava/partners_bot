@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Исправлена ошибка в обработчике запроса контакта пользователя">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexicon/lexicon_ru.py" beforeDir="false" afterPath="$PROJECT_DIR$/lexicon/lexicon_ru.py" afterDir="false" />
-    </list>
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -393,7 +388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745152738397</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона.">
+      <option name="closed" value="true" />
+      <created>1745154620436</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1745154620436</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -423,7 +426,8 @@
     <MESSAGE value="Добавлена ошибка при отсутствии привязанных покупателей к пользователю. &#10;Добавлена обработка нулевых значений полей покупателя" />
     <MESSAGE value="Переработано меню бота, добавлено инлайн меню бота." />
     <MESSAGE value="Исправлена ошибка в обработчике запроса контакта пользователя" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправлена ошибка в обработчике запроса контакта пользователя" />
+    <MESSAGE value="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
