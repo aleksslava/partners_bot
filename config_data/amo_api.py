@@ -74,9 +74,20 @@ class Customer:
         self.bonuses = self.get_bonuses(self.custom_fields)
         self.town = self.get_town(self.custom_fields)
         self.next_status = self.get_next_status(self.status)
+        self.tg_id: bool = self.get_customer_tg_id(self.custom_fields)
         # self.bye_for_next_status = pass
 
         return self
+
+    def get_customer_tg_id(self, values: list):
+        if values is None:  # Если нет записанного id_tg у партнёра, то True иначе False
+            return True
+
+        tg_id = [res for res in values if res['field_id'] == self.fields_id.get('tg_id_field')]
+        if tg_id:
+            return False
+        return True
+
 
     def get_status(self, values: list):
         if values is None:

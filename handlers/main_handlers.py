@@ -78,8 +78,11 @@ async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict)
         responsible_manager = amo_api.get_responsible_user_by_id(int(customer[1].get('responsible_user_id')))
         customer[1]['manager'] = responsible_manager
         customer_params = amo_api.get_customer_params(customer[1], fields_id=fields_id)
-
-        amo_api.put_tg_id_to_customer(customer_params.id, message.from_user.id)
+        if customer_params.tg_id:
+            amo_api.put_tg_id_to_customer(customer_params.id, message.from_user.id)
+        else:
+            await message.answer(text='К партнёру уже привязан другой аккаунт телеграмм.\n'
+                                      'Обратитесь к Вашему менеджеру для разъяснения ситуации!')
 
         await message.answer(text=account_info(customer_params),
                              reply_markup=await get_contacts_list(customer_params.id)
