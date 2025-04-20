@@ -15,7 +15,8 @@ logger = logging.getLogger(__name__)
 @main_router.message(CommandStart())  # Хэндлер для обработки команды /start
 async def command_start_process(message: Message):
 
-    await message.answer(text='Главная клавиатура бота', reply_markup=await get_start_keyboard(start_menu))
+    await message.answer(text='<b>Основное меню чат-бота HiTE PRO!</b>',
+                         reply_markup=await get_start_keyboard(start_menu))
 
 
 @main_router.message(Command(commands=['info']))  # Хэндлер для обработки команды /info
@@ -44,15 +45,15 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
         await message.answer(text=customer.get('response'))
 
 
-@main_router.callback_query(F.data == '/info')
+@main_router.callback_query(F.data == '/info')  # Обработка инлайн кнопки "Мой профиль"
 async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict):
     tg_id = callback.message.chat.id
 
-    # Проверка наличия партнёра в бд по tg_id
+    # Проверка наличия партнёра в амо по tg_id
 
     customer = amo_api.get_customer_by_tg_id(tg_id)
-    if customer.get('status_code'):
-        if customer.get('tg_id_in_db'):
+    if customer.get('status_code'):  # Проверка корректности ответа от амо
+        if customer.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
             customer = customer.get('response')
             responsible_manager = amo_api.get_responsible_user_by_id(int(customer.get('responsible_user_id')))
             customer['manager'] = responsible_manager
@@ -62,9 +63,9 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.message.chat.first_name
-            await callback.message.edit_text(text=f'{name}, здравствуйте.\n'
+            await callback.message.answer(text=f'{name}, здравствуйте.\n'
                                                   f'Поделитесь своим номером телефона для использования бота.',
-                                             reply_markup=await reply_phone_number())
+                                          reply_markup=await reply_phone_number())
     else:
         await callback.message.edit_text(text=customer.get('response'))
 

@@ -3,16 +3,15 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, BotCommand, Inlin
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
-async def reply_phone_number():
+async def reply_phone_number():  # Формирование инлайн клавиатуры запроса контакта пользователя
     first_button = KeyboardButton(text='Поделиться номером телефона', request_contact=True)
     markup = ReplyKeyboardMarkup(keyboard=[[first_button,]], resize_keyboard=True, one_time_keyboard=True)
 
     return markup
 
 
-async def set_main_menu(bot: Bot, commands: dict):
+async def set_main_menu(bot: Bot, commands: dict):  # Главная клавиатура бота
 
-    # Главная клавиатура бота
     main_menu_commands = [
         BotCommand(command=command,
                    description=description) for command, description in commands.items()
@@ -20,14 +19,14 @@ async def set_main_menu(bot: Bot, commands: dict):
     await bot.set_my_commands(main_menu_commands)
 
 
-async def get_contacts_list(customer_id):
+async def get_contacts_list(customer_id): # Формирование кнопки раскрытия списка контактов партнёра
     button = InlineKeyboardButton(text='Список связанных контактов', callback_data=f'contacts_list_{customer_id}')
     markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
 
     return markup
 
 
-async def hide_contacts_list(customer_id):
+async def hide_contacts_list(customer_id): # Формирование кнопки скрытия списка контактов партнёра
     button = InlineKeyboardButton(text='Скрыть список конактов', callback_data=f'hide_contacts_list_{customer_id}')
     markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
 
@@ -35,7 +34,7 @@ async def hide_contacts_list(customer_id):
 
 
 # Главная inline клавиатура
-async def get_start_keyboard(commands: dict):
+async def get_start_keyboard(commands: dict): # Формирование главной инлайн клавиатуры
     kb_bl = InlineKeyboardBuilder()
     buttons: list = [
         InlineKeyboardButton(text=text,
@@ -45,7 +44,7 @@ async def get_start_keyboard(commands: dict):
     return kb_bl.as_markup()
 
 
-async def forum_button():
+async def forum_button(): # Формирование клавиатуры перехода на форум
     button = InlineKeyboardButton(
         text='Перейти на форум',
         url='https://t.me/+sk6G14Ywu9AzMTBi'
@@ -54,7 +53,7 @@ async def forum_button():
     return InlineKeyboardMarkup(inline_keyboard=[[button]])
 
 
-async def manager_button():
+async def manager_button():  # Формирование клавиатуры для связи с менеджером
     button_whatsapp = InlineKeyboardButton(
         text="🟢 WhatsApp",
         url='https://wa.me/79251930861'
@@ -66,7 +65,7 @@ async def manager_button():
     markup = InlineKeyboardMarkup(inline_keyboard=[[button_whatsapp], [button_telegram]])
     return markup
 
-async def support_button():
+async def support_button(): # Формирование клавиатуры для связи с тех. поддержкой
     button = InlineKeyboardButton(
         text="🟢 WhatsApp",
         url='https://wa.me/79251894560'
@@ -74,7 +73,7 @@ async def support_button():
     markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
     return markup
 
-async def problem_button():
+async def problem_button():  # Формирование клавиатуры для заполнения формы отзыва на бота
     button = InlineKeyboardButton(
         text='Заполнить форму',
         url='https://forms.gle/wnxcfdTsPpHtNCcy9'
