@@ -37,10 +37,13 @@ Lexicon_RU = {
                         f'📞 <b>Телефон</b> :\n'
                         f'+7 (495) 256-33-00\n\n'
                         f'📧 <b>Электронная почта</b> :\n'
-                        f'<a href="sales@hite-pro.ru">sales@hite-pro.ru</a>\n\n'
-                        f'📱 <b>WhatsApp</b> :\n'
-                        f'<a href="https://wa.me/79251930861">Ссылка на whatsapp</a>'
+                        f'<a href="partner@hite-pro.ru">partner@hite-pro.ru</a>\n\n'
+                        f'🟢 <b>WhatsApp</b> :\n'
+                        f'<a href="https://wa.me/79251930861">Ссылка на whatsapp</a>\n\n'
+                        f'🔵 <b>Telegram</b> :\n'
+                        f'<a href="https://t.me/+79251930861">Ссылка на telegram</a>'
                         ),
+
     'message_in_dev': ('Данный раздел  находится в разработке.\n'
                        'Приносим извинения за предоставленные неудобства!'),
 
