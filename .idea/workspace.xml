@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона.">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexicon/lexicon_ru.py" beforeDir="false" afterPath="$PROJECT_DIR$/lexicon/lexicon_ru.py" afterDir="false" />
     </list>
@@ -415,7 +415,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745155424554</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты">
+      <option name="closed" value="true" />
+      <created>1745155912825</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1745155912825</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -446,7 +454,8 @@
     <MESSAGE value="Переработано меню бота, добавлено инлайн меню бота." />
     <MESSAGE value="Исправлена ошибка в обработчике запроса контакта пользователя" />
     <MESSAGE value="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона." />
+    <MESSAGE value="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты" />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
