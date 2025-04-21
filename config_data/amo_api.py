@@ -33,11 +33,11 @@ class Contact:
         contact_message = f'\n\nИмя контакта: {self.name}\n'
 
         for number in self.phone_list:
-            value = f'📞 <b>Телефон</b> : {number}\n'
+            value = f'📞 {number}\n'
             contact_message = contact_message + value
 
         for email in self.mail_list:
-            value = f'📧 <b>Электронная почта</b> : {email}\n'
+            value = f'📧 {email}\n'
             contact_message = contact_message + value
 
         return contact_message
