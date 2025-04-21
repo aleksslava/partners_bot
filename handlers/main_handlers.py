@@ -4,9 +4,10 @@ from aiogram import Router, F
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, CallbackQuery, InlineKeyboardButton, WebAppInfo, InlineKeyboardMarkup
 from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hide_contacts_list, get_start_keyboard,
-                                        forum_button, manager_button, support_button, problem_button)
+                                       forum_button, manager_button, support_button, problem_button,
+                                       helpfull_materials_keyboard, back_button)
 from config_data.amo_api import AmoCRMWrapper, Contact
-from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu
+from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu, helpfull_materials_menu
 
 main_router = Router()
 logger = logging.getLogger(__name__)
@@ -155,29 +156,66 @@ async def command_forum_process_cl(callback: CallbackQuery):
 
 @main_router.message(Command(commands='materials'))  # Хэндлер для обработки команды /materials
 async def command_materials_process(message: Message):
-    await message.answer(text=Lexicon_RU.get('helpful_materials').get('first_message'))
-    await asyncio.sleep(1)
-    await message.answer(text=Lexicon_RU.get('helpful_materials').get('second_message'))
-    await asyncio.sleep(1)
-    await message.answer(text=Lexicon_RU.get('helpful_materials').get('third_message'))
-    await asyncio.sleep(1)
-    await message.answer(text=Lexicon_RU.get('helpful_materials').get('forth_message'))
-    await asyncio.sleep(1)
-    await message.answer(text=Lexicon_RU.get('helpful_materials').get('five_message'))
+
+    await message.answer(text='<b>Полезные материалы HiTE PRO.</b>\n\n'
+                              '👇 Используйте кнопки ниже, чтобы выбрать раздел.',
+                         reply_markup=await helpfull_materials_keyboard(helpfull_materials_menu))
+    # await message.answer(text=Lexicon_RU.get('helpful_materials').get('first_message'))
+    # await asyncio.sleep(1)
+    # await message.answer(text=Lexicon_RU.get('helpful_materials').get('second_message'))
+    # await asyncio.sleep(1)
+    # await message.answer(text=Lexicon_RU.get('helpful_materials').get('third_message'))
+    # await asyncio.sleep(1)
+    # await message.answer(text=Lexicon_RU.get('helpful_materials').get('forth_message'))
+    # await asyncio.sleep(1)
+    # await message.answer(text=Lexicon_RU.get('helpful_materials').get('five_message'))
 
 
 @main_router.callback_query(F.data == '/materials')  # Хэндлер для обработки inline кнопки "materials"
 async def command_materials_process_cl(callback: CallbackQuery):
-    await callback.message.edit_text(text=Lexicon_RU.get('helpful_materials').get('first_message'))
-    await asyncio.sleep(1)
-    await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('second_message'))
-    await asyncio.sleep(1)
-    await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('third_message'))
-    await asyncio.sleep(1)
-    await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('forth_message'))
-    await asyncio.sleep(1)
-    await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('five_message'))
+    await callback.message.edit_text(text='<b>Полезные материалы HiTE PRO.</b>\n\n'
+                                    '👇 Используйте кнопки ниже, чтобы выбрать раздел.',
+                                     reply_markup=await helpfull_materials_keyboard(helpfull_materials_menu))
+    # await callback.message.edit_text(text=Lexicon_RU.get('helpful_materials').get('first_message'))
+    # await asyncio.sleep(1)
+    # await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('second_message'))
+    # await asyncio.sleep(1)
+    # await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('third_message'))
+    # await asyncio.sleep(1)
+    # await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('forth_message'))
+    # await asyncio.sleep(1)
+    # await callback.message.answer(text=Lexicon_RU.get('helpful_materials').get('five_message'))
 
+@main_router.callback_query(F.data == 'first_message')
+async def command_materials_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text=Lexicon_RU.get('helpful_materials').get('first_message'),
+                                     reply_markup=await back_button())
+
+@main_router.callback_query(F.data == 'second_message')
+async def command_materials_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text=Lexicon_RU.get('helpful_materials').get('second_message'),
+                                     reply_markup=await back_button())
+
+@main_router.callback_query(F.data == 'third_message')
+async def command_materials_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text=Lexicon_RU.get('helpful_materials').get('third_message'),
+                                     reply_markup=await back_button())
+
+@main_router.callback_query(F.data == 'forth_message')
+async def command_materials_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text=Lexicon_RU.get('helpful_materials').get('forth_message'),
+                                     reply_markup=await back_button())
+
+@main_router.callback_query(F.data == 'five_message')
+async def command_materials_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text=Lexicon_RU.get('helpful_materials').get('five_message'),
+                                     reply_markup=await back_button())
+
+@main_router.callback_query(F.data == 'back')
+async def command_materials_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text='<b>Полезные материалы HiTE PRO.</b>\n\n'
+                                          '👇 Используйте кнопки ниже, чтобы выбрать раздел.',
+                                     reply_markup=await helpfull_materials_keyboard(helpfull_materials_menu))
 
 @main_router.message(Command(commands='manager'))  # Хэндлер для обработки команды /manager
 async def command_manager_process(message: Message):

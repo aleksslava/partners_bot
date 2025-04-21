@@ -30,6 +30,14 @@ start_menu = {
     '/problem': 'Проблемы с ботом?'
 }
 
+helpfull_materials_menu = {
+    'Закрытый канал партнёров': 'first_message',
+    'Инструкции по устройствам': 'second_message',
+    'Главное видео HiTE PRO': 'third_message',
+    'Презентации и прочие материалы': 'forth_message',
+    'Каталог HiTE PRO': 'five_message'
+}
+
 # Сообщения для хендлеров
 Lexicon_RU = {
     'contact_message': (f'<b>Наши контакты</b>\n\n'

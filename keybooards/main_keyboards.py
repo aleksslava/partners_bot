@@ -80,3 +80,18 @@ async def problem_button():  # Формирование клавиатуры д�
     )
     markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
     return markup
+
+async def helpfull_materials_keyboard(texts: dict):
+    kb_bl = InlineKeyboardBuilder()
+    buttons: list = [
+        InlineKeyboardButton(text=text,
+                             callback_data=data) for text, data in texts.items()
+    ]
+    kb_bl.row(*buttons, width=1)
+    return kb_bl.as_markup()
+
+async def back_button():
+    button = InlineKeyboardButton(text='Назад',
+                                  callback_data='back')
+    markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
+    return markup
