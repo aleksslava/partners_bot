@@ -70,7 +70,7 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
                                           reply_markup=await reply_phone_number())
     else:
         await callback.message.edit_text(text='Ошибка! Помогите нам её исправить. '
-                                              'Сообщите об этой ошибке в онлайн-форме:',
+                                              '👇 Сообщите об этой ошибке в онлайн-форме.',
                                          reply_markup=await problem_button())
 
 
@@ -88,7 +88,9 @@ async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict)
                              reply_markup=await get_contacts_list(customer_params.id)
                              )
     else:
-        await message.answer(text=customer[1])
+        await message.answer(text=f'{customer[1]}\n\n'
+                                  f'👇 Сообщите об этой ошибке в онлайн-форме.',
+                             reply_markup=await problem_button())
 
 
 # Хэндлер для обработки инлайн кнопки "Показать контакты"
