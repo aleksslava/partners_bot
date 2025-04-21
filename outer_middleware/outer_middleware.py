@@ -11,7 +11,8 @@ logger = logging.getLogger(__name__)
 class OuterMiddleware(BaseMiddleware):
     def __init__(self,
                  amo_api: AmoCRMWrapper,
-                 fields_id: dict):
+                 fields_id: dict,
+                 ):
         self.amo_api = amo_api
         self.fields_id = fields_id
 
