@@ -30,7 +30,7 @@ class Contact:
         return data
 
     def __str__(self):
-        contact_message = f'\n\nИмя контакта: {self.name}\n'
+        contact_message = f'\n\n{self.name}\n'
 
         for number in self.phone_list:
             value = f'📞 {number}\n'
@@ -114,6 +114,7 @@ class Customer:
         if not bonuses:
             return 0
         bonuses_value = bonuses[0].get('values')[0].get('value')
+        bonuses_value = f'{bonuses_value:,}'.replace(',', ' ')
         return bonuses_value
 
     def get_town(self, values: list):
