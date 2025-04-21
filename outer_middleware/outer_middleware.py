@@ -22,17 +22,17 @@ class OuterMiddleware(BaseMiddleware):
         data: Dict[str, Any],
     ) -> Any:
 
-        logger.info(
-            'Вошли в миддлварь %s, тип события %s',
-            __class__.__name__,
-            event.__class__.__name__
-        )
+        # logger.info(
+        #     'Вошли в миддлварь %s, тип события %s',
+        #     __class__.__name__,
+        #     event.__class__.__name__
+        # )
 
         data['amo_api'] = self.amo_api
         data['fields_id'] = self.fields_id
 
         result = await handler(event, data)
 
-        logger.info('Выходим из миддлвари  %s', __class__.__name__)
+        # logger.info('Выходим из миддлвари  %s', __class__.__name__)
 
         return result

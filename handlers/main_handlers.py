@@ -42,7 +42,8 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
                                       f'Поделитесь своим номером телефона для использования бота.',
                                  reply_markup=await reply_phone_number())
     else:
-        await message.answer(text=customer.get('response'))
+        await message.answer(text='Ошибка! Помогите нам её исправить. Сообщите об этой ошибке в онлайн-форме:',
+                             reply_markup=await problem_button())
 
 
 @main_router.callback_query(F.data == '/info')  # Обработка инлайн кнопки "Мой профиль"
@@ -68,7 +69,9 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
                                                   f'Поделитесь своим номером телефона для использования бота.',
                                           reply_markup=await reply_phone_number())
     else:
-        await callback.message.edit_text(text=customer.get('response'))
+        await callback.message.edit_text(text='Ошибка! Помогите нам её исправить. '
+                                              'Сообщите об этой ошибке в онлайн-форме:',
+                                         reply_markup=await problem_button())
 
 
 @main_router.message(F.contact)  # Хэндлер для обработки отправленного пользователем контакта

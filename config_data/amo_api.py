@@ -187,8 +187,12 @@ class AmoCRMWrapper:
         }
         response = requests.post("https://{}.amocrm.ru/oauth2/access_token".format(self.amocrm_subdomain),
                                  json=data).json()
-        access_token = response["access_token"]
-        refresh_token = response["refresh_token"]
+        try:
+            access_token = response["access_token"]
+            refresh_token = response["refresh_token"]
+        except KeyError as error:
+            logger.error("Ошибка обновления токенов")
+            return False
 
         self._save_tokens(access_token, refresh_token)
 
@@ -279,11 +283,14 @@ class AmoCRMWrapper:
 
     def get_customer_by_id(self, customer_id, with_contacts=False) -> tuple:
         url = f'/api/v4/customers/{customer_id}'
-        if with_contacts:
-            query = str(f'with=contacts')
-            customer = self._base_request(endpoint=url, type='get_param', parameters=query)
-        else:
-            customer = self._base_request(endpoint=url, type='get')
+        try:
+            if with_contacts:
+                query = str(f'with=contacts')
+                customer = self._base_request(endpoint=url, type='get_param', parameters=query)
+            else:
+                customer = self._base_request(endpoint=url, type='get')
+        except Exception as error:
+            return False, "Произошла ошибка на сервере"
         if customer.status_code == 200:
             return True, customer.json()
         elif customer.status_code == 204:
