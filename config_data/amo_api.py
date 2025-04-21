@@ -30,7 +30,7 @@ class Contact:
         return data
 
     def __str__(self):
-        contact_message = f'\n\n{self.name}\n'
+        contact_message = f'\n{self.name}\n'
 
         for number in self.phone_list:
             value = f'📞 {number}\n'

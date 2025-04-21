@@ -99,7 +99,7 @@ async def open_contacts_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
     customer_id = callback.data.split('_')[2]
     customer = amo_api.get_customer_by_id(customer_id, with_contacts=True)
     contacts_list_id = [contact.get('id') for contact in customer[1]['_embedded']['contacts']]
-    last_message = last_message + '\n\n<b>Привязанные контакты к профилю</b>'
+    last_message = last_message + '\n\n<b>Привязанные контакты к профилю</b>\n'
 
     for contact_id in contacts_list_id:
         contact_data = Contact(**amo_api.get_contact_by_id(contact_id))
