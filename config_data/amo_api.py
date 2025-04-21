@@ -114,7 +114,7 @@ class Customer:
         if not bonuses:
             return 0
         bonuses_value = bonuses[0].get('values')[0].get('value')
-        bonuses_value = f'{bonuses_value:,}'.replace(',', ' ')
+        bonuses_value = f'{int(bonuses_value):,}'.replace(',', ' ')
         return bonuses_value
 
     def get_town(self, values: list):
