@@ -112,7 +112,7 @@ async def open_contacts_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
 async def hide_contact_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
     customer_id = callback.data.split('_')[3]
     last_text = callback.message.text
-    hide_index = last_text.find('Контакты :')
+    hide_index = last_text.find('Привязанные')
     new_text = last_text[:hide_index]
     await callback.message.edit_text(text=new_text, reply_markup=await get_contacts_list(customer_id))
 
