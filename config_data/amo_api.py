@@ -53,11 +53,12 @@ class Customer:
         'Серебро': ['скидка 30%', 500000],
         'Золото': ['скидка 35%',],
         'Платина': ['скидка 40%',],
-        'Бизнес': ['скидка 40%',]
+        'Бизнес': ['скидка 40%',],
+        'Эксклюзив': ['Индивидуальные условия',]
     }
 
     partner_status_list: list = [
-        'Отсутствует', 'Старт', 'База', 'Бронза', 'Серебро', 'Золото', 'Платина', 'Бизнес'
+        'Отсутствует', 'Старт', 'База', 'Бронза', 'Серебро', 'Золото', 'Платина', 'Бизнес', 'Эксклюзив'
     ]
 
     def __init__(self, fields_id: dict[str, int]):
@@ -75,9 +76,20 @@ class Customer:
         self.town = self.get_town(self.custom_fields)
         self.next_status = self.get_next_status(self.status)
         self.tg_id: bool = self.get_customer_tg_id(self.custom_fields)
-        # self.bye_for_next_status = pass
+        self.full_price = self.get_customer_full_price(self.custom_fields)
+
 
         return self
+
+    def get_customer_full_price(self, values: list):
+        if values is None:
+            return 0
+        full_price_list = [res for res in values if res['field_id'] == self.fields_id.get('full_price')]
+        if not full_price_list:
+            return 0
+        full_price = full_price_list[0].get('values')[0].get('value')
+        full_price = f'{int(full_price):,}'.replace(',', ' ')
+        return full_price
 
     def get_customer_tg_id(self, values: list):
         if values is None:  # Если нет записанного id_tg у партнёра, то True иначе False
@@ -382,8 +394,7 @@ if __name__ == '__main__':
         amocrm_access_token=config.amo_config.amocrm_access_token,
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
-    response = amo_api.get_responsible_user_by_id(12376093)
-    pprint.pprint(response.json().get('name'), indent=4)
+    amo_api.init_oauth2()
 
 
 

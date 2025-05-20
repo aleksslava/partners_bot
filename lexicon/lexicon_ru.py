@@ -7,6 +7,7 @@ def account_info(customer: Customer):
     message = (f'<b>Данные Вашего профиля партнёра</b>\n\n'
                f'👤 {customer.name}\n'
                f'🌟 Статус: {customer.status}\n'
+               f'💰 Сумма чистого выкупа: {customer.full_price}\n'
                f'🎁 Бонусы на балансе: {customer.bonuses}\n'
                f'🌆 Город работы: {customer.town}\n'
                f'👥 Ваш менеджер: {customer.manager}\n\n'

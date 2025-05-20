@@ -11,6 +11,7 @@ fields_id = {
     'by_this_period_id_field': 1104934,
     'bonuses_id_field': 971580,
     'town_id_field': 972054,
+    'full_price': 1105022
 }
 
 # Класс с токеном бота телеграмм

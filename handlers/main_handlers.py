@@ -244,3 +244,6 @@ async def command_problem_process(message: Message):
 @main_router.callback_query(F.data == '/problem')  # Хэндлер для обработки inline кнопки "problem"
 async def command_problem_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('problem'), reply_markup=await problem_button())
+
+
+
