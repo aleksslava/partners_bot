@@ -246,4 +246,6 @@ async def command_problem_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('problem'), reply_markup=await problem_button())
 
 
-
+@main_router.message()  # Хэндлер для обработки произвольных сообщений пользователя
+async def answer_message(message: Message):
+    await message.answer(text=Lexicon_RU.get('answer_for_user'))
