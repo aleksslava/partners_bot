@@ -5,7 +5,7 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, CallbackQuery, InlineKeyboardButton, WebAppInfo, InlineKeyboardMarkup
 from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hide_contacts_list, get_start_keyboard,
                                        forum_button, manager_button, support_button, problem_button,
-                                       helpfull_materials_keyboard, back_button)
+                                       helpfull_materials_keyboard, back_button, answer_for_user)
 from config_data.amo_api import AmoCRMWrapper, Contact
 from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu, helpfull_materials_menu
 
@@ -248,4 +248,4 @@ async def command_problem_process_cl(callback: CallbackQuery):
 
 @main_router.message()  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message):
-    await message.answer(text=Lexicon_RU.get('answer_for_user'))
+    await message.answer(text=Lexicon_RU.get('answer_for_user'), reply_markup=await answer_for_user())

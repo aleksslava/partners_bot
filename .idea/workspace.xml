@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Исправлен вывод текстов сообщений">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена обработка произвольного сообщения">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keybooards/main_keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/keybooards/main_keyboards.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexicon/lexicon_ru.py" beforeDir="false" afterPath="$PROJECT_DIR$/lexicon/lexicon_ru.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +61,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/PycharmProjects/partners_bot/config_data&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/Desktop/Новая папка/script.js&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Python&quot;
   }
 }</component>
@@ -161,14 +160,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00001" summary="new comment">
-      <option name="closed" value="true" />
-      <created>1743093714222</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1743093714222</updated>
     </task>
     <task id="LOCAL-00002" summary="new comment">
       <option name="closed" value="true" />
@@ -546,7 +537,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745252382726</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="Добавлен вывод чистого выкупа. &#10;Добавлен статус &quot;Эксклюзив&quot;">
+      <option name="closed" value="true" />
+      <created>1747738949539</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1747738949539</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Добавлена обработка произвольного сообщения">
+      <option name="closed" value="true" />
+      <created>1756654879434</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1756654879434</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -581,104 +588,106 @@
     <MESSAGE value="Изменена функция get_contact. &#10;Теперь даже если есть записанный tg_id, вывод информации будет произведен" />
     <MESSAGE value="Добавлен вывод ошибок пользователю" />
     <MESSAGE value="Исправлен вывод текстов сообщений" />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправлен вывод текстов сообщений" />
+    <MESSAGE value="Добавлен вывод чистого выкупа. &#10;Добавлен статус &quot;Эксклюзив&quot;" />
+    <MESSAGE value="Добавлена обработка произвольного сообщения" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена обработка произвольного сообщения" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>278</line>
+          <line>279</line>
           <option name="timeStamp" value="197" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>279</line>
+          <line>280</line>
           <option name="timeStamp" value="198" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>280</line>
+          <line>281</line>
           <option name="timeStamp" value="199" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>281</line>
+          <line>282</line>
           <option name="timeStamp" value="200" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>282</line>
+          <line>283</line>
           <option name="timeStamp" value="201" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>283</line>
+          <line>284</line>
           <option name="timeStamp" value="202" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>284</line>
+          <line>285</line>
           <option name="timeStamp" value="203" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>287</line>
+          <line>288</line>
           <option name="timeStamp" value="204" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>288</line>
+          <line>289</line>
           <option name="timeStamp" value="205" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>289</line>
+          <line>290</line>
           <option name="timeStamp" value="206" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>291</line>
+          <line>292</line>
           <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>292</line>
+          <line>293</line>
           <option name="timeStamp" value="208" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>293</line>
+          <line>294</line>
           <option name="timeStamp" value="209" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>201</line>
+          <line>202</line>
           <option name="timeStamp" value="213" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>202</line>
+          <line>203</line>
           <option name="timeStamp" value="214" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>203</line>
+          <line>204</line>
           <option name="timeStamp" value="215" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>204</line>
+          <line>205</line>
           <option name="timeStamp" value="216" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>205</line>
+          <line>206</line>
           <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>206</line>
+          <line>207</line>
           <option name="timeStamp" value="218" />
         </line-breakpoint>
       </breakpoints>

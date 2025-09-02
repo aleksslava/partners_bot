@@ -47,7 +47,7 @@ async def get_start_keyboard(commands: dict): # Формирование гла�
 async def forum_button(): # Формирование клавиатуры перехода на форум
     button = InlineKeyboardButton(
         text='Перейти на форум',
-        url='https://t.me/+sk6G14Ywu9AzMTBi'
+        url='https://t.me/+T7LVt_YYHDYwMzQy'
     )
 
     return InlineKeyboardMarkup(inline_keyboard=[[button]])
@@ -94,4 +94,16 @@ async def back_button():
     button = InlineKeyboardButton(text='Назад',
                                   callback_data='back')
     markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
+    return markup
+
+async def answer_for_user():  # Формирование клавиатуры для ответа на произвольное сообщение
+    button_whatsapp_tp = InlineKeyboardButton(
+        text="🟢 WhatsApp тех. поддержки",
+        url='https://wa.me/79251894560'
+    )
+    button_telegram_opt = InlineKeyboardButton(
+        text='🔵 Telegram партнёрский отдел',
+        url='https://t.me/+79251930861'
+    )
+    markup = InlineKeyboardMarkup(inline_keyboard=[[button_whatsapp_tp], [button_telegram_opt]])
     return markup
