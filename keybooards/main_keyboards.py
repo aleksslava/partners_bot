@@ -19,6 +19,7 @@ async def set_main_menu(bot: Bot, commands: dict):  # Главная клави�
     await bot.set_my_commands(main_menu_commands)
 
 
+
 async def get_contacts_list(customer_id): # Формирование кнопки раскрытия списка контактов партнёра
     button = InlineKeyboardButton(text='Список связанных контактов', callback_data=f'contacts_list_{customer_id}')
     markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
@@ -39,6 +40,15 @@ async def get_start_keyboard(commands: dict): # Формирование гла�
     buttons: list = [
         InlineKeyboardButton(text=text,
                              callback_data=data) for data, text in commands.items() if data != '/start'
+    ]
+    kb_bl.row(*buttons, width=2)
+    return kb_bl.as_markup()
+
+async def authorized_client(commands: dict):
+    kb_bl = InlineKeyboardBuilder()
+    buttons: list = [
+        InlineKeyboardButton(text=text,
+                             callback_data=data) for data, text in commands.items() if data in ['/shop', '/info']
     ]
     kb_bl.row(*buttons, width=2)
     return kb_bl.as_markup()

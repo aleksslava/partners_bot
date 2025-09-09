@@ -1,7 +1,7 @@
 import logging
 from typing import Any, Awaitable, Callable, Dict
 
-from aiogram import BaseMiddleware
+from aiogram import BaseMiddleware, Bot
 from aiogram.types import TelegramObject
 from config_data.amo_api import AmoCRMWrapper
 
@@ -12,9 +12,11 @@ class OuterMiddleware(BaseMiddleware):
     def __init__(self,
                  amo_api: AmoCRMWrapper,
                  fields_id: dict,
+                 bot: Bot,
                  ):
         self.amo_api = amo_api
         self.fields_id = fields_id
+        self.bot = bot
 
     async def __call__(
         self,

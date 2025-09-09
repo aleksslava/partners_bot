@@ -11,7 +11,11 @@ fields_id = {
     'by_this_period_id_field': 1104934,
     'bonuses_id_field': 971580,
     'town_id_field': 972054,
-    'full_price': 1105022
+    'full_price': 1105022,
+    'pipeline_id': 1628622,
+    'tag_id': 606054,
+    'status_id': 32809260,
+    'chat_id': -4950490417
 }
 
 # Класс с токеном бота телеграмм

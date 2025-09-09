@@ -47,7 +47,7 @@ async def main():
     dp = Dispatcher()
 
     dp.include_router(main_router)
-    dp.update.middleware(OuterMiddleware(amo_api, fields_id))
+    dp.update.middleware(OuterMiddleware(amo_api, fields_id, bot))
     logger.info("partners_bot started succesful")
 
     await bot.delete_webhook(drop_pending_updates=True)

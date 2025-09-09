@@ -355,6 +355,48 @@ class AmoCRMWrapper:
         logger.info(f'Запись ID_telegram: {tg_id} в карту партнёра: {id_customer}\n'
                     f'Статус операции: {response.status_code}')
 
+
+    def send_lead_to_amo(self, pipeline_id: int, status_id: int, tag_id: int, contact_id: int,
+                         price: int):
+        url = f'/api/v4/leads'
+        data = [{
+            'name': 'Заказ с чат_бота',
+            'pipeline_id': pipeline_id,
+            'created_by': 0,
+            'status_id': status_id,
+            'price': price,
+            'responsible_user_id': 453498,
+            '_embedded': {
+                'tags': [
+                    {
+                        'id': tag_id
+                    }
+                ],
+                'contacts': [
+                    {
+                        'id': contact_id
+                    }
+                ]
+            }
+
+        },]
+        response = self._base_request(type='post', endpoint=url, data=data)
+        return response.json()
+
+    def add_new_note_to_lead(self, lead_id, text):
+        url = f'/api/v4/leads/{lead_id}/notes'
+        data = [
+            {
+                'note_type': 'common',
+                'params': {
+                    'text': text
+                }
+            }
+        ]
+        response = self._base_request(type='post', endpoint=url, data=data)
+        return response.json()
+
+
     def get_contact_by_id(self, contact_id) -> dict:
         url = f'/api/v4/contacts/{contact_id}'
         response = self._base_request(type='get', endpoint=url)
