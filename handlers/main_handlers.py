@@ -153,7 +153,7 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
-                                      url=f'https://aleksslava.github.io/testwebapp.github.io/?bonus={bonus}&'
+                                      url=f'https://aleksslava.github.io/website.github.io/?bonus={bonus}&'
                                           f'id={customer_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
@@ -188,7 +188,7 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
-                                      url=f'https://aleksslava.github.io/testwebapp.github.io/?bonus={bonus}&'
+                                      url=f'https://aleksslava.github.io/website.github.io/?bonus={bonus}&'
                                           f'id={customer_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
