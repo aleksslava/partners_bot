@@ -359,5 +359,5 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         await message.answer(text='Произошла ошибка при отправке заказа, обратитесь к менеджеру.',
                              reply_markup=ReplyKeyboardRemove())
 
-        # await bot.send_message(chat_id=fields_id.get('chat_id'),
-        #                        text=f'Произошла ошибка при оформлении заказа.\n\n{error}')
+        await bot.send_message(chat_id=fields_id.get('chat_id'),
+                               text=f'Произошла ошибка при оформлении заказа.\n\n{error}')
