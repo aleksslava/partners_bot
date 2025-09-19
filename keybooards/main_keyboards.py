@@ -53,6 +53,12 @@ async def authorized_client(commands: dict):
     kb_bl.row(*buttons, width=2)
     return kb_bl.as_markup()
 
+async def link_to_opt_button(lead_id):
+    button = InlineKeyboardButton(
+        text='Сообщить о заказе менеджеру',
+        url=f'https://t.me/+79251930861?text=Здравствуйте! Я оформил заказ №{lead_id} через Кабинет партнера в ТГ. Вы видите заказ?'
+    )
+    return InlineKeyboardMarkup(inline_keyboard=[[button]])
 
 async def forum_button(): # Формирование клавиатуры перехода на форум
     button = InlineKeyboardButton(

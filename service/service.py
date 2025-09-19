@@ -5,25 +5,27 @@ discount_types = {
 }
 
 # функция парсит данные заказа с webapp и преобразует в сообщение для примечания
-def order_note(raw_json: dict) -> str:
+def order_note(raw_json: dict, lead_id: int, service=True) -> str:
 
     item_text = ''
     items = raw_json.get('items')
     for item in items:
         name = item.get('name')
-        modify = item.get('modificationName') if item.get('modificationName') is not None else ''
+        modify = item.get('modificationName')
+        modify = modify if modify != name else ''
+
         quantity = item.get('quantity')
         total = item.get('total')
         price = item.get('price')
-        item_text += f'{name} ({modify}), {price} руб. x {str(quantity)} шт. = {str(total)} руб.\n'
+        item_text += f'{name} {modify}, {price} руб. x {str(quantity)} шт. = {str(total)} руб.\n'
 
     item_text += f'Сумма: {raw_json.get("total")} руб.\n\n'
 
     if raw_json.get('type') == 'commercial_offer':
-        text = ('Запрос КП\n\n'
+        text = (f'Вы запросили КП #{lead_id}\n\n'
                 'Состав заказа:\n') + item_text
     else:
-        text = ('Запрос счета\n\n'
+        text = (f'Вы оформили заказ #{lead_id}\n\n'
                 'Позиции в заказе:\n') + item_text
         phone = raw_json.get('phone')
         delivery_method = raw_json.get('deliveryMethod')
@@ -45,6 +47,9 @@ def order_note(raw_json: dict) -> str:
             text += text_of_payment
     discount_type = raw_json.get('discountType')
     discount = discount_types[discount_type]
-    text += f'\nЧто делать с бонусами: {discount}'
+    text += f'\nЧто делать с бонусами: {discount}\n\n'
+    if not service:
+        text += ('Менеджер партнерского отдела примет заказ в работу и свяжется с вами в рабочее время'
+                 ' для уточнения деталей (Пн-Пт, с 09 до 18 по мск).')
     return text
 

@@ -1,6 +1,6 @@
-import asyncio
 import logging
 import json
+from pprint import pprint
 
 from service.service import order_note
 
@@ -11,7 +11,9 @@ from aiogram.types import Message, CallbackQuery, WebAppInfo, \
 
 from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hide_contacts_list, get_start_keyboard,
                                        forum_button, manager_button, support_button, problem_button,
-                                       helpfull_materials_keyboard, back_button, answer_for_user, authorized_client)
+                                       helpfull_materials_keyboard, back_button, answer_for_user, authorized_client,
+                                       link_to_opt_button,
+                                       )
 from config_data.amo_api import AmoCRMWrapper, Contact
 from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu, helpfull_materials_menu
 
@@ -89,14 +91,14 @@ async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict)
         customer_params = amo_api.get_customer_params(customer[1], fields_id=fields_id)
         amo_api.put_tg_id_to_customer(customer_params.id, message.from_user.id)
 
-
         await message.answer(text=f'Вы успешно авторизовались в чат боте HiTE PRO!\n\n'
                                   f'Можете посмотреть информацию из Вашего профиля и воспользоваться '
                                   f'магазином HiTE PRO👇', reply_markup=await authorized_client(start_menu))
     else:
         await message.answer(text=f'{customer[1]}\n\n'
                                   f'Воспользоваться чат-ботом могут только авторизованные партнёры.\n'
-                                  f'👇 Если вы действующий партнёр компании HiTE PRO, сообщите об этой ошибке в онлайн-форме.',
+                                  f'👇 Если вы действующий партнёр компании HiTE PRO, '
+                                  f'сообщите об этой ошибке в онлайн-форме.',
                              reply_markup=await problem_button())
 
 
@@ -118,7 +120,7 @@ async def open_contacts_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
 
 # Хэндлер для обработки инлайн кнопки "Скрыть контакты"
 @main_router.callback_query(F.data.startswith('hide_contacts_list'))
-async def hide_contact_list(callback: CallbackQuery, amo_api: AmoCRMWrapper):
+async def hide_contact_list(callback: CallbackQuery):
     customer_id = callback.data.split('_')[3]
     last_text = callback.message.text
     hide_index = last_text.find('Привязанные')
@@ -138,7 +140,6 @@ async def command_contacts_process_cl(callback: CallbackQuery):
 
 @main_router.message(Command(commands='shop'))  # Хэндлер для обработки команды /shop
 async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict):
-
     tg_id = message.from_user.id
     customer = amo_api.get_customer_by_tg_id(tg_id)
     if customer.get('status_code'):  # Проверка корректности ответа от амо
@@ -148,11 +149,12 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
             customer_id = customer_params.id
             bonus = str(customer_params.bonuses).replace(' ', '')
+            discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
-                                      url=f'https://aleksslava.github.io/website.github.io/?bonus={bonus}&'
-                                          f'id={customer_id}'))
+                                      url=f'https://aleksslava.github.io/testwebapp.github.io/?bonus={bonus}&'
+                                          f'id={customer_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
             await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
@@ -169,9 +171,9 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
                                   f'👇 Сообщите об этой ошибке в онлайн-форме.',
                              reply_markup=await problem_button())
 
+
 @main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"
 async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict):
-
     tg_id = callback.from_user.id
 
     customer = amo_api.get_customer_by_tg_id(tg_id)
@@ -182,26 +184,27 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
             customer_id = customer_params.id
             bonus = str(customer_params.bonuses).replace(' ', '')
+            discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
-                                      url=f'https://aleksslava.github.io/website.github.io/?bonus={bonus}&'
-                                          f'id={customer_id}'))
+                                      url=f'https://aleksslava.github.io/testwebapp.github.io/?bonus={bonus}&'
+                                          f'id={customer_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
             await callback.message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
-                                 reply_markup=webapp_keyboard_1)
+                                          reply_markup=webapp_keyboard_1)
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.from_user.first_name
             await callback.message.answer(text=f'{name}, здравствуйте.\n'
-                                      f'Поделитесь своим номером телефона для использования бота.',
-                                 reply_markup=await reply_phone_number())
+                                               f'Поделитесь своим номером телефона для использования бота.',
+                                          reply_markup=await reply_phone_number())
     else:
         response = customer.get('response')
         await callback.message.answer(text=f'{response}\n\n'
-                                  f'👇 Сообщите об этой ошибке в онлайн-форме.',
-                             reply_markup=await problem_button())
+                                           f'👇 Сообщите об этой ошибке в онлайн-форме.',
+                                      reply_markup=await problem_button())
 
     await callback.answer()
 
@@ -297,7 +300,6 @@ async def command_problem_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('problem'), reply_markup=await problem_button())
 
 
-
 @main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message):
     await message.answer(text=Lexicon_RU.get('answer_for_user'), reply_markup=await answer_for_user())
@@ -308,8 +310,9 @@ async def answer_message(message: Message):
 async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     raw_json = message.web_app_data.data
     raw_json = json.loads(raw_json)
-    text_note = order_note(raw_json)
     full_price = raw_json.get('total')
+
+
     try:
         customer_id = raw_json.get('userId')
         if customer_id is None:
@@ -318,6 +321,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         contacts_list_id = [contact.get('id') for contact in customer[1]['_embedded']['contacts']]
         contact_id = contacts_list_id[0]
 
+        # Создание новой сделки в АМО
         response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
                                             status_id=fields_id.get('status_id'),
                                             tag_id=fields_id.get('tag_id'),
@@ -325,30 +329,35 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                             price=int(full_price))
 
         lead_id = response.get('_embedded').get('leads')[0].get('id')
-        response_add_note = amo_api.add_new_note_to_lead(lead_id=lead_id, text=str(text_note))
 
-        await message.answer(text='Ваш заказ успешно передан на оформление', reply_markup=ReplyKeyboardRemove())
+        # Добавление примечания в сделку
+        response_add_note = amo_api.add_new_note_to_lead(lead_id=lead_id, text=order_note(raw_json, lead_id=lead_id))
+
+        items = raw_json.get('items')
+
+        # Добавление товаров в сделку
+        response = amo_api.add_catalog_elements_to_lead(lead_id=lead_id,
+                                                        catalog_id=fields_id.get('catalog_id'),
+                                                        elements=items)
+
+        await message.answer(text=order_note(raw_json, lead_id=lead_id, service=False),
+                             reply_markup=ReplyKeyboardRemove())
+
+        link_to_opt = ('👉 Если хотите общаться с сотрудниками HiTE PRO в Телеграм — '
+                       'нажмите на кнопку ниже и напишите любое сообщение.')
+
+        await message.answer(text=link_to_opt, reply_markup=await link_to_opt_button(lead_id=lead_id))
 
         await bot.send_message(chat_id=fields_id.get('chat_id'),
-                               text=f'Оформлен заказ:\n\n{text_note}\n'
+                               text=f'Оформлен заказ:\n\n{order_note(raw_json, lead_id=lead_id)}\n'
                                     f'Создана сделка:\n'
                                     f'<a href="https://hite.amocrm.ru/leads/detail/{lead_id}">{lead_id}</a>')
 
     except BaseException as error:
+        logger.error(error)
+
         await message.answer(text='Произошла ошибка при отправке заказа, обратитесь к менеджеру.',
                              reply_markup=ReplyKeyboardRemove())
 
-        await bot.send_message(chat_id=fields_id.get('chat_id'),
-                               text=f'Произошла ошибка при оформлении заказа.\n\n{error}')
-
-
-
-
-
-
-
-
-
-
-
-
+        # await bot.send_message(chat_id=fields_id.get('chat_id'),
+        #                        text=f'Произошла ошибка при оформлении заказа.\n\n{error}')
