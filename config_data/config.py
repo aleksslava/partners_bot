@@ -16,7 +16,8 @@ fields_id = {
     'tag_id': 606054,
     'status_id': 32809260,
     'chat_id': -4950490417,
-    'catalog_id': 1682
+    'catalog_id': 1682,
+    'web_app_url': 'https://aleksslava.github.io/website.github.io/'
 }
 
 # Класс с токеном бота телеграмм

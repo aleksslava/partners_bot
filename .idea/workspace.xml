@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена обработка произвольного сообщения">
-      <change afterPath="$PROJECT_DIR$/service/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/service/service.py" afterDir="false" />
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Изменен web app и соответсвующие с ним обработки.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config_data/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keybooards/main_keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/keybooards/main_keyboards.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outer_middleware/outer_middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/outer_middleware/outer_middleware.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,38 +160,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00003" summary="new comment">
-      <option name="closed" value="true" />
-      <created>1743364910042</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1743364910042</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Добавлена middleware для проброса amo_api в хэндлеры">
-      <option name="closed" value="true" />
-      <created>1743617525705</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1743617525705</updated>
-    </task>
-    <task id="LOCAL-00005" summary="add class Customer">
-      <option name="closed" value="true" />
-      <created>1743710579544</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1743710579544</updated>
-    </task>
-    <task id="LOCAL-00006" summary="add handler get_contact">
-      <option name="closed" value="true" />
-      <created>1743789391629</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1743789391629</updated>
     </task>
     <task id="LOCAL-00007" summary="add handler &quot;in dev&quot;">
       <option name="closed" value="true" />
@@ -558,7 +521,39 @@
       <option name="project" value="LOCAL" />
       <updated>1756817767963</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="Добавлен web app и соответсвующие с ним обработки.">
+      <option name="closed" value="true" />
+      <created>1757409312560</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1757409312560</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Изменен web app и соответсвующие с ним обработки.">
+      <option name="closed" value="true" />
+      <created>1758278685436</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1758278685436</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Изменен web app и соответсвующие с ним обработки.">
+      <option name="closed" value="true" />
+      <created>1758278770384</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1758278770384</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Изменен web app и соответсвующие с ним обработки.">
+      <option name="closed" value="true" />
+      <created>1758280399231</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1758280399231</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -595,7 +590,9 @@
     <MESSAGE value="Исправлен вывод текстов сообщений" />
     <MESSAGE value="Добавлен вывод чистого выкупа. &#10;Добавлен статус &quot;Эксклюзив&quot;" />
     <MESSAGE value="Добавлена обработка произвольного сообщения" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлена обработка произвольного сообщения" />
+    <MESSAGE value="Добавлен web app и соответсвующие с ним обработки." />
+    <MESSAGE value="Изменен web app и соответсвующие с ним обработки." />
+    <option name="LAST_COMMIT_MESSAGE" value="Изменен web app и соответсвующие с ним обработки." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -56,7 +56,7 @@ async def authorized_client(commands: dict):
 async def link_to_opt_button(lead_id):
     button = InlineKeyboardButton(
         text='Сообщить о заказе менеджеру',
-        url=f'https://t.me/+79251930861?text=Здравствуйте! Я оформил заказ №{lead_id} через Кабинет партнера в ТГ. Вы видите заказ?'
+        url=f'https://t.me/+79251930861?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%AF%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D0%BB%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%20%E2%84%96%7B{lead_id}%7D%20%D1%87%D0%B5%D1%80%D0%B5%D0%B7%20%D0%9A%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82%20%D0%BF%D0%B0%D1%80%D1%82%D0%BD%D0%B5%D1%80%D0%B0%20%D0%B2%20%D0%A2%D0%93.%20%D0%92%D1%8B%20%D0%B2%D0%B8%D0%B4%D0%B8%D1%82%D0%B5%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7?'
     )
     return InlineKeyboardMarkup(inline_keyboard=[[button]])
 

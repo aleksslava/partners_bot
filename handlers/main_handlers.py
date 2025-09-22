@@ -150,10 +150,11 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
             customer_id = customer_params.id
             bonus = str(customer_params.bonuses).replace(' ', '')
             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
+            web_app_url = fields_id.get('web_app_url')
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
-                                      url=f'https://aleksslava.github.io/website.github.io/?bonus={bonus}&'
+                                      url=f'{web_app_url}?bonus={bonus}&'
                                           f'id={customer_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
@@ -185,10 +186,11 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
             customer_id = customer_params.id
             bonus = str(customer_params.bonuses).replace(' ', '')
             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
+            web_app_url = fields_id.get('web_app_url')
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
-                                      url=f'https://aleksslava.github.io/website.github.io/?bonus={bonus}&'
+                                      url=f'{web_app_url}?bonus={bonus}&'
                                           f'id={customer_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
