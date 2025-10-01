@@ -221,6 +221,16 @@ async def command_forum_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('forum_message'), reply_markup=await forum_button())
 
 
+@main_router.message(Command(commands='partners'))  # Хэндлер для обработки команды /partners
+async def command_partners_process(message: Message):
+    await message.answer(text=Lexicon_RU.get('partner_kanal'))
+
+
+@main_router.callback_query(F.data == '/partners')  # Хэндлер для обработки inline кнопки "partners"
+async def command_forum_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text=Lexicon_RU.get('partner_kanal'))
+
+
 @main_router.message(Command(commands='materials'))  # Хэндлер для обработки команды /materials
 async def command_materials_process(message: Message):
     await message.answer(text='<b>Полезные материалы HiTE PRO.</b>\n\n'
@@ -345,8 +355,8 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         await message.answer(text=order_note(raw_json, lead_id=lead_id, service=False),
                              reply_markup=ReplyKeyboardRemove())
 
-        link_to_opt = ('👉 Если хотите общаться с сотрудниками HiTE PRO в Телеграм — '
-                       'нажмите на кнопку ниже и напишите любое сообщение.')
+        link_to_opt = ('⚠️ ВАЖНО ⚠️\nНажмите на кнопку "Сообщить о заказе менеджеру" и отправьте сообщение,'
+                       ' чтобы сотрудники HiTE PRO могли написать вам в Телеграм.')
 
         await message.answer(text=link_to_opt, reply_markup=await link_to_opt_button(lead_id=lead_id))
 
