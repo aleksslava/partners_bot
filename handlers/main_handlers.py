@@ -221,16 +221,6 @@ async def command_forum_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('forum_message'), reply_markup=await forum_button())
 
 
-@main_router.message(Command(commands='partners'))  # Хэндлер для обработки команды /partners
-async def command_partners_process(message: Message):
-    await message.answer(text=Lexicon_RU.get('partner_kanal'))
-
-
-@main_router.callback_query(F.data == '/partners')  # Хэндлер для обработки inline кнопки "partners"
-async def command_forum_process_cl(callback: CallbackQuery):
-    await callback.message.edit_text(text=Lexicon_RU.get('partner_kanal'))
-
-
 @main_router.message(Command(commands='materials'))  # Хэндлер для обработки команды /materials
 async def command_materials_process(message: Message):
     await message.answer(text='<b>Полезные материалы HiTE PRO.</b>\n\n'
@@ -280,6 +270,15 @@ async def command_materials_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text='<b>Полезные материалы HiTE PRO.</b>\n\n'
                                           '👇 Используйте кнопки ниже, чтобы выбрать раздел.',
                                      reply_markup=await helpfull_materials_keyboard(helpfull_materials_menu))
+
+@main_router.message(Command(commands='partners'))  # Хэндлер для обработки команды /partners
+async def command_partners_process(message: Message):
+    await message.answer(text=Lexicon_RU.get('partner_kanal'))
+
+
+@main_router.callback_query(F.data == '/partners')  # Хэндлер для обработки inline кнопки "partners"
+async def command_forum_process_cl(callback: CallbackQuery):
+    await callback.message.edit_text(text=Lexicon_RU.get('partner_kanal'))
 
 
 @main_router.message(Command(commands='manager'))  # Хэндлер для обработки команды /manager
