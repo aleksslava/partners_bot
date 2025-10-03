@@ -151,13 +151,11 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
     customer = amo_api.get_customer_by_tg_id(tg_id)
     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
 
-
     if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
         if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
             customer = customer.get('response')
             customer['manager'] = {'name': None}
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
-            customer_id = customer_params.id
             bonus = str(customer_params.bonuses).replace(' ', '')
             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
             web_app_url = fields_id.get('web_app_url')
@@ -179,7 +177,10 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
                                       f'Поделитесь своим номером телефона для использования бота.',
                                  reply_markup=await reply_phone_number())
     else:
-        response = customer.get('response')
+        if customer.get('status_code'):
+            response = contact.get('response')
+        else:
+            response = customer.get('response')
         await message.answer(text=f'{response}\n\n'
                                   f'👇 Сообщите об этой ошибке в онлайн-форме.',
                              reply_markup=await problem_button())
@@ -192,13 +193,12 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
     customer = amo_api.get_customer_by_tg_id(tg_id)
     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
 
-
     if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
         if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
             customer = customer.get('response')
             customer['manager'] = {'name': None}
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
-            customer_id = customer_params.id
+
             bonus = str(customer_params.bonuses).replace(' ', '')
             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
             web_app_url = fields_id.get('web_app_url')
@@ -220,7 +220,7 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
                                                f'Поделитесь своим номером телефона для использования бота.',
                                           reply_markup=await reply_phone_number())
     else:
-        if customer.get('response'):
+        if customer.get('status_code'):
             response = contact.get('response')
         else:
             response = customer.get('response')
@@ -291,6 +291,7 @@ async def command_materials_process_cl(callback: CallbackQuery):
                                           '👇 Используйте кнопки ниже, чтобы выбрать раздел.',
                                      reply_markup=await helpfull_materials_keyboard(helpfull_materials_menu))
 
+
 @main_router.message(Command(commands='partners'))  # Хэндлер для обработки команды /partners
 async def command_partners_process(message: Message):
     await message.answer(text=Lexicon_RU.get('partner_kanal'))
@@ -331,18 +332,17 @@ async def command_problem_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('problem'), reply_markup=await problem_button())
 
 
-@main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
+@main_router.message(F.text is not None)  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message):
     await message.answer(text=Lexicon_RU.get('answer_for_user'), reply_markup=await answer_for_user())
     print(message.chat.id)
 
 
-@main_router.message(F.web_app_data.data != None)  # Хэндлер для обработки заказа из webapp
+@main_router.message(F.web_app_data.data is not None)  # Хэндлер для обработки заказа из webapp
 async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     raw_json = message.web_app_data.data
     raw_json = json.loads(raw_json)
     full_price = raw_json.get('total')
-
 
     try:
         contact_id = raw_json.get('userId')
@@ -359,23 +359,23 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         lead_id = response.get('_embedded').get('leads')[0].get('id')
 
         # Добавление примечания в сделку
-        response_add_note = amo_api.add_new_note_to_lead(lead_id=lead_id, text=order_note(raw_json, lead_id=lead_id))
-
-        items = raw_json.get('items')
+        amo_api.add_new_note_to_lead(lead_id=lead_id, text=order_note(raw_json, lead_id=lead_id))
 
         # Добавление товаров в сделку
-        response = amo_api.add_catalog_elements_to_lead(lead_id=lead_id,
-                                                        catalog_id=fields_id.get('catalog_id'),
-                                                        elements=items)
+        items = raw_json.get('items')
+        amo_api.add_catalog_elements_to_lead(lead_id=lead_id,
+                                             catalog_id=fields_id.get('catalog_id'),
+                                             elements=items)
 
+        # Первое сообщение клиенту о создании заказа
         await message.answer(text=order_note(raw_json, lead_id=lead_id, service=False),
                              reply_markup=ReplyKeyboardRemove())
 
-        link_to_opt = ('⚠️ ВАЖНО ⚠️\nНажмите на кнопку "Сообщить о заказе менеджеру" и отправьте сообщение,'
-                       ' чтобы сотрудники HiTE PRO могли написать вам в Телеграм.')
+        # Второе сообщение клиенту, приглашение в чат с партнёрами
+        await message.answer(text=Lexicon_RU.get('message_link_partners'),
+                             reply_markup=await link_to_opt_button(lead_id=lead_id))
 
-        await message.answer(text=link_to_opt, reply_markup=await link_to_opt_button(lead_id=lead_id))
-
+        # Отправка сообщения в чат проверки
         await bot.send_message(chat_id=fields_id.get('chat_id'),
                                text=f'Оформлен заказ:\n\n{order_note(raw_json, lead_id=lead_id)}\n'
                                     f'Создана сделка:\n'

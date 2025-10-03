@@ -6,9 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Изменёно главное меню бота. канал партнёров выведен в главное меню.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexicon/lexicon_ru.py" beforeDir="false" afterPath="$PROJECT_DIR$/lexicon/lexicon_ru.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,19 +57,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.amo_api.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Run",
-    "Python.test_amo.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "test__branch",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/solom/Desktop/Новая папка/script.js",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Python"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.amo_api.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_amo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;test__branch&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/Desktop/Новая папка/script.js&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Python&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\solom\PycharmProjects\partners_bot\config_data" />
@@ -189,14 +188,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00010" summary="add changes to start_handler">
-      <option name="closed" value="true" />
-      <created>1743965189211</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1743965189211</updated>
     </task>
     <task id="LOCAL-00011" summary="add changes to amo_api.py -&gt; def _save_tokens">
       <option name="closed" value="true" />
@@ -582,7 +573,15 @@
       <option name="project" value="LOCAL" />
       <updated>1759388102801</updated>
     </task>
-    <option name="localTasksCounter" value="59" />
+    <task id="LOCAL-00059" summary="Изменёно главное меню бота. канал партнёров выведен в главное меню.">
+      <option name="closed" value="true" />
+      <created>1759481370874</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1759481370874</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
