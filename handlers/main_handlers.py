@@ -83,13 +83,20 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
 
 @main_router.message(F.contact)  # Хэндлер для обработки отправленного пользователем контакта
 async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict):
-    contact = message.contact
-    customer = amo_api.get_customer_by_phone(contact.phone_number)
+    contact_phone = message.contact.phone_number
+    contact_username = message.from_user.username
+
+    customer = amo_api.get_customer_by_phone(contact_phone)
     if customer[0]:
+        contact_id = customer[2].get('id')
         responsible_manager = amo_api.get_responsible_user_by_id(int(customer[1].get('responsible_user_id')))
         customer[1]['manager'] = responsible_manager
         customer_params = amo_api.get_customer_params(customer[1], fields_id=fields_id)
         amo_api.put_tg_id_to_customer(customer_params.id, message.from_user.id)
+        amo_api.put_tgid_username_to_contact(id_contact=contact_id,
+                                             username=contact_username,
+                                             tg_id=message.from_user.id,
+                                             fields_id=fields_id.get('contacts_fields_id'))
 
         await message.answer(text=f'Вы успешно авторизовались в чат боте HiTE PRO!\n\n'
                                   f'Можете посмотреть информацию из Вашего профиля и воспользоваться '
@@ -142,8 +149,11 @@ async def command_contacts_process_cl(callback: CallbackQuery):
 async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict):
     tg_id = message.from_user.id
     customer = amo_api.get_customer_by_tg_id(tg_id)
-    if customer.get('status_code'):  # Проверка корректности ответа от амо
-        if customer.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
+    contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
+
+
+    if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
+        if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
             customer = customer.get('response')
             customer['manager'] = {'name': None}
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
@@ -151,11 +161,13 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
             bonus = str(customer_params.bonuses).replace(' ', '')
             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
             web_app_url = fields_id.get('web_app_url')
+            contact = contact.get('response')
+            contact_id = contact.get('id')
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
                                       url=f'{web_app_url}?bonus={bonus}&'
-                                          f'id={customer_id}&discont={discont}'))
+                                          f'id={contact_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
             await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
@@ -178,8 +190,11 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
     tg_id = callback.from_user.id
 
     customer = amo_api.get_customer_by_tg_id(tg_id)
-    if customer.get('status_code'):  # Проверка корректности ответа от амо
-        if customer.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
+    contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
+
+
+    if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
+        if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
             customer = customer.get('response')
             customer['manager'] = {'name': None}
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
@@ -187,11 +202,13 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
             bonus = str(customer_params.bonuses).replace(' ', '')
             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
             web_app_url = fields_id.get('web_app_url')
+            contact = contact.get('response')
+            contact_id = contact.get('id')
 
             kb_1 = KeyboardButton(text='Открыть магазин',
                                   web_app=WebAppInfo(
                                       url=f'{web_app_url}?bonus={bonus}&'
-                                          f'id={customer_id}&discont={discont}'))
+                                          f'id={contact_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
 
             await callback.message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
@@ -203,7 +220,10 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
                                                f'Поделитесь своим номером телефона для использования бота.',
                                           reply_markup=await reply_phone_number())
     else:
-        response = customer.get('response')
+        if customer.get('response'):
+            response = contact.get('response')
+        else:
+            response = customer.get('response')
         await callback.message.answer(text=f'{response}\n\n'
                                            f'👇 Сообщите об этой ошибке в онлайн-форме.',
                                       reply_markup=await problem_button())
@@ -325,12 +345,9 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
 
 
     try:
-        customer_id = raw_json.get('userId')
-        if customer_id is None:
-            raise ValueError('Нет id покупателя к которому привязать заказ')
-        customer = amo_api.get_customer_by_id(customer_id, with_contacts=True)
-        contacts_list_id = [contact.get('id') for contact in customer[1]['_embedded']['contacts']]
-        contact_id = contacts_list_id[0]
+        contact_id = raw_json.get('userId')
+        if contact_id is None:
+            raise ValueError('Нет id контакта к которому привязать заказ')
 
         # Создание новой сделки в АМО
         response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),

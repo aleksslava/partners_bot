@@ -277,6 +277,8 @@ class AmoCRMWrapper:
             logger.error('Нет авторизации в AMO_API')
             return False, 'Произошла ошибка на сервере!'
 
+
+
     def get_customer_by_phone(self, phone_number) -> tuple:
         contact = self.get_contact_by_phone(phone_number, with_customer=True)
         if contact[0]:  # Проверка, что ответ от сервера получен
@@ -290,9 +292,11 @@ class AmoCRMWrapper:
             url = f'/api/v4/customers/{customer_id}'
             customer = self._base_request(endpoint=url, type='get').json()
 
-            return True, customer
+            return True, customer, contact
         else:
             return contact
+
+
 
     def get_customer_by_id(self, customer_id, with_contacts=False) -> tuple:
         url = f'/api/v4/customers/{customer_id}'
@@ -320,6 +324,7 @@ class AmoCRMWrapper:
 
         if response.status_code == 200:
             customer_list = response.json()['_embedded']['customers']
+
             if len(customer_list) > 1:
                 return {'status_code': False,
                         'tg_id_in_db': False,
@@ -329,6 +334,37 @@ class AmoCRMWrapper:
             return {'status_code': True,
                     'tg_id_in_db': True,
                     'response': customer_list[0]
+                    }
+
+        elif response.status_code == 204:
+            return {'status_code': True,
+                    'tg_id_in_db': False,
+                    'response': 'Телеграмм id не найден в базе данных'
+                    }
+
+        else:
+            return {'status_code': False,
+                    'tg_id_in_db': False,
+                    'response': 'Произошла ошибка на сервере'
+                    }
+
+    def get_contact_by_tg_id(self, tg_id: int, fields_id: dict) -> dict:  # Нужно убрать все id полей амо в конфиг
+        url = '/api/v4/contacts'
+        field_id = fields_id.get('tg_id_field')
+        query = str(f'filter[custom_fields_values][{field_id}][]={tg_id}')
+        response = self._base_request(endpoint=url, type='get_param', parameters=query)
+        if response.status_code == 200:
+            contacts_list = response.json()['_embedded']['contacts']
+
+            if len(contacts_list) > 1:
+                return {'status_code': False,
+                        'tg_id_in_db': False,
+                        'response': 'Найдено более одного номера tg_id в базе данных\n'
+                                    'Обратитесь к Вашему менеджеру'
+                        }
+            return {'status_code': True,
+                    'tg_id_in_db': True,
+                    'response': contacts_list[0]
                     }
 
         elif response.status_code == 204:
@@ -355,6 +391,25 @@ class AmoCRMWrapper:
         logger.info(f'Запись ID_telegram: {tg_id} в карту партнёра: {id_customer}\n'
                     f'Статус операции: {response.status_code}')
 
+    def put_tgid_username_to_contact(self, id_contact, tg_id, username, fields_id: dict):
+        url = f'/api/v4/contacts/{id_contact}'
+        username = '@' + username
+        tg_id_field = fields_id.get('tg_id_field')
+        tg_username_field = fields_id.get('tg_username_field')
+        data = {"custom_fields_values": [
+            {"field_id": tg_id_field,
+             "values": [
+                 {"value": f"{tg_id}"},
+             ]
+             },
+            {"field_id": tg_username_field,
+             "values": [
+                 {"value": f"{username}"},
+             ]
+             }]}
+        response = self._base_request(type='patch', endpoint=url, data=data)
+        logger.info(f'Запись ID_telegram: {tg_id} и username: {username} в контакт покупателя: {id_contact}\n'
+                    f'Статус операции: {response.status_code}')
 
     def send_lead_to_amo(self, pipeline_id: int, status_id: int, tag_id: int, contact_id: int,
                          price: int, pay_for_cart=False, sklad=1):
