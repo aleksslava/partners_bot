@@ -1,6 +1,5 @@
 import logging
 import json
-from pprint import pprint
 
 from service.service import order_note
 
@@ -332,13 +331,13 @@ async def command_problem_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('problem'), reply_markup=await problem_button())
 
 
-@main_router.message(F.text is not None)  # Хэндлер для обработки произвольных сообщений пользователя
+@main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message):
     await message.answer(text=Lexicon_RU.get('answer_for_user'), reply_markup=await answer_for_user())
     print(message.chat.id)
 
 
-@main_router.message(F.web_app_data.data is not None)  # Хэндлер для обработки заказа из webapp
+@main_router.message(F.web_app_data.data != None)  # Хэндлер для обработки заказа из webapp
 async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     raw_json = message.web_app_data.data
     raw_json = json.loads(raw_json)
