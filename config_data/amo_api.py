@@ -266,11 +266,8 @@ class AmoCRMWrapper:
         contact = self._base_request(endpoint=url, type="get_param", parameters=query)
         if contact.status_code == 200:
             contacts_list = contact.json()['_embedded']['contacts']
-            if len(contacts_list) > 1:  # Проверка на дубли номера телефона в контактах
-                return False, ('Найдено более одного контакта с номером телефона\n'
-                               'Обратитесь к менеджеру отдела продаж!')
-            else:
-                return True, contacts_list[0]
+
+            return True, contacts_list[0]
         elif contact.status_code == 204:
             return False, 'Контакт не найден'
         else:
@@ -281,9 +278,11 @@ class AmoCRMWrapper:
 
     def get_customer_by_phone(self, phone_number) -> tuple:
         contact = self.get_contact_by_phone(phone_number, with_customer=True)
+
         if contact[0]:  # Проверка, что ответ от сервера получен
             contact = contact[1]
             customer_list = contact['_embedded']['customers']
+
             if len(customer_list) > 1:
                 return False, 'К номеру телефона привязано более одного партнёра'
             elif not customer_list:
@@ -379,6 +378,47 @@ class AmoCRMWrapper:
                     'response': 'Произошла ошибка на сервере'
                     }
 
+    def put_data_in_lead(self):
+        url = f'/api/v4/leads/32049218'
+        data = {"custom_fields_values": [
+            {"field_id": 1105338, # Поле оплаты картой
+             "values": [
+                 {"value": True},
+                 ]
+             },
+            {"field_id": 971974, # Поле склад
+             "values": [
+                 {"value": 'Офис'},
+             ]
+             },
+            # {"field_id": 958756,  # Поле адрес доставки
+            #  "values": [
+            #      {"value": 'Берзарина 36, стр.10'},
+            #  ]
+            #  },
+            {"field_id": 972566,  # Поле ИНН
+             "values": [
+                 {"value": '92139123'},
+             ]
+             },
+            {"field_id": 1095240,  # Поле Юр. адрес
+             "values": [
+                 {"value": 'г. Саратов'},
+             ]
+             },
+            {"field_id": 972568,  # Поле Бик
+             "values": [
+                 {"value": '777777777'},
+             ]
+             },
+            {"field_id": 972570,  # Поле Расчетный счет
+             "values": [
+                 {"value": '5555555555'},
+             ]
+             }
+        ]}
+        response = self._base_request(type='patch', endpoint=url, data=data)
+        return response
     def put_tg_id_to_customer(self, id_customer, tg_id):
         url = f'/api/v4/customers/{id_customer}'
         data = {"custom_fields_values": [
@@ -504,8 +544,10 @@ class AmoCRMWrapper:
         else:
             raise JSONDecodeError
 
-
-
+    def get_lead_by_id(self, lead_id):
+        url = f'/api/v4/leads/{lead_id}'
+        response = self._base_request(type='get', endpoint=url)
+        return response.json()
 
     @staticmethod
     def get_customer_params(customer_dct: dict[str, str], fields_id: dict) -> Customer:

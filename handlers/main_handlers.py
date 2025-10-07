@@ -342,9 +342,9 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
     raw_json = message.web_app_data.data
     raw_json = json.loads(raw_json)
     full_price = raw_json.get('total')
-
+    contact_id = raw_json.get('userId')
     try:
-        contact_id = raw_json.get('userId')
+
         if contact_id is None:
             raise ValueError('Нет id контакта к которому привязать заказ')
 
@@ -377,8 +377,10 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         # Отправка сообщения в чат проверки
         await bot.send_message(chat_id=fields_id.get('chat_id'),
                                text=f'Оформлен заказ:\n\n{order_note(raw_json, lead_id=lead_id)}\n'
-                                    f'Создана сделка:\n'
-                                    f'<a href="https://hite.amocrm.ru/leads/detail/{lead_id}">{lead_id}</a>')
+                                    f'Создана сделка: '
+                                    f'<a href="https://hite.amocrm.ru/leads/detail/{lead_id}">{lead_id}</a>\n'
+                                    f'Контакт клиента: '
+                                    f'<a href="https://hite.amocrm.ru/contacts/detail/{contact_id}">{contact_id}</a>')
 
     except BaseException as error:
         logger.error(error)
@@ -387,4 +389,6 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                              reply_markup=ReplyKeyboardRemove())
 
         await bot.send_message(chat_id=fields_id.get('chat_id'),
-                               text=f'Произошла ошибка при оформлении заказа.\n\n{error}')
+                               text=f'Произошла ошибка при оформлении заказа.\n\n{error}\n'
+                                    f'Контакт клиента:'
+                                    f'<a href="https://hite.amocrm.ru/contacts/detail/{contact_id}">{contact_id}</a>')

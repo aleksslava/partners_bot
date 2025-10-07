@@ -1,5 +1,7 @@
 import asyncio
 import logging
+from pprint import pprint
+
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
 from aiogram.client.default import DefaultBotProperties
@@ -44,6 +46,11 @@ async def main():
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
 
+    # response = amo_api.put_data_in_lead()
+    # print(response.status_code)
+    # pprint(response.json(), indent=4)
+
+
     dp = Dispatcher()
 
     dp.include_router(main_router)
@@ -52,6 +59,7 @@ async def main():
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
+
 
 
 if __name__ == "__main__":
