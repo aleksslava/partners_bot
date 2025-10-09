@@ -433,7 +433,6 @@ class AmoCRMWrapper:
 
     def put_tgid_username_to_contact(self, id_contact, tg_id, username, fields_id: dict):
         url = f'/api/v4/contacts/{id_contact}'
-        username = '@' + username
         tg_id_field = fields_id.get('tg_id_field')
         tg_username_field = fields_id.get('tg_username_field')
         data = {"custom_fields_values": [

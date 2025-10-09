@@ -83,7 +83,7 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
 @main_router.message(F.contact)  # Хэндлер для обработки отправленного пользователем контакта
 async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict):
     contact_phone = message.contact.phone_number
-    contact_username = message.from_user.username
+    contact_username = '@' + message.from_user.username if message.from_user.username is not None else ''
 
     customer = amo_api.get_customer_by_phone(contact_phone)
     if customer[0]:
