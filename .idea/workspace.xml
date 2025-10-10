@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлено заполнение контакта - tg_id и username_tg. Теперь в созданную сделку добавляется контакт отправивший заказ, а не основной.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexicon/lexicon_ru.py" beforeDir="false" afterPath="$PROJECT_DIR$/lexicon/lexicon_ru.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.py" afterDir="false" />
-    </list>
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлены новые поля при оформлении КП" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -189,14 +184,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Теперь проверка пользователя в амо происходит по номеру tg_id. &#10;Если номера нет, то по телефону и при успехе tg_id добавляется в карточку пользователя">
-      <option name="closed" value="true" />
-      <created>1744376659616</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1744376659616</updated>
     </task>
     <task id="LOCAL-00014" summary="Теперь проверка пользователя в амо происходит по номеру tg_id. &#10;Если номера нет, то по телефону и при успехе tg_id добавляется в карточку пользователя">
       <option name="closed" value="true" />
@@ -582,7 +569,15 @@
       <option name="project" value="LOCAL" />
       <updated>1760006157298</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="Добавлены новые поля при оформлении КП">
+      <option name="closed" value="true" />
+      <created>1760081801500</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1760081801500</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -597,7 +592,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавлена middleware для проброса amo_api в хэндлеры" />
     <MESSAGE value="add class Customer" />
     <MESSAGE value="add handler get_contact" />
     <MESSAGE value="add handler &quot;in dev&quot;" />
@@ -622,7 +616,8 @@
     <MESSAGE value="Изменен web app и соответсвующие с ним обработки." />
     <MESSAGE value="Изменёно главное меню бота. канал партнёров выведен в главное меню." />
     <MESSAGE value="Добавлено заполнение контакта - tg_id и username_tg. Теперь в созданную сделку добавляется контакт отправивший заказ, а не основной." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлено заполнение контакта - tg_id и username_tg. Теперь в созданную сделку добавляется контакт отправивший заказ, а не основной." />
+    <MESSAGE value="Добавлены новые поля при оформлении КП" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлены новые поля при оформлении КП" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
