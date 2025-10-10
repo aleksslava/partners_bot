@@ -1,7 +1,8 @@
 import logging
 import json
+from pprint import pprint
 
-from service.service import order_note
+from service.service import Order
 
 from aiogram import Router, F, Bot
 from aiogram.filters import Command, CommandStart
@@ -341,8 +342,11 @@ async def answer_message(message: Message):
 async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     raw_json = message.web_app_data.data
     raw_json = json.loads(raw_json)
+
     full_price = raw_json.get('total')
     contact_id = raw_json.get('userId')
+
+
     try:
 
         if contact_id is None:
@@ -356,9 +360,10 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                             price=int(full_price))
 
         lead_id = response.get('_embedded').get('leads')[0].get('id')
+        order_note = Order(raw_json=raw_json, lead_id=lead_id)
 
         # Добавление примечания в сделку
-        amo_api.add_new_note_to_lead(lead_id=lead_id, text=order_note(raw_json, lead_id=lead_id))
+        amo_api.add_new_note_to_lead(lead_id=lead_id, text=order_note.get_order_message())
 
         # Добавление товаров в сделку
         items = raw_json.get('items')
@@ -367,7 +372,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                              elements=items)
 
         # Первое сообщение клиенту о создании заказа
-        await message.answer(text=order_note(raw_json, lead_id=lead_id, service=False),
+        await message.answer(text=order_note.get_order_message(service=False),
                              reply_markup=ReplyKeyboardRemove())
 
         # Второе сообщение клиенту, приглашение в чат с партнёрами
@@ -376,7 +381,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
 
         # Отправка сообщения в чат проверки
         await bot.send_message(chat_id=fields_id.get('chat_id'),
-                               text=f'Оформлен заказ:\n\n{order_note(raw_json, lead_id=lead_id)}\n'
+                               text=f'Оформлен заказ:\n\n{order_note.get_order_message()}\n'
                                     f'Создана сделка: '
                                     f'<a href="https://hite.amocrm.ru/leads/detail/{lead_id}">{lead_id}</a>\n'
                                     f'Контакт клиента: '
