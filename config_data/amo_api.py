@@ -1,5 +1,3 @@
-import pprint
-
 import dotenv
 import jwt
 import requests
@@ -8,7 +6,6 @@ import logging
 
 from pydantic import json
 from requests.exceptions import JSONDecodeError
-from config_data.config import load_config
 
 logger = logging.getLogger(__name__)
 
@@ -388,14 +385,16 @@ class AmoCRMWrapper:
              },
             {"field_id": 971974, # Поле склад
              "values": [
-                 {"value": 'Офис'},
+                 {"value": 'Я.Доставка'},
              ]
              },
-            # {"field_id": 958756,  # Поле адрес доставки
-            #  "values": [
-            #      {"value": 'Берзарина 36, стр.10'},
-            #  ]
-            #  },
+            {"field_id": 958756,  # Поле адрес доставки
+             "values": [
+                 {'enum_code': 'address_line_1',
+                  'enum_id': 1,
+                  'value': 'Москва. ул. Берзарина 36, стр.2'}
+             ]
+             },
             {"field_id": 972566,  # Поле ИНН
              "values": [
                  {"value": '92139123'},
@@ -451,7 +450,7 @@ class AmoCRMWrapper:
                     f'Статус операции: {response.status_code}')
 
     def send_lead_to_amo(self, pipeline_id: int, status_id: int, tag_id: int, contact_id: int,
-                         price: int, pay_for_cart=False, sklad=1):
+                         price: int, fields_id: dict, order_data: dict):
         url = f'/api/v4/leads'
         data = [{
             'name': 'Заказ с чат_бота',
@@ -462,13 +461,45 @@ class AmoCRMWrapper:
             'responsible_user_id': 453498,
             'custom_fields_values': [
                 {
-                    'field_id': 1105338, # Чекбокс оплаты картой
+                    'field_id': fields_id.get('kard_pay'), # Чекбокс оплаты картой
                     'values': [
                         {
-                            'value': pay_for_cart
+                            'value': order_data.get('payment_type')
                         }
                     ]
                 },
+                {"field_id": fields_id.get('delivery_type'),  # Поле склад
+                 "values": [
+                     {"value": order_data.get('delivery_type')},
+                 ]
+                 },
+                {"field_id": fields_id.get('delivery_adress'),  # Поле адрес доставки
+                 "values": [
+                     {'enum_code': 'address_line_1',
+                      'enum_id': 1,
+                      'value': order_data.get('delivery_adress')}
+                 ]
+                 },
+                {"field_id": fields_id.get('inn'),  # Поле ИНН
+                 "values": [
+                     {"value": order_data.get('inn')},
+                 ]
+                 },
+                {"field_id": fields_id.get('organization_adress'),  # Поле Юр. адрес
+                 "values": [
+                     {"value": order_data.get('organization_adress')},
+                 ]
+                 },
+                {"field_id": fields_id.get('bik'),  # Поле Бик
+                 "values": [
+                     {"value": order_data.get('bik')},
+                 ]
+                 },
+                {"field_id": fields_id.get('organization_account'),  # Поле Расчетный счет
+                 "values": [
+                     {"value": order_data.get('organization_account')},
+                 ]
+                 }
             ],
             '_embedded': {
                 'tags': [

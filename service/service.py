@@ -79,5 +79,29 @@ class Order:
         discount_message = f'Что делать с бонусами: {discount}\n\n'
         return discount_message
 
+    def get_fields_for_lead(self):
+        data = {
+            'payment_type': self.get_payment_method(),
+            'delivery_type': f'{self.get_delivery_type()}',
+            'delivery_adress': self.raw_json.get('deliveryAddress', ''),
+            'inn': self.raw_json.get('organizationInn', ''),
+            'bik': self.raw_json.get('organizationBik', ''),
+            'organization_account': self.raw_json.get('organizationAccount', ''),
+            'organization_adress': self.raw_json.get('organizationAddress', ''),
+        }
+        return data
 
 
+    def get_delivery_type(self):
+        deliveryMethod = self.raw_json.get('deliveryMethod', '')
+        if deliveryMethod == 'Самовывоз':
+            return 'Офис'
+        else:
+            return 'Я.Доставка'
+
+    def get_payment_method(self):
+        payment_type = self.raw_json.get('paymentMethod', '')
+        if payment_type == 'Ссылка на оплату картой':
+            return True
+        else:
+            return False

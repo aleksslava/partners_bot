@@ -46,9 +46,6 @@ async def main():
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
 
-    # response = amo_api.put_data_in_lead()
-    # print(response.status_code)
-    # pprint(response.json(), indent=4)
 
 
     dp = Dispatcher()

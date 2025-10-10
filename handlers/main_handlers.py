@@ -352,13 +352,15 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         if contact_id is None:
             raise ValueError('Нет id контакта к которому привязать заказ')
 
+        order_data = Order(raw_json=raw_json, lead_id=111)
         # Создание новой сделки в АМО
         response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
                                             status_id=fields_id.get('status_id'),
                                             tag_id=fields_id.get('tag_id'),
                                             contact_id=int(contact_id),
-                                            price=int(full_price))
-
+                                            price=int(full_price),
+                                            fields_id=fields_id.get('lead_custom_fields'),
+                                            order_data=order_data.get_fields_for_lead())
         lead_id = response.get('_embedded').get('leads')[0].get('id')
         order_note = Order(raw_json=raw_json, lead_id=lead_id)
 

@@ -12,15 +12,24 @@ fields_id = {
     'bonuses_id_field': 971580,
     'town_id_field': 972054,
     'full_price': 1105022,
-    'pipeline_id': 1628622,
+    'pipeline_id': 1628622, #  7411865 - воронка тест
     'tag_id': 606054,
-    'status_id': 32809260,
+    'status_id': 32809260, #  61586805 - статус переговоры
     'chat_id': -4950490417,
     'catalog_id': 1682,
     'web_app_url': 'https://aleksslava.github.io/website.github.io/',
     'contacts_fields_id': {
         'tg_id_field': 1097296,
         'tg_username_field': 1097294
+    },
+    'lead_custom_fields': {
+        'inn': 972566,
+        'bik': 972568,
+        'organization_adress': 1095240,
+        'organization_account': 972570,
+        'delivery_adress': 958756,
+        'kard_pay': 1105338,
+        'delivery_type': 971974
     }
 }
 
