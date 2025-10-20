@@ -1,6 +1,5 @@
 import asyncio
 import logging
-from pprint import pprint
 
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
@@ -11,6 +10,8 @@ from config_data.amo_api import AmoCRMWrapper
 from outer_middleware.outer_middleware import OuterMiddleware
 from keybooards.main_keyboards import set_main_menu
 from lexicon.lexicon_ru import start_menu
+
+
 
 # Инициализация логера
 logger = logging.getLogger(__name__)
@@ -46,8 +47,6 @@ async def main():
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
 
-
-
     dp = Dispatcher()
 
     dp.include_router(main_router)
@@ -56,7 +55,6 @@ async def main():
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
-
 
 
 if __name__ == "__main__":

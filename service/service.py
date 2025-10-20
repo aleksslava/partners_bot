@@ -1,3 +1,7 @@
+import pickle
+
+import requests
+
 discount_types = {
     'discount_only': 'Только скидка',
     'discount_and_spend_points': 'Скидка и списать бонусы',
@@ -9,7 +13,8 @@ class Order:
     def __init__(self, raw_json: dict, lead_id: int):
         self.raw_json = raw_json
         self.lead_id = lead_id
-        self.phone = self.raw_json.get('phone')
+        self.phone = raw_json.get('phone')
+        self.order_type = raw_json.get('type')
 
     def get_order_message(self, service=True):
         order_type = self.raw_json.get('type')
@@ -35,8 +40,8 @@ class Order:
             response_message = client_header + response_message + work_schedule
         return response_message
     def get_delivery_message(self):
-        delivery_method = self.raw_json.get('deliveryMethod')
-        delivery_adress = self.raw_json.get('pickupAddress') + self.raw_json.get('deliveryAddress')
+        delivery_method = self.raw_json.get('deliveryMethod', '')
+        delivery_adress = self.raw_json.get('pickupAddress', '') + self.raw_json.get('deliveryAddress', '')
         delivery_response = (f'Тип доставки: {delivery_method}\n'
                     f'Адрес доставки: {delivery_adress}\n')
         return delivery_response
@@ -58,10 +63,10 @@ class Order:
 
     def get_payment_details(self):
         payment_type = self.raw_json.get('paymentMethod', '')
-        organizationInn = self.raw_json.get('organizationInn')
-        organizationAddress = self.raw_json.get('organizationAddress')
-        organizationBik = self.raw_json.get('organizationBik')
-        organizationAccount = self.raw_json.get('organizationAccount')
+        organizationInn = self.raw_json.get('organizationInn', '')
+        organizationAddress = self.raw_json.get('organizationAddress', '')
+        organizationBik = self.raw_json.get('organizationBik', '')
+        organizationAccount = self.raw_json.get('organizationAccount', '')
         response_payments = f'Тип оплаты: {payment_type}\n' if payment_type else ''
         if payment_type == 'Счет на оплату':
             payment_details = (f'Реквизиты:\n'
@@ -105,3 +110,36 @@ class Order:
             return True
         else:
             return False
+
+
+def get_lead_total(record):
+    field_total_id = 1105084
+    field_type_id = 1105600
+    fields_values = record.get('custom_fields_values')
+    value = 0
+    record_type = ''
+    for field in fields_values:
+        if field.get('field_id') == field_total_id:
+            value = field.get('values')[0].get('value')
+        if field.get('field_id') == field_type_id:
+            record_type = field.get('values')[0].get('value')
+    if record_type == 'Возврат':
+        return -int(value)
+    else:
+        return int(value)
+
+def get_bonus_total(record):
+    field_total_id = 1105086
+    fields_values = record.get('custom_fields_values')
+    value = 0
+    for field in fields_values:
+        if field.get('field_id') == field_total_id:
+            value = field.get('values')[0].get('value')
+            return int(value)
+
+
+def get_kp_pdf(lead_id: int):
+    pdf_response = requests.get(url=f'https://process.connect-profi.ru/amocrm/actions/get_kp/index.php?leadId={lead_id}&methodKey=vikl')
+    with open(f'Kp_{lead_id}.pdf', 'wb') as f:
+        pickle.dump(pdf_response.content, f)
+

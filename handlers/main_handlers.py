@@ -1,13 +1,14 @@
 import logging
 import json
+import os
 from pprint import pprint
 
-from service.service import Order
+from service.service import Order, get_kp_pdf
 
 from aiogram import Router, F, Bot
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, CallbackQuery, WebAppInfo, \
-    KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove
+    KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, FSInputFile
 
 from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hide_contacts_list, get_start_keyboard,
                                        forum_button, manager_button, support_button, problem_button,
@@ -23,6 +24,7 @@ logger = logging.getLogger(__name__)
 
 @main_router.message(CommandStart())  # Хэндлер для обработки команды /start
 async def command_start_process(message: Message):
+
     await message.answer(text='<b>Основное меню чат-бота HiTE PRO!</b>',
                          reply_markup=await get_start_keyboard(start_menu))
 
@@ -340,12 +342,9 @@ async def answer_message(message: Message):
 
 @main_router.message(F.web_app_data.data != None)  # Хэндлер для обработки заказа из webapp
 async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
-    raw_json = message.web_app_data.data
-    raw_json = json.loads(raw_json)
-
+    raw_json = json.loads(message.web_app_data.data)
     full_price = raw_json.get('total')
     contact_id = raw_json.get('userId')
-
 
     try:
 
@@ -353,14 +352,24 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
             raise ValueError('Нет id контакта к которому привязать заказ')
 
         order_data = Order(raw_json=raw_json, lead_id=111)
-        # Создание новой сделки в АМО
-        response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
-                                            status_id=fields_id.get('status_id'),
+        if order_data.order_type == "commercial_offer":
+            # Создание нового лида в статусе "КП отправлено"
+            response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
+                                            status_id=fields_id.get('status_id_kp'),
                                             tag_id=fields_id.get('tag_id'),
                                             contact_id=int(contact_id),
                                             price=int(full_price),
                                             fields_id=fields_id.get('lead_custom_fields'),
                                             order_data=order_data.get_fields_for_lead())
+        else:
+            # Создание нового заказа в статусе "Новый заказ"
+            response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
+                                                status_id=fields_id.get('status_id_order'),
+                                                tag_id=fields_id.get('tag_id'),
+                                                contact_id=int(contact_id),
+                                                price=int(full_price),
+                                                fields_id=fields_id.get('lead_custom_fields'),
+                                                order_data=order_data.get_fields_for_lead())
         lead_id = response.get('_embedded').get('leads')[0].get('id')
         order_note = Order(raw_json=raw_json, lead_id=lead_id)
 
@@ -372,14 +381,24 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         amo_api.add_catalog_elements_to_lead(lead_id=lead_id,
                                              catalog_id=fields_id.get('catalog_id'),
                                              elements=items)
+        # Сообщения клиенту при запросе КП и отправка КП в чат бот.
+        if order_data.order_type == 'commercial_offer':
+            get_kp_pdf(lead_id)
+            document = FSInputFile(f'Kp_{lead_id}.pdf')
+            await message.answer_document(document=document, caption='КП по Вашему запросу!')
+            os.remove(f'Kp_{lead_id}.pdf')
+            await message.answer(text=Lexicon_RU.get('message_link_partners_kp'),
+                                 reply_markup=await link_to_opt_button(lead_id=lead_id))
 
-        # Первое сообщение клиенту о создании заказа
-        await message.answer(text=order_note.get_order_message(service=False),
-                             reply_markup=ReplyKeyboardRemove())
+        # Сообщения клиенту при запросе счета
+        else:
+            # Первое сообщение клиенту о создании заказа
+            await message.answer(text=order_note.get_order_message(service=False),
+                                 reply_markup=ReplyKeyboardRemove())
 
-        # Второе сообщение клиенту, приглашение в чат с партнёрами
-        await message.answer(text=Lexicon_RU.get('message_link_partners'),
-                             reply_markup=await link_to_opt_button(lead_id=lead_id))
+            # Второе сообщение клиенту, приглашение в чат с партнёрами
+            await message.answer(text=Lexicon_RU.get('message_link_partners_order'),
+                                 reply_markup=await link_to_opt_button(lead_id=lead_id))
 
         # Отправка сообщения в чат проверки
         await bot.send_message(chat_id=fields_id.get('chat_id'),

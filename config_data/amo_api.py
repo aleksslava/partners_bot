@@ -1,3 +1,5 @@
+import pickle
+
 import dotenv
 import jwt
 import requests
@@ -6,8 +8,10 @@ import logging
 
 from pydantic import json
 from requests.exceptions import JSONDecodeError
+from io import BytesIO
 
 logger = logging.getLogger(__name__)
+
 
 
 class Contact:
@@ -312,6 +316,19 @@ class AmoCRMWrapper:
             logger.error('Нет авторизации в AMO_API')
             return False, 'Произошла ошибка на сервере!'
 
+    def add_new_task(self, contact_id, descr, url_materials, time, user_id):
+        url = '/api/v4/tasks'
+        data = [{
+            'text': f'Обращение по ошибке чат-бота:\n{descr} {url_materials}',
+            'complete_till': time,
+            'entity_id': contact_id,
+            "entity_type": "contacts",
+            'responsible_user_id': user_id
+        }
+        ]
+        response = self._base_request(type='post', endpoint=url, data=data)
+        return response
+
     def get_customer_by_tg_id(self, tg_id: int) -> dict:  # Нужно убрать все id полей амо в конфиг
         url = '/api/v4/customers'
         field_id = '1104992'
@@ -549,13 +566,23 @@ class AmoCRMWrapper:
         response = self._base_request(type='post', endpoint=url, data=data)
         return response.json()
 
-    def get_catalog_by_id(self, catalog_id: int, page: int, limit:int):
+    # def get_catalog_by_id(self, catalog_id: int, page: int, limit:int):
+    #     url = f'/api/v4/catalogs/{catalog_id}/elements'
+    #     data = {
+    #         'page': page,
+    #         'limit': limit
+    #     }
+    #     response = self._base_request(type='get_param', endpoint=url, parameters=data)
+    #     return response.json()
+
+    def get_catalog_elements_by_partnerid(self, partner_id):
+        catalog_id = 2244
         url = f'/api/v4/catalogs/{catalog_id}/elements'
-        data = {
-            'page': page,
-            'limit': limit
-        }
-        response = self._base_request(type='get_param', endpoint=url, parameters=data)
+        limit = 250
+        page = 1
+        filter = str(f'filter[custom_fields][1105082][from]={partner_id}&filter[custom_fields][1105082][to]={partner_id}')
+        response = self._base_request(type='get_param', endpoint=url, parameters=filter)
+        print(response.url)
         return response.json()
 
 
