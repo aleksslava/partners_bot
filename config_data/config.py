@@ -18,7 +18,7 @@ fields_id = {
     'status_id_kp': 39080307, # статус КП отправлено
     'chat_id': -4950490417,
     'catalog_id': 1682,
-    'web_app_url': 'https://aleksslava.github.io/testwebapp.github.io/',
+    'web_app_url': 'https://aleksslava.github.io/website.github.io/',
     'contacts_fields_id': {
         'tg_id_field': 1097296,
         'tg_username_field': 1097294
