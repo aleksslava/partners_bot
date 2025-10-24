@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена обработка пустого поля payment_type">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Реаилзовано автоматическое выставление КП в чат бот. &#10;Выбор заполнения реквизитов по прошлому заказу.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config_data/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keybooards/main_keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/keybooards/main_keyboards.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/service.py" beforeDir="false" afterPath="$PROJECT_DIR$/service/service.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -20,6 +19,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Python Script" />
       </list>
     </option>
@@ -60,19 +60,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.amo_api.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.test.executor": "Run",
-    "Python.test_amo.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/solom/Desktop/Новая папка/script.js",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Python"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python.amo_api.executor&quot;: &quot;Run&quot;,
+    &quot;Python.jinja_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_amo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/Desktop/Новая папка/script.js&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\solom\PycharmProjects\partners_bot\config_data" />
@@ -93,6 +95,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/config_data/amo_api.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="jinja_test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="partners_bot" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/templates" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/templates/jinja_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -170,6 +194,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.jinja_test" />
         <item itemvalue="Python.test_amo" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.amo_api" />
@@ -191,30 +216,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Оптимизирован по основной аккаунт амоCRM">
-      <option name="closed" value="true" />
-      <created>1744801272937</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1744801272937</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости.">
-      <option name="closed" value="true" />
-      <created>1744873892064</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1744873892064</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости.">
-      <option name="closed" value="true" />
-      <created>1744874479836</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1744874479836</updated>
     </task>
     <task id="LOCAL-00018" summary="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости.">
       <option name="closed" value="true" />
@@ -584,7 +585,31 @@
       <option name="project" value="LOCAL" />
       <updated>1760082168540</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="Реализовано заполнение полей сделки:&#10;Адрес доставки, склад, оплата картой, реквизиты.">
+      <option name="closed" value="true" />
+      <created>1760093593573</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1760093593573</updated>
+    </task>
+    <task id="LOCAL-00065" summary="Реаилзовано автоматическое выставление КП в чат бот. &#10;Выбор заполнения реквизитов по прошлому заказу.">
+      <option name="closed" value="true" />
+      <created>1760944253266</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1760944253266</updated>
+    </task>
+    <task id="LOCAL-00066" summary="Реаилзовано автоматическое выставление КП в чат бот. &#10;Выбор заполнения реквизитов по прошлому заказу.">
+      <option name="closed" value="true" />
+      <created>1760946588270</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1760946588270</updated>
+    </task>
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -599,8 +624,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add handler get_contact" />
-    <MESSAGE value="add handler &quot;in dev&quot;" />
     <MESSAGE value="add changes to main_keyboaards.py" />
     <MESSAGE value="add changes to start_handler" />
     <MESSAGE value="add changes to amo_api.py -&gt; def _save_tokens" />
@@ -624,7 +647,9 @@
     <MESSAGE value="Добавлено заполнение контакта - tg_id и username_tg. Теперь в созданную сделку добавляется контакт отправивший заказ, а не основной." />
     <MESSAGE value="Добавлены новые поля при оформлении КП" />
     <MESSAGE value="Добавлена обработка пустого поля payment_type" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлена обработка пустого поля payment_type" />
+    <MESSAGE value="Реализовано заполнение полей сделки:&#10;Адрес доставки, склад, оплата картой, реквизиты." />
+    <MESSAGE value="Реаилзовано автоматическое выставление КП в чат бот. &#10;Выбор заполнения реквизитов по прошлому заказу." />
+    <option name="LAST_COMMIT_MESSAGE" value="Реаилзовано автоматическое выставление КП в чат бот. &#10;Выбор заполнения реквизитов по прошлому заказу." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

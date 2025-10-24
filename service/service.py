@@ -17,6 +17,7 @@ class Order:
         self.order_type = raw_json.get('type')
 
     def get_order_message(self, service=True):
+        use_previous = self.raw_json.get('usePreviousOrder', '')
         order_type = self.raw_json.get('type')
         if order_type == 'commercial_offer':
             service_header = f'Запрос КП №{self.lead_id}\n\n'
@@ -33,7 +34,9 @@ class Order:
         work_schedule = ('Менеджер партнерского отдела примет заказ в работу и свяжется с вами в рабочее время'
                          ' для уточнения деталей (Пн-Пт, с 09 до 18 по мск.')
 
-        response_message = order_items + customer_phone + delivery_message + payment_details + discount_types
+        previous_message = 'Заполнить по прошлому заказу!!!\n' if use_previous else ''
+
+        response_message = order_items + customer_phone + previous_message + delivery_message + payment_details + discount_types
         if service:
             response_message = service_header + response_message
         else:

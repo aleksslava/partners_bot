@@ -4,8 +4,9 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 
 async def reply_phone_number():  # Формирование инлайн клавиатуры запроса контакта пользователя
-    first_button = KeyboardButton(text='Поделиться номером телефона', request_contact=True)
-    markup = ReplyKeyboardMarkup(keyboard=[[first_button,]], resize_keyboard=True, one_time_keyboard=True)
+    first_button = KeyboardButton(text='Отправить номер телефона', request_contact=True)
+    markup = ReplyKeyboardMarkup(is_persistent=True, keyboard=[[first_button,]], resize_keyboard=True,
+                                 one_time_keyboard=False, )
 
     return markup
 

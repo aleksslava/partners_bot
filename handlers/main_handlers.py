@@ -48,7 +48,7 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = message.from_user.first_name
             await message.answer(text=f'{name}, здравствуйте.\n'
-                                      f'Поделитесь своим номером телефона для использования бота.',
+                                      f'Поделитесь своим номером телефона для использования бота.👇',
                                  reply_markup=await reply_phone_number())
     else:
         await message.answer(text='Ошибка! Помогите нам её исправить. Сообщите об этой ошибке в онлайн-форме:',
@@ -75,7 +75,7 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.message.chat.first_name
             await callback.message.answer(text=f'{name}, здравствуйте.\n'
-                                               f'Поделитесь своим номером телефона для использования бота.',
+                                               f'Поделитесь своим номером телефона для использования бота.👇',
                                           reply_markup=await reply_phone_number())
     else:
         await callback.message.edit_text(text='Ошибка! Помогите нам её исправить. '
@@ -168,7 +168,8 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
                                   web_app=WebAppInfo(
                                       url=f'{web_app_url}?bonus={bonus}&'
                                           f'id={contact_id}&discont={discont}'))
-            webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
+            webapp_keyboard_1 = ReplyKeyboardMarkup(is_persistent=True, keyboard=[[kb_1, ]],
+                                                    resize_keyboard=True, one_time_keyboard=True)
 
             await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
                                  reply_markup=webapp_keyboard_1)
@@ -176,7 +177,7 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = message.from_user.first_name
             await message.answer(text=f'{name}, здравствуйте.\n'
-                                      f'Поделитесь своим номером телефона для использования бота.',
+                                      f'Поделитесь своим номером телефона для использования бота.👇',
                                  reply_markup=await reply_phone_number())
     else:
         if customer.get('status_code'):
@@ -219,7 +220,7 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.from_user.first_name
             await callback.message.answer(text=f'{name}, здравствуйте.\n'
-                                               f'Поделитесь своим номером телефона для использования бота.',
+                                               f'Поделитесь своим номером телефона для использования бота.👇',
                                           reply_markup=await reply_phone_number())
     else:
         if customer.get('status_code'):
