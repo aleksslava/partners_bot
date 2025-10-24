@@ -34,7 +34,7 @@ class Order:
         work_schedule = ('Менеджер партнерского отдела примет заказ в работу и свяжется с вами в рабочее время'
                          ' для уточнения деталей (Пн-Пт, с 09 до 18 по мск.')
 
-        previous_message = 'Заполнить по прошлому заказу!!!\n' if use_previous else ''
+        previous_message = 'Заполнить по прошлому заказу реквизиты, способ оплаты, получателя и адрес доставки!\n' if use_previous else ''
 
         response_message = order_items + customer_phone + previous_message + delivery_message + payment_details + discount_types
         if service:
