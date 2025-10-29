@@ -1,5 +1,3 @@
-import pickle
-
 import dotenv
 import jwt
 import requests
@@ -8,7 +6,6 @@ import logging
 
 from pydantic import json
 from requests.exceptions import JSONDecodeError
-from io import BytesIO
 
 logger = logging.getLogger(__name__)
 
@@ -306,7 +303,7 @@ class AmoCRMWrapper:
                 customer = self._base_request(endpoint=url, type='get_param', parameters=query)
             else:
                 customer = self._base_request(endpoint=url, type='get')
-        except Exception as error:
+        except Exception:
             return False, "Произошла ошибка на сервере"
         if customer.status_code == 200:
             return True, customer.json()
@@ -467,7 +464,7 @@ class AmoCRMWrapper:
                     f'Статус операции: {response.status_code}')
 
     def send_lead_to_amo(self, pipeline_id: int, status_id: int, tag_id: int, contact_id: int,
-                         price: int, fields_id: dict, order_data: dict):
+                         price: int, custom_fields_data: list):
         url = f'/api/v4/leads'
         data = [{
             'name': 'Заказ с чат_бота',
@@ -476,48 +473,7 @@ class AmoCRMWrapper:
             'status_id': status_id,
             'price': price,
             'responsible_user_id': 453498,
-            'custom_fields_values': [
-                {
-                    'field_id': fields_id.get('kard_pay'), # Чекбокс оплаты картой
-                    'values': [
-                        {
-                            'value': order_data.get('payment_type')
-                        }
-                    ]
-                },
-                {"field_id": fields_id.get('delivery_type'),  # Поле склад
-                 "values": [
-                     {"value": order_data.get('delivery_type')},
-                 ]
-                 },
-                {"field_id": fields_id.get('delivery_adress'),  # Поле адрес доставки
-                 "values": [
-                     {'enum_code': 'address_line_1',
-                      'enum_id': 1,
-                      'value': order_data.get('delivery_adress')}
-                 ]
-                 },
-                {"field_id": fields_id.get('inn'),  # Поле ИНН
-                 "values": [
-                     {"value": order_data.get('inn')},
-                 ]
-                 },
-                {"field_id": fields_id.get('organization_adress'),  # Поле Юр. адрес
-                 "values": [
-                     {"value": order_data.get('organization_adress')},
-                 ]
-                 },
-                {"field_id": fields_id.get('bik'),  # Поле Бик
-                 "values": [
-                     {"value": order_data.get('bik')},
-                 ]
-                 },
-                {"field_id": fields_id.get('organization_account'),  # Поле Расчетный счет
-                 "values": [
-                     {"value": order_data.get('organization_account')},
-                 ]
-                 }
-            ],
+            'custom_fields_values': custom_fields_data,
             '_embedded': {
                 'tags': [
                     {
@@ -578,8 +534,6 @@ class AmoCRMWrapper:
     def get_catalog_elements_by_partnerid(self, partner_id):
         catalog_id = 2244
         url = f'/api/v4/catalogs/{catalog_id}/elements'
-        limit = 250
-        page = 1
         filter = str(f'filter[custom_fields][1105082][from]={partner_id}&filter[custom_fields][1105082][to]={partner_id}')
         response = self._base_request(type='get_param', endpoint=url, parameters=filter)
         print(response.url)

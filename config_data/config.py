@@ -30,7 +30,11 @@ fields_id = {
         'organization_account': 972570,
         'delivery_adress': 958756,
         'kard_pay': 1105338,
-        'delivery_type': 971974
+        'delivery_type': 971974,
+        'discount_field': 972024,
+        'partner_project_id': 938609,
+        'appeal_type_field_id': 961948,
+        'lead_target_field_id': 1103658,
     }
 }
 

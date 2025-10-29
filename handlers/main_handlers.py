@@ -2,7 +2,7 @@ import logging
 import json
 import os
 from pprint import pprint
-
+from service.service import LeadData
 from service.service import Order, get_kp_pdf
 
 from aiogram import Router, F, Bot
@@ -338,7 +338,7 @@ async def command_problem_process_cl(callback: CallbackQuery):
 @main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message):
     await message.answer(text=Lexicon_RU.get('answer_for_user'), reply_markup=await answer_for_user())
-    print(message.chat.id)
+
 
 
 @main_router.message(F.web_app_data.data != None)  # Хэндлер для обработки заказа из webapp
@@ -346,7 +346,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
     raw_json = json.loads(message.web_app_data.data)
     full_price = raw_json.get('total')
     contact_id = raw_json.get('userId')
-
+    custom_data = LeadData(raw_json=raw_json, fields_id=fields_id)
     try:
 
         if contact_id is None:
@@ -354,14 +354,14 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
 
         order_data = Order(raw_json=raw_json, lead_id=111)
         if order_data.order_type == "commercial_offer":
-            # Создание нового лида в статусе "КП отправлено"
+            #Создание нового лида в статусе "КП отправлено"
             response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
                                             status_id=fields_id.get('status_id_kp'),
                                             tag_id=fields_id.get('tag_id'),
                                             contact_id=int(contact_id),
                                             price=int(full_price),
-                                            fields_id=fields_id.get('lead_custom_fields'),
-                                            order_data=order_data.get_fields_for_lead())
+                                            custom_fields_data=custom_data.get_custom_fields_data())
+
         else:
             # Создание нового заказа в статусе "Новый заказ"
             response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
@@ -369,8 +369,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                                 tag_id=fields_id.get('tag_id'),
                                                 contact_id=int(contact_id),
                                                 price=int(full_price),
-                                                fields_id=fields_id.get('lead_custom_fields'),
-                                                order_data=order_data.get_fields_for_lead())
+                                                custom_fields_data=custom_data.get_custom_fields_data())
         lead_id = response.get('_embedded').get('leads')[0].get('id')
         order_note = Order(raw_json=raw_json, lead_id=lead_id)
 

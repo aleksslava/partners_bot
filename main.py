@@ -1,6 +1,6 @@
 import asyncio
 import logging
-
+from redis.asyncio.client import Redis
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
 from aiogram.client.default import DefaultBotProperties
@@ -11,6 +11,8 @@ from outer_middleware.outer_middleware import OuterMiddleware
 from keybooards.main_keyboards import set_main_menu
 from lexicon.lexicon_ru import start_menu
 
+
+redis = Redis(host='localhost')
 
 
 # Инициализация логера
@@ -50,7 +52,7 @@ async def main():
     dp = Dispatcher()
 
     dp.include_router(main_router)
-    dp.update.middleware(OuterMiddleware(amo_api, fields_id, bot))
+    dp.update.middleware(OuterMiddleware(amo_api, fields_id, bot, redis))
     logger.info("partners_bot started succesful")
 
     await bot.delete_webhook(drop_pending_updates=True)
