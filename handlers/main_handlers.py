@@ -56,6 +56,7 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
             await bot.send_photo(chat_id=message.chat.id, photo=file,
                                  caption=f'{name}, здравствуйте.\n'
                                          f'Поделитесь своим номером телефона для использования бота.👇',
+                                 show_caption_above_media=True,
                                  reply_markup=await reply_phone_number())
     else:
         await message.answer(text='Ошибка! Помогите нам её исправить. Сообщите об этой ошибке в онлайн-форме:',
@@ -88,6 +89,7 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
             await bot.send_photo(chat_id=callback.message.chat.id, photo=file,
                                  caption=f'{name}, здравствуйте.\n'
                                          f'Поделитесь своим номером телефона для использования бота.👇',
+                                 show_caption_above_media=True,
                                  reply_markup=await reply_phone_number())
     else:
         await callback.message.edit_text(text='Ошибка! Помогите нам её исправить. '
@@ -160,7 +162,7 @@ async def command_contacts_process_cl(callback: CallbackQuery):
 
 
 @main_router.message(Command(commands='shop'))  # Хэндлер для обработки команды /shop
-async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict):
+async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     tg_id = message.from_user.id
     customer = amo_api.get_customer_by_tg_id(tg_id)
     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
@@ -188,8 +190,11 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = message.from_user.first_name
-            await message.answer(text=f'{name}, здравствуйте.\n'
-                                      f'Поделитесь своим номером телефона для использования бота.👇',
+            file = FSInputFile('image.png')
+            await bot.send_photo(chat_id=message.chat.id, photo=file,
+                                 caption=f'{name}, здравствуйте.\n'
+                                         f'Поделитесь своим номером телефона для использования бота.👇',
+                                 show_caption_above_media=True,
                                  reply_markup=await reply_phone_number())
     else:
         if customer.get('status_code'):
@@ -202,7 +207,7 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
 
 
 @main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"
-async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict):
+async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     tg_id = callback.from_user.id
 
     customer = amo_api.get_customer_by_tg_id(tg_id)
@@ -231,9 +236,12 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.from_user.first_name
-            await callback.message.answer(text=f'{name}, здравствуйте.\n'
-                                               f'Поделитесь своим номером телефона для использования бота.👇',
-                                          reply_markup=await reply_phone_number())
+            file = FSInputFile('image.png')
+            await bot.send_photo(chat_id=callback.message.chat.id, photo=file,
+                                 caption=f'{name}, здравствуйте.\n'
+                                         f'Поделитесь своим номером телефона для использования бота.👇',
+                                 show_caption_above_media=True,
+                                 reply_markup=await reply_phone_number())
     else:
         if customer.get('status_code'):
             response = contact.get('response')
