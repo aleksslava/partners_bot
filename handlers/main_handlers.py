@@ -364,8 +364,11 @@ async def bot_instr_cl(callback: CallbackQuery):
 
 @main_router.message(lambda message: message.chat.id == -1003159184418) # Обработка сообщений из группы рассылки
 async def message_from_group(message: Message, bot: Bot, redis: Redis):
-    partners_id = list(redis.keys())
-    await message.answer(text=f'{partners_id}')
+    stroke = ''
+    async for key in redis.scan_iter():
+        stroke += str(key)
+        stroke += ' '
+    await message.answer(text=f'{stroke}')
 
 @main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message, bot: Bot):
