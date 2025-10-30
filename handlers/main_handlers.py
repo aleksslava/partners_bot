@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 @main_router.message(CommandStart())  # Хэндлер для обработки команды /start
 async def command_start_process(message: Message):
-    # await message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
+    await message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
     await message.answer(text='<b>Основное меню чат-бота HiTE PRO!</b>',
                          reply_markup=await get_start_keyboard(start_menu))
 
@@ -364,7 +364,7 @@ async def bot_instr_cl(callback: CallbackQuery):
 
 @main_router.message(lambda message: message.chat.id == -1003159184418) # Обработка сообщений из группы рассылки
 async def message_from_group(message: Message, bot: Bot, redis: Redis):
-    partners_id = redis.scan_iter('*')
+    partners_id = list(redis.keys())
     await message.answer(text=f'{partners_id}')
 
 @main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
