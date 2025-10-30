@@ -46,11 +46,10 @@ class OuterMiddleware(BaseMiddleware):
             else:
                 logger.error('Не удалось определить telegram_id покупателя')
 
-            response = await self.redis.keys()
-            logger.error(response)
+
         except BaseException as error:
             logger.error(error)
-
+        data['redis'] = self.redis
         data['amo_api'] = self.amo_api
         data['fields_id'] = self.fields_id
 

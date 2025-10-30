@@ -29,7 +29,8 @@ start_menu = {
     '/materials': 'Полезные материалы',
     '/manager': 'Написать менеджеру',
     '/support': 'Тех. поддержка',
-    '/problem': 'Проблемы с ботом?'
+    '/problem': 'Проблемы с ботом?',
+    '/bot_instr': 'Как пользоваться ботом?'
 }
 
 helpfull_materials_menu = {

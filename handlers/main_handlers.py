@@ -2,6 +2,8 @@ import logging
 import json
 import os
 from pprint import pprint
+
+from redis.asyncio.client import Redis
 from service.service import LeadData
 from service.service import Order, get_kp_pdf
 
@@ -24,13 +26,13 @@ logger = logging.getLogger(__name__)
 
 @main_router.message(CommandStart())  # Хэндлер для обработки команды /start
 async def command_start_process(message: Message):
-
+    await message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
     await message.answer(text='<b>Основное меню чат-бота HiTE PRO!</b>',
                          reply_markup=await get_start_keyboard(start_menu))
 
 
 @main_router.message(Command(commands=['info']))  # Хэндлер для обработки команды /info
-async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict):
+async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     tg_id = message.from_user.id
 
     # Проверка наличия партнёра в бд по tg_id
@@ -47,8 +49,13 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = message.from_user.first_name
-            await message.answer(text=f'{name}, здравствуйте.\n'
-                                      f'Поделитесь своим номером телефона для использования бота.👇',
+            # await message.answer(text=f'{name}, здравствуйте.\n'
+            #                           f'Поделитесь своим номером телефона для использования бота.👇',
+            #                      reply_markup=await reply_phone_number())
+            file = FSInputFile('image.png')
+            await bot.send_photo(chat_id=message.chat.id, photo=file,
+                                 caption=f'{name}, здравствуйте.\n'
+                                         f'Поделитесь своим номером телефона для использования бота.👇',
                                  reply_markup=await reply_phone_number())
     else:
         await message.answer(text='Ошибка! Помогите нам её исправить. Сообщите об этой ошибке в онлайн-форме:',
@@ -56,7 +63,7 @@ async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict
 
 
 @main_router.callback_query(F.data == '/info')  # Обработка инлайн кнопки "Мой профиль"
-async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict):
+async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     await callback.answer()
     tg_id = callback.message.chat.id
 
@@ -74,9 +81,14 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.message.chat.first_name
-            await callback.message.answer(text=f'{name}, здравствуйте.\n'
-                                               f'Поделитесь своим номером телефона для использования бота.👇',
-                                          reply_markup=await reply_phone_number())
+            # await callback.message.answer(text=f'{name}, здравствуйте.\n'
+            #                                    f'Поделитесь своим номером телефона для использования бота.👇',
+            #                               reply_markup=await reply_phone_number())
+            file = FSInputFile('image.png')
+            await bot.send_photo(chat_id=callback.message.chat.id, photo=file,
+                                 caption=f'{name}, здравствуйте.\n'
+                                         f'Поделитесь своим номером телефона для использования бота.👇',
+                                 reply_markup=await reply_phone_number())
     else:
         await callback.message.edit_text(text='Ошибка! Помогите нам её исправить. '
                                               '👇 Сообщите об этой ошибке в онлайн-форме.',
@@ -334,11 +346,22 @@ async def command_problem_process(message: Message):
 async def command_problem_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('problem'), reply_markup=await problem_button())
 
+@main_router.message(Command(commands='bot_instr'))
+async def bot_instr(message: Message):
+    await message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
+
+@main_router.callback_query(F.data == '/bot_instr')
+async def bot_instr_cl(callback: CallbackQuery):
+    await callback.message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
+
+# @main_router.message(lambda message: message.chat.id == -1003159184418) # Обработка сообщений из группы рассылки
+# async def message_from_group(message: Message, bot: Bot):
+#     message_id = bot.copy_message(from_chat_id=message.chat.id)
+#     await message.answer(text='Вот мой ответ на твоё сообщение')
 
 @main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
-async def answer_message(message: Message):
+async def answer_message(message: Message, bot: Bot):
     await message.answer(text=Lexicon_RU.get('answer_for_user'), reply_markup=await answer_for_user())
-
 
 
 @main_router.message(F.web_app_data.data != None)  # Хэндлер для обработки заказа из webapp
@@ -356,11 +379,11 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
         if order_data.order_type == "commercial_offer":
             #Создание нового лида в статусе "КП отправлено"
             response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
-                                            status_id=fields_id.get('status_id_kp'),
-                                            tag_id=fields_id.get('tag_id'),
-                                            contact_id=int(contact_id),
-                                            price=int(full_price),
-                                            custom_fields_data=custom_data.get_custom_fields_data())
+                                                status_id=fields_id.get('status_id_kp'),
+                                                tag_id=fields_id.get('tag_id'),
+                                                contact_id=int(contact_id),
+                                                price=int(full_price),
+                                                custom_fields_data=custom_data.get_custom_fields_data())
 
         else:
             # Создание нового заказа в статусе "Новый заказ"
@@ -418,3 +441,5 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                text=f'Произошла ошибка при оформлении заказа.\n\n{error}\n'
                                     f'Контакт клиента:'
                                     f'<a href="https://hite.amocrm.ru/contacts/detail/{contact_id}">{contact_id}</a>')
+
+
