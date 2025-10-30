@@ -12,7 +12,7 @@ from keybooards.main_keyboards import set_main_menu
 from lexicon.lexicon_ru import start_menu
 
 
-redis = Redis(host='localhost')
+redis = Redis(decode_responses=True, host='localhost')
 
 
 # Инициализация логера
