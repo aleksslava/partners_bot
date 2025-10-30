@@ -362,10 +362,14 @@ async def bot_instr(message: Message):
 async def bot_instr_cl(callback: CallbackQuery):
     await callback.message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
 
-# @main_router.message(lambda message: message.chat.id == -1003159184418) # Обработка сообщений из группы рассылки
-# async def message_from_group(message: Message, bot: Bot):
-#     message_id = bot.copy_message(from_chat_id=message.chat.id)
-#     await message.answer(text='Вот мой ответ на твоё сообщение')
+@main_router.message(lambda message: message.chat.id == -1003159184418) # Обработка сообщений из группы рассылки
+async def message_from_group(message: Message, bot: Bot, redis: Redis):
+    partners_id = redis.keys()
+    stroke = ''
+    for key in partners_id:
+        stroke += key
+        stroke += ' '
+    await message.answer(text='stroke')
 
 @main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message, bot: Bot):
