@@ -124,3 +124,14 @@ async def answer_for_user():  # Формирование клавиатуры д
     )
     markup = InlineKeyboardMarkup(inline_keyboard=[[button_whatsapp_tp], [button_telegram_opt]])
     return markup
+
+async def confirm_spam(message_id: int):
+    kb_bl = InlineKeyboardBuilder()
+    buttons: list = [
+        InlineKeyboardButton(text='Да',
+                             callback_data=f'spamyes_{message_id}'),
+        InlineKeyboardButton(text='Нет',
+                             callback_data=f'spamno_{message_id}')
+    ]
+    kb_bl.row(*buttons, width=2)
+    return kb_bl.as_markup()

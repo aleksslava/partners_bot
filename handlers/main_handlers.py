@@ -15,7 +15,7 @@ from aiogram.types import Message, CallbackQuery, WebAppInfo, \
 from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hide_contacts_list, get_start_keyboard,
                                        forum_button, manager_button, support_button, problem_button,
                                        helpfull_materials_keyboard, back_button, answer_for_user, authorized_client,
-                                       link_to_opt_button,
+                                       link_to_opt_button, confirm_spam,
                                        )
 from config_data.amo_api import AmoCRMWrapper, Contact
 from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu, helpfull_materials_menu
@@ -363,12 +363,32 @@ async def bot_instr_cl(callback: CallbackQuery):
     await callback.message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
 
 @main_router.message(lambda message: message.chat.id == -1003159184418) # Обработка сообщений из группы рассылки
-async def message_from_group(message: Message, bot: Bot, redis: Redis):
-    stroke = ''
-    async for key in redis.scan_iter():
-        stroke += str(key)
-        stroke += ' '
-    await message.answer(text=f'{stroke}')
+async def message_from_group(message: Message):
+    message_id = message.message_id
+    await message.reply(text='!!!ВНИМАНИЕ!!!\nВы отправите рассылку по партнёрам компании HiTE PRO!\n\nВы уверены?',
+                        reply_markup=await confirm_spam(message_id))
+
+
+@main_router.callback_query(F.data.startswith('spam'))
+async def forward_spam_message(callback: CallbackQuery, bot: Bot, redis: Redis):
+    from_chat_id = -1003159184418
+    answer, message_id = callback.data.split('_')
+    if answer == 'spamyes':
+        await callback.message.edit_text(text='Рассылка запущена.\nО результате будет оповещение.')
+        good_try = 2
+        bad_try = 0
+        await bot.copy_message(chat_id=int(784343277), message_id=int(message_id), from_chat_id=from_chat_id)
+        await bot.copy_message(chat_id=int(365884966), message_id=int(message_id), from_chat_id=from_chat_id)
+        # async for chat_id in redis.scan_iter():
+        #     try:
+        #         await bot.copy_message(chat_id=int(chat_id), message_id=int(message_id), from_chat_id=from_chat_id)
+        #         good_try += 1
+        #     except BaseException:
+        #         bad_try += 1
+        await callback.message.reply(text=f'Рассылка совершена!\nУспешных отправок: {good_try}\n'
+                                           f'Несостоявшихся отправок: {bad_try}')
+    else:
+        await callback.message.edit_text(text='Рассылка отменена')
 
 @main_router.message(F.text != None)  # Хэндлер для обработки произвольных сообщений пользователя
 async def answer_message(message: Message, bot: Bot):

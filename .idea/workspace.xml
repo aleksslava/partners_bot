@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлено логгирование в бд redis">
-      <change afterPath="$PROJECT_DIR$/image.png" afterDir="false" />
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена отправка видео при старте бота и инструкция к боту.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexicon/lexicon_ru.py" beforeDir="false" afterPath="$PROJECT_DIR$/lexicon/lexicon_ru.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/outer_middleware/outer_middleware.py" beforeDir="false" afterPath="$PROJECT_DIR$/outer_middleware/outer_middleware.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keybooards/main_keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/keybooards/main_keyboards.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,62 +217,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Добавлена ошибка при отсутствии привязанных покупателей к пользователю. &#10;Добавлена обработка нулевых значений полей покупателя">
-      <option name="closed" value="true" />
-      <created>1744878854032</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1744878854032</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Добавлена ошибка при отсутствии привязанных покупателей к пользователю. &#10;Добавлена обработка нулевых значений полей покупателя">
-      <option name="closed" value="true" />
-      <created>1744885165898</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1744885165898</updated>
-    </task>
-    <task id="LOCAL-00023" summary="Переработано меню бота, добавлено инлайн меню бота.">
-      <option name="closed" value="true" />
-      <created>1745089340648</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1745089340648</updated>
-    </task>
-    <task id="LOCAL-00024" summary="Переработано меню бота, добавлено инлайн меню бота.">
-      <option name="closed" value="true" />
-      <created>1745091101520</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1745091101520</updated>
-    </task>
-    <task id="LOCAL-00025" summary="Переработано меню бота, добавлено инлайн меню бота.">
-      <option name="closed" value="true" />
-      <created>1745091141670</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1745091141670</updated>
-    </task>
-    <task id="LOCAL-00026" summary="Переработано меню бота, добавлено инлайн меню бота.">
-      <option name="closed" value="true" />
-      <created>1745091756721</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1745091756721</updated>
-    </task>
-    <task id="LOCAL-00027" summary="Переработано меню бота, добавлено инлайн меню бота.">
-      <option name="closed" value="true" />
-      <created>1745093080059</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1745093080059</updated>
     </task>
     <task id="LOCAL-00028" summary="Переработано меню бота, добавлено инлайн меню бота.">
       <option name="closed" value="true" />
@@ -612,7 +554,63 @@
       <option name="project" value="LOCAL" />
       <updated>1761745126207</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="Добавлена отправка видео при старте бота и инструкция к боту.">
+      <option name="closed" value="true" />
+      <created>1761829041947</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1761829041947</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Добавлена отправка видео при старте бота и инструкция к боту.">
+      <option name="closed" value="true" />
+      <created>1761829606735</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1761829606735</updated>
+    </task>
+    <task id="LOCAL-00072" summary="Добавлена отправка видео при старте бота и инструкция к боту.">
+      <option name="closed" value="true" />
+      <created>1761829920869</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1761829920869</updated>
+    </task>
+    <task id="LOCAL-00073" summary="Добавлена отправка видео при старте бота и инструкция к боту.">
+      <option name="closed" value="true" />
+      <created>1761832765243</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1761832765243</updated>
+    </task>
+    <task id="LOCAL-00074" summary="Добавлена отправка видео при старте бота и инструкция к боту.">
+      <option name="closed" value="true" />
+      <created>1761833850302</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1761833850302</updated>
+    </task>
+    <task id="LOCAL-00075" summary="Добавлена отправка видео при старте бота и инструкция к боту.">
+      <option name="closed" value="true" />
+      <created>1761834237568</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1761834237568</updated>
+    </task>
+    <task id="LOCAL-00076" summary="Добавлена отправка видео при старте бота и инструкция к боту.">
+      <option name="closed" value="true" />
+      <created>1761834978461</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1761834978461</updated>
+    </task>
+    <option name="localTasksCounter" value="77" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -627,7 +625,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Теперь проверка пользователя в амо происходит по номеру tg_id. &#10;Если номера нет, то по телефону и при успехе tg_id добавляется в карточку пользователя" />
     <MESSAGE value="Оптимизирован по основной аккаунт амоCRM" />
     <MESSAGE value="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости." />
     <MESSAGE value="Внесены изменения в функцию get_next_status" />
@@ -652,7 +649,8 @@
     <MESSAGE value="Добавлена передача чекбокса &quot;Заполнить по прошлому заказу&quot; в чат-бот и в сделку АМО. &#10;Клавиатура с запросом контакта сделана нескрываемой." />
     <MESSAGE value="Изменено примечание сделки" />
     <MESSAGE value="Добавлено логгирование в бд redis" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлено логгирование в бд redis" />
+    <MESSAGE value="Добавлена отправка видео при старте бота и инструкция к боту." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена отправка видео при старте бота и инструкция к боту." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
