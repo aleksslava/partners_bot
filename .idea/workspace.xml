@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена отправка видео при старте бота и инструкция к боту.">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена рассылка сообщений через чат-бот">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keybooards/main_keyboards.py" beforeDir="false" afterPath="$PROJECT_DIR$/keybooards/main_keyboards.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,14 +215,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00028" summary="Переработано меню бота, добавлено инлайн меню бота.">
-      <option name="closed" value="true" />
-      <created>1745093230340</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1745093230340</updated>
     </task>
     <task id="LOCAL-00029" summary="Исправлена ошибка в обработчике запроса контакта пользователя">
       <option name="closed" value="true" />
@@ -610,7 +600,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761834978461</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Добавлена рассылка сообщений через чат-бот">
+      <option name="closed" value="true" />
+      <created>1761910431576</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1761910431576</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -625,7 +623,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Оптимизирован по основной аккаунт амоCRM" />
     <MESSAGE value="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости." />
     <MESSAGE value="Внесены изменения в функцию get_next_status" />
     <MESSAGE value="Добавлена ошибка при отсутствии привязанных покупателей к пользователю. &#10;Добавлена обработка нулевых значений полей покупателя" />
@@ -650,7 +647,8 @@
     <MESSAGE value="Изменено примечание сделки" />
     <MESSAGE value="Добавлено логгирование в бд redis" />
     <MESSAGE value="Добавлена отправка видео при старте бота и инструкция к боту." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлена отправка видео при старте бота и инструкция к боту." />
+    <MESSAGE value="Добавлена рассылка сообщений через чат-бот" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлена рассылка сообщений через чат-бот" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

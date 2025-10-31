@@ -375,16 +375,14 @@ async def forward_spam_message(callback: CallbackQuery, bot: Bot, redis: Redis):
     answer, message_id = callback.data.split('_')
     if answer == 'spamyes':
         await callback.message.edit_text(text='Рассылка запущена.\nО результате будет оповещение.')
-        good_try = 2
+        good_try = 0
         bad_try = 0
-        await bot.copy_message(chat_id=int(784343277), message_id=int(message_id), from_chat_id=from_chat_id)
-        await bot.copy_message(chat_id=int(365884966), message_id=int(message_id), from_chat_id=from_chat_id)
-        # async for chat_id in redis.scan_iter():
-        #     try:
-        #         await bot.copy_message(chat_id=int(chat_id), message_id=int(message_id), from_chat_id=from_chat_id)
-        #         good_try += 1
-        #     except BaseException:
-        #         bad_try += 1
+        async for chat_id in redis.scan_iter():
+            try:
+                await bot.copy_message(chat_id=int(chat_id), message_id=int(message_id), from_chat_id=from_chat_id)
+                good_try += 1
+            except BaseException:
+                bad_try += 1
         await callback.message.reply(text=f'Рассылка совершена!\nУспешных отправок: {good_try}\n'
                                            f'Несостоявшихся отправок: {bad_try}')
     else:
