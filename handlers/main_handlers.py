@@ -396,7 +396,6 @@ async def answer_message(message: Message, bot: Bot):
 @main_router.message(F.web_app_data.data != None)  # Хэндлер для обработки заказа из webapp
 async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     raw_json = json.loads(message.web_app_data.data)
-    pprint(raw_json)
     full_price = raw_json.get('total')
     contact_id = raw_json.get('userId')
     custom_data = LeadData(raw_json=raw_json, fields_id=fields_id)
