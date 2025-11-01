@@ -463,7 +463,7 @@ class AmoCRMWrapper:
         logger.info(f'Запись ID_telegram: {tg_id} и username: {username} в контакт покупателя: {id_contact}\n'
                     f'Статус операции: {response.status_code}')
 
-    def send_lead_to_amo(self, pipeline_id: int, status_id: int, tag_id: int, contact_id: int,
+    def send_lead_to_amo(self, pipeline_id: int, status_id: int, tags_data: list, contact_id: int,
                          price: int, custom_fields_data: list):
         url = f'/api/v4/leads'
         data = [{
@@ -475,11 +475,7 @@ class AmoCRMWrapper:
             'responsible_user_id': 453498,
             'custom_fields_values': custom_fields_data,
             '_embedded': {
-                'tags': [
-                    {
-                        'id': tag_id
-                    }
-                ],
+                'tags': tags_data,
                 'contacts': [
                     {
                         'id': contact_id
@@ -565,6 +561,19 @@ class AmoCRMWrapper:
         customer = Customer(fields_id)
         customer = customer(customer_dct)
         return customer
+
+
+    def get_customers_list_if_tg(self):
+        url = f'/api/v4/customers/'
+        limit = 250
+        page = 1
+        filter = {
+            'filter[custom_fields][5B1104992][from]': '1',
+            # 'page': '1'
+        }
+        response = self._base_request(type='get_param', endpoint=url, parameters=filter)
+        logger.info(f'Статус код запроса записей покупателя: {response.status_code}')
+        return response.json()
 
 
 if __name__ == '__main__':

@@ -1,5 +1,7 @@
 import asyncio
 import logging
+from pprint import pprint
+
 from redis.asyncio.client import Redis
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
@@ -48,6 +50,7 @@ async def main():
         amocrm_access_token=config.amo_config.amocrm_access_token,
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
+
 
     dp = Dispatcher()
 

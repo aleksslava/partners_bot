@@ -167,6 +167,17 @@ class LeadData: # Класс описывает подготовку и пере
                  }
         return data
 
+    def get_need_manager_checkbox(self):
+        value = self.raw_json.get('HelpManagerNeed', False)
+        data = {
+                    'field_id': self.custom_fields.get('need_manager_checkbox'), # Чекбокс оплаты картой
+                    'values': [
+                        {
+                            'value': value
+                        }
+                    ]}
+        return data
+
     def get_inn_data(self):
         inn_field_id = self.custom_fields.get('inn')
         inn_value = self.raw_json.get('inn', '')
@@ -260,8 +271,20 @@ class LeadData: # Класс описывает подготовку и пере
         custom_fields_data.append(self.get_project_name_data())
         custom_fields_data.append(self.get_appeal_type())
         custom_fields_data.append(self.get_lead_target_data())
+        custom_fields_data.append(self.get_need_manager_checkbox())
         return custom_fields_data
 
+    def get_lead_tags(self):
+        chat_bot_tag_id = self.fields_id.get('tag_id')
+        need_help_tag = self.fields_id.get('need_help_tag')
+        tag_list = [chat_bot_tag_id]
+        if self.raw_json.get('HelpManagerNeed', False):
+            tag_list.append(need_help_tag)
+
+        data = [{
+            'id': value
+        } for value in tag_list]
+        return data
 
 def get_lead_total(record):
     field_total_id = 1105084

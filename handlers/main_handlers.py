@@ -396,6 +396,7 @@ async def answer_message(message: Message, bot: Bot):
 @main_router.message(F.web_app_data.data != None)  # Хэндлер для обработки заказа из webapp
 async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
     raw_json = json.loads(message.web_app_data.data)
+    pprint(raw_json)
     full_price = raw_json.get('total')
     contact_id = raw_json.get('userId')
     custom_data = LeadData(raw_json=raw_json, fields_id=fields_id)
@@ -409,7 +410,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
             #Создание нового лида в статусе "КП отправлено"
             response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
                                                 status_id=fields_id.get('status_id_kp'),
-                                                tag_id=fields_id.get('tag_id'),
+                                                tags_data=custom_data.get_lead_tags(),
                                                 contact_id=int(contact_id),
                                                 price=int(full_price),
                                                 custom_fields_data=custom_data.get_custom_fields_data())
@@ -418,7 +419,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
             # Создание нового заказа в статусе "Новый заказ"
             response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
                                                 status_id=fields_id.get('status_id_order'),
-                                                tag_id=fields_id.get('tag_id'),
+                                                tags_data=custom_data.get_lead_tags(),
                                                 contact_id=int(contact_id),
                                                 price=int(full_price),
                                                 custom_fields_data=custom_data.get_custom_fields_data())

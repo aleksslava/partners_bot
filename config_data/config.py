@@ -14,11 +14,12 @@ fields_id = {
     'full_price': 1105022,
     'pipeline_id': 1628622, #  7411865 - воронка тест 1628622 - воронка партнёры
     'tag_id': 606054,
+    'need_help_tag': 607773,
     'status_id_order': 32809260, #  61586805 - статус переговоры 32809260 - статус новый заказ
     'status_id_kp': 39080307, # статус КП отправлено
     'chat_id': -4950490417,
     'catalog_id': 1682,
-    'web_app_url': 'https://aleksslava.github.io/website.github.io/',
+    'web_app_url': 'https://aleksslava.github.io/testwebapp.github.io/',
     'contacts_fields_id': {
         'tg_id_field': 1097296,
         'tg_username_field': 1097294
@@ -35,6 +36,7 @@ fields_id = {
         'partner_project_id': 938609,
         'appeal_type_field_id': 961948,
         'lead_target_field_id': 1103658,
+        'need_manager_checkbox': 1105727,
     }
 }
 
