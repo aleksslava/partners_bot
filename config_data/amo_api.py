@@ -258,6 +258,7 @@ class AmoCRMWrapper:
 
     def get_contact_by_phone(self, phone_number, with_customer=False) -> tuple:
         phone_number = str(phone_number)[1:]
+
         url = '/api/v4/contacts'
         if with_customer:
             query = str(f'query={phone_number}&with=customers')
@@ -266,7 +267,7 @@ class AmoCRMWrapper:
         contact = self._base_request(endpoint=url, type="get_param", parameters=query)
         if contact.status_code == 200:
             contacts_list = contact.json()['_embedded']['contacts']
-            pprint(contact.json())
+
 
             return True, contacts_list[0]
         elif contact.status_code == 204:

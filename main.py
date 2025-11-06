@@ -50,8 +50,7 @@ async def main():
         amocrm_access_token=config.amo_config.amocrm_access_token,
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
-    customer = amo_api.get_customer_by_phone(phone_number=79265820067)
-    pprint(customer, indent=4)
+
 
     dp = Dispatcher()
 
