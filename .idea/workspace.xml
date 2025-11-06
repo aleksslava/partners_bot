@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Исправлено выставление КП, убрана скидка.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,22 +215,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты">
-      <option name="closed" value="true" />
-      <created>1745156581376</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1745156581376</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Изменена функция get_contact. &#10;Теперь даже если есть записанный tg_id, вывод информации будет произведен">
-      <option name="closed" value="true" />
-      <created>1745239631658</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1745239631658</updated>
     </task>
     <task id="LOCAL-00036" summary="Добавлен вывод ошибок пользователю">
       <option name="closed" value="true" />
@@ -610,7 +592,23 @@
       <option name="project" value="LOCAL" />
       <updated>1762432849355</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="Исправлено выставление КП, убрана скидка.">
+      <option name="closed" value="true" />
+      <created>1762440811982</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1762440811982</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Исправлено выставление КП, убрана скидка.">
+      <option name="closed" value="true" />
+      <created>1762441137827</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1762441137827</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
