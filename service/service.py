@@ -139,7 +139,10 @@ class LeadData: # Класс описывает подготовку и пере
             return 'Я.Доставка'
 
     def get_discount_data(self):
-        discount_value = self.get_discount()
+        if self.raw_json.get('type') == 'commercial_offer':
+            discount_value = '0'
+        else:
+            discount_value = self.get_discount()
         data = {
                     'field_id': self.custom_fields.get('discount_field'), # Поле скидки в сделке
                     'values': [
