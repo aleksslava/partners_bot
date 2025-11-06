@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Добавлена рассылка сообщений через чат-бот">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Исправлено выставление КП, убрана скидка.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
@@ -58,21 +58,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.amo_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.jinja_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_amo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/Desktop/Новая папка/script.js&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.amo_api.executor": "Run",
+    "Python.jinja_test.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.test_amo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/solom/Desktop/Новая папка/script.js",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\solom\PycharmProjects\partners_bot\config_data" />
@@ -217,38 +217,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона.">
-      <option name="closed" value="true" />
-      <created>1745154620436</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1745154620436</updated>
-    </task>
-    <task id="LOCAL-00031" summary="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона.">
-      <option name="closed" value="true" />
-      <created>1745154992320</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1745154992320</updated>
-    </task>
-    <task id="LOCAL-00032" summary="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона.">
-      <option name="closed" value="true" />
-      <created>1745155424554</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1745155424554</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты">
-      <option name="closed" value="true" />
-      <created>1745155912825</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1745155912825</updated>
     </task>
     <task id="LOCAL-00034" summary="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты">
       <option name="closed" value="true" />
@@ -610,7 +578,39 @@
       <option name="project" value="LOCAL" />
       <updated>1761914910721</updated>
     </task>
-    <option name="localTasksCounter" value="79" />
+    <task id="LOCAL-00079" summary="Добавлен тег помощь менеджера и обработка одноимённого чекбокса">
+      <option name="closed" value="true" />
+      <created>1762010543925</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1762010543925</updated>
+    </task>
+    <task id="LOCAL-00080" summary="Добавлен тег помощь менеджера и обработка одноимённого чекбокса">
+      <option name="closed" value="true" />
+      <created>1762010564172</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1762010564172</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Добавлен тег помощь менеджера и обработка одноимённого чекбокса">
+      <option name="closed" value="true" />
+      <created>1762010640319</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1762010640319</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Исправлено выставление КП, убрана скидка.">
+      <option name="closed" value="true" />
+      <created>1762432849355</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1762432849355</updated>
+    </task>
+    <option name="localTasksCounter" value="83" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -625,8 +625,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавлена возможность посмотреть связанные с партнёром котакты и скрыть при необходимости." />
-    <MESSAGE value="Внесены изменения в функцию get_next_status" />
     <MESSAGE value="Добавлена ошибка при отсутствии привязанных покупателей к пользователю. &#10;Добавлена обработка нулевых значений полей покупателя" />
     <MESSAGE value="Переработано меню бота, добавлено инлайн меню бота." />
     <MESSAGE value="Исправлена ошибка в обработчике запроса контакта пользователя" />
@@ -650,7 +648,9 @@
     <MESSAGE value="Добавлено логгирование в бд redis" />
     <MESSAGE value="Добавлена отправка видео при старте бота и инструкция к боту." />
     <MESSAGE value="Добавлена рассылка сообщений через чат-бот" />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлена рассылка сообщений через чат-бот" />
+    <MESSAGE value="Добавлен тег помощь менеджера и обработка одноимённого чекбокса" />
+    <MESSAGE value="Исправлено выставление КП, убрана скидка." />
+    <option name="LAST_COMMIT_MESSAGE" value="Исправлено выставление КП, убрана скидка." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
