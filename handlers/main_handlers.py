@@ -26,10 +26,10 @@ logger = logging.getLogger(__name__)
 
 @main_router.message(CommandStart())  # Хэндлер для обработки команды /start
 async def command_start_process(message: Message):
-    try:
-        await message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
-    except BaseException as error:
-        logger.error(error)
+    # try:
+    #     await message.answer_video(video='BAACAgIAAxkBAAIEzGkDLp9OWJMOfxossVWEHioSDdtQAALjiwACJ0kZSB1oJGqY-v-vNgQ')
+    # except BaseException as error:
+    #     logger.error(error)
     await message.answer(text='<b>Основное меню чат-бота HiTE PRO!</b>',
                          reply_markup=await get_start_keyboard(start_menu))
 
