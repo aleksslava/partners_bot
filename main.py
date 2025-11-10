@@ -51,6 +51,8 @@ async def main():
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
 
+    # response = amo_api.get_customer_by_phone(phone_number='+79916173505')
+    # pprint(response, indent=4)
 
     dp = Dispatcher()
 

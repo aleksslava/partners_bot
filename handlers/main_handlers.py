@@ -165,8 +165,11 @@ async def command_contacts_process_cl(callback: CallbackQuery):
 
 
 @main_router.message(Command(commands='shop'))  # Хэндлер для обработки команды /shop
-async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
+async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot,
+                               redis: Redis):
     tg_id = message.from_user.id
+    user_name = message.from_user.username
+    await redis.set(name=str(tg_id), value=user_name)
     customer = amo_api.get_customer_by_tg_id(tg_id)
     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
 
@@ -210,9 +213,11 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
 
 
 @main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"
-async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
+async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot,
+                                  redis: Redis):
     tg_id = callback.from_user.id
-
+    user_name = callback.from_user.username
+    await redis.set(name=str(tg_id), value=user_name)
     customer = amo_api.get_customer_by_tg_id(tg_id)
     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
 
