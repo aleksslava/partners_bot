@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import time
 from pprint import pprint
 
 from redis.asyncio.client import Redis
@@ -39,6 +40,7 @@ async def main():
     )
     await set_main_menu(bot, start_menu)
 
+
     # Создаём объект связи с API AMOCRM
     amo_api = AmoCRMWrapper(
         path=config.amo_config.path_to_env,
@@ -51,8 +53,7 @@ async def main():
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
 
-    # response = amo_api.get_customer_by_phone(phone_number='+79916173505')
-    # pprint(response, indent=4)
+
 
     dp = Dispatcher()
 

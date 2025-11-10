@@ -1,13 +1,12 @@
 import logging
+import time
 from pprint import pprint
 from typing import Any, Awaitable, Callable, Dict
-
+import asyncio
 from aiogram import BaseMiddleware, Bot
 from aiogram.types import TelegramObject
 from redis.asyncio import Redis
-
 from config_data.amo_api import AmoCRMWrapper
-
 logger = logging.getLogger(__name__)
 
 
@@ -16,7 +15,7 @@ class OuterMiddleware(BaseMiddleware):
                  amo_api: AmoCRMWrapper,
                  fields_id: dict,
                  bot: Bot,
-                 redis: Redis
+                 redis: Redis,
                  ):
         self.amo_api = amo_api
         self.fields_id = fields_id
@@ -30,11 +29,13 @@ class OuterMiddleware(BaseMiddleware):
         data: Dict[str, Any],
     ) -> Any:
 
+
         data['redis'] = self.redis
         data['amo_api'] = self.amo_api
         data['fields_id'] = self.fields_id
 
         result = await handler(event, data)
+
 
 
 

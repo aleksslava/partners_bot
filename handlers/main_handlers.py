@@ -3,6 +3,7 @@ import json
 import os
 from pprint import pprint
 
+import aiogram.exceptions
 from redis.asyncio.client import Redis
 from service.service import LeadData
 from service.service import Order, get_kp_pdf
@@ -80,8 +81,10 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
             responsible_manager = amo_api.get_responsible_user_by_id(int(customer.get('responsible_user_id')))
             customer['manager'] = responsible_manager
             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
+
             await callback.message.edit_text(text=account_info(customer_params),
                                              reply_markup=await get_contacts_list(customer_params.id))
+
         else:
             # Если tg_id нет в бд, то ищем по номеру телефона
             name = callback.message.chat.first_name
