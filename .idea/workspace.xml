@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Изменён алгоритм записи пользователей в бд">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="ОБработка ошибок redis">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,14 +215,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Исправлен вывод текстов сообщений">
-      <option name="closed" value="true" />
-      <created>1745246841599</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1745246841599</updated>
     </task>
     <task id="LOCAL-00040" summary="Исправлен вывод текстов сообщений">
       <option name="closed" value="true" />
@@ -609,7 +600,15 @@
       <option name="project" value="LOCAL" />
       <updated>1762758133939</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="ОБработка ошибок redis">
+      <option name="closed" value="true" />
+      <created>1763031061364</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1763031061364</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -624,7 +623,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Переработано меню бота, добавлено инлайн меню бота." />
     <MESSAGE value="Исправлена ошибка в обработчике запроса контакта пользователя" />
     <MESSAGE value="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона." />
     <MESSAGE value="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты" />
@@ -649,7 +647,8 @@
     <MESSAGE value="Добавлен тег помощь менеджера и обработка одноимённого чекбокса" />
     <MESSAGE value="Исправлено выставление КП, убрана скидка." />
     <MESSAGE value="Изменён алгоритм записи пользователей в бд" />
-    <option name="LAST_COMMIT_MESSAGE" value="Изменён алгоритм записи пользователей в бд" />
+    <MESSAGE value="ОБработка ошибок redis" />
+    <option name="LAST_COMMIT_MESSAGE" value="ОБработка ошибок redis" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
