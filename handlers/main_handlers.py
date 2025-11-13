@@ -225,8 +225,9 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
     user_name = callback.from_user.username
     try:
         await redis.set(name=str(tg_id), value=user_name)
-    except:
-        logger.error(f'Не получиось записать в бд id: {tg_id}')
+    except BaseException as error:
+        logger.error(error)
+        logger.error(f'Не получилось записать в бд id: {tg_id}')
     customer = amo_api.get_customer_by_tg_id(tg_id)
     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
 

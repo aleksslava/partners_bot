@@ -5,8 +5,8 @@ import environs
 from environs import Env
 
 fields_id = {
-    'manager_id_field': 1506979,
-    'tg_id_field': 1104992,
+    'manager_id_field': 1506979, # Поле отв. менеджер
+    'tg_id_field': 1104992, # Поле tg_id партнёра
     'status_id_field': 972634,
     'by_this_period_id_field': 1104934,
     'bonuses_id_field': 971580,
