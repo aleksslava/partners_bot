@@ -12,14 +12,14 @@ fields_id = {
     'bonuses_id_field': 971580,
     'town_id_field': 972054,
     'full_price': 1105022,
-    'pipeline_id': 7411865, #  7411865 - воронка тест 1628622 - воронка партнёры
+    'pipeline_id': 1628622, #  7411865 - воронка тест 1628622 - воронка партнёры
     'tag_id': 606054,
     'need_help_tag': 607773,
-    'status_id_order': 61586805, #  61586805 - статус переговоры 32809260 - статус новый заказ
+    'status_id_order': 32809260, #  61586805 - статус переговоры 32809260 - статус новый заказ
     'status_id_kp': 39080307, # статус КП отправлено
     'chat_id': -4950490417,
     'catalog_id': 1682,
-    'web_app_url': 'https://aleksslava.github.io/testwebapp.github.io/',
+    'web_app_url': 'https://aleksslava.github.io/website.github.io/',
     'contacts_fields_id': {
         'tg_id_field': 1097296,
         'tg_username_field': 1097294
