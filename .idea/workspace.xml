@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="ОБработка ошибок redis">
+    <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Смена воронки и этапа на основную">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,21 +59,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.amo_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.jinja_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_amo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/Desktop/Новая папка/script.js&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.amo_api.executor": "Run",
+    "Python.jinja_test.executor": "Run",
+    "Python.main.executor": "Debug",
+    "Python.test.executor": "Run",
+    "Python.test_amo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/solom/Desktop/Новая папка/script.js",
+    "settings.editor.selected.configurable": "http.certificates"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\solom\PycharmProjects\partners_bot\config_data" />
@@ -193,10 +196,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.amo_api" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.jinja_test" />
         <item itemvalue="Python.test_amo" />
-        <item itemvalue="Python.amo_api" />
       </list>
     </recent_temporary>
   </component>
@@ -215,30 +218,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Исправлен вывод текстов сообщений">
-      <option name="closed" value="true" />
-      <created>1745247538326</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1745247538326</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Исправлен вывод текстов сообщений">
-      <option name="closed" value="true" />
-      <created>1745247713227</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1745247713227</updated>
-    </task>
-    <task id="LOCAL-00042" summary="Исправлен вывод текстов сообщений">
-      <option name="closed" value="true" />
-      <created>1745247937786</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1745247937786</updated>
     </task>
     <task id="LOCAL-00043" summary="Исправлен вывод текстов сообщений">
       <option name="closed" value="true" />
@@ -608,7 +587,31 @@
       <option name="project" value="LOCAL" />
       <updated>1763031061364</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="ОБработка ошибок redis">
+      <option name="closed" value="true" />
+      <created>1763042293272</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1763042293272</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Смена воронки и этапа на тестовое">
+      <option name="closed" value="true" />
+      <created>1763043279854</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1763043279854</updated>
+    </task>
+    <task id="LOCAL-00091" summary="Смена воронки и этапа на основную">
+      <option name="closed" value="true" />
+      <created>1763045165005</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1763045165005</updated>
+    </task>
+    <option name="localTasksCounter" value="92" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -623,8 +626,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Исправлена ошибка в обработчике запроса контакта пользователя" />
-    <MESSAGE value="Добавлена проверка наличия tg_id в аккаунте партнёра, при поиске по номеру телефона." />
     <MESSAGE value="Исправлена почта отдела партнёров.&#10;Добавлена ссылка на телеграм в контакты" />
     <MESSAGE value="Изменена функция get_contact. &#10;Теперь даже если есть записанный tg_id, вывод информации будет произведен" />
     <MESSAGE value="Добавлен вывод ошибок пользователю" />
@@ -648,10 +649,64 @@
     <MESSAGE value="Исправлено выставление КП, убрана скидка." />
     <MESSAGE value="Изменён алгоритм записи пользователей в бд" />
     <MESSAGE value="ОБработка ошибок redis" />
-    <option name="LAST_COMMIT_MESSAGE" value="ОБработка ошибок redis" />
+    <MESSAGE value="Смена воронки и этапа на тестовое" />
+    <MESSAGE value="Смена воронки и этапа на основную" />
+    <option name="LAST_COMMIT_MESSAGE" value="Смена воронки и этапа на основную" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>258</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>259</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>262</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>261</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>263</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>264</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>265</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>266</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>267</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
+          <line>268</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">

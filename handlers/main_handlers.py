@@ -222,7 +222,7 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
 async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot,
                                   redis: Redis):
     tg_id = callback.from_user.id
-    user_name = callback.from_user.username
+    user_name = callback.from_user.username if callback.from_user.username is not None else ''
     try:
         await redis.set(name=str(tg_id), value=user_name)
     except BaseException as error:
