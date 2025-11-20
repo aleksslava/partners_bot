@@ -112,7 +112,7 @@ async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict)
                 f'Username: {contact_username}\n'
                 f'TG_ID: {message.from_user.id}')
     customer = amo_api.get_customer_by_phone(contact_phone)
-    logger.info(f'Ответ функции на запрос покупателя: {customer}')
+
     if customer[0]:
         contact_id = customer[2].get('id')
         responsible_manager = amo_api.get_responsible_user_by_id(int(customer[1].get('responsible_user_id')))

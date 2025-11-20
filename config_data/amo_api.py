@@ -266,9 +266,9 @@ class AmoCRMWrapper:
         else:
             query = str(f'query={phone_number}')
         contact = self._base_request(endpoint=url, type="get_param", parameters=query)
+
         if contact.status_code == 200:
             contacts_list = contact.json()['_embedded']['contacts']
-
 
             return True, contacts_list[0]
         elif contact.status_code == 204:
@@ -281,7 +281,6 @@ class AmoCRMWrapper:
 
     def get_customer_by_phone(self, phone_number) -> tuple:
         contact = self.get_contact_by_phone(phone_number, with_customer=True)
-        logger.info(f'Получен ответ от АМО на запрос контакта: {contact}')
         if contact[0]:  # Проверка, что ответ от сервера получен
             contact = contact[1]
             customer_list = contact['_embedded']['customers']
