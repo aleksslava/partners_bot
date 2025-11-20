@@ -107,8 +107,12 @@ async def info_handler_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, field
 async def get_contact(message: Message, amo_api: AmoCRMWrapper, fields_id: dict):
     contact_phone = message.contact.phone_number
     contact_username = '@' + message.from_user.username if message.from_user.username is not None else ''
-
+    logger.info(f'Получен контакт клиента для авторизации:\n'
+                f'Номер телефона: {contact_phone}\n'
+                f'Username: {contact_username}\n'
+                f'TG_ID: {message.from_user.id}')
     customer = amo_api.get_customer_by_phone(contact_phone)
+    logger.info(f'Ответ функции на запрос покупателя: {customer}')
     if customer[0]:
         contact_id = customer[2].get('id')
         responsible_manager = amo_api.get_responsible_user_by_id(int(customer[1].get('responsible_user_id')))

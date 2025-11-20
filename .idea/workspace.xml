@@ -7,7 +7,6 @@
     <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Смена воронки и этапа на основную">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,21 +58,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Python.amo_api.executor": "Run",
-    "Python.jinja_test.executor": "Run",
-    "Python.main.executor": "Debug",
-    "Python.test.executor": "Run",
-    "Python.test_amo.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/solom/Desktop/Новая папка/script.js",
-    "settings.editor.selected.configurable": "http.certificates"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Python.amo_api.executor&quot;: &quot;Run&quot;,
+    &quot;Python.jinja_test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_amo.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/Desktop/Новая папка/script.js&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;http.certificates&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\solom\PycharmProjects\partners_bot\config_data" />
@@ -218,14 +217,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Исправлен вывод текстов сообщений">
-      <option name="closed" value="true" />
-      <created>1745248093508</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1745248093508</updated>
     </task>
     <task id="LOCAL-00044" summary="Исправлен вывод текстов сообщений">
       <option name="closed" value="true" />
@@ -611,7 +602,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763045165005</updated>
     </task>
-    <option name="localTasksCounter" value="92" />
+    <task id="LOCAL-00092" summary="Смена воронки и этапа на основную">
+      <option name="closed" value="true" />
+      <created>1763537744136</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1763537744136</updated>
+    </task>
+    <option name="localTasksCounter" value="93" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -655,58 +654,6 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>258</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>259</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>262</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>261</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>263</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>264</line>
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>265</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>266</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>267</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/config_data/amo_api.py</url>
-          <line>268</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
-      </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
           <properties notifyOnTerminate="true" exception="BaseException">
@@ -719,6 +666,7 @@
       <configuration name="PythonConfigurationType">
         <watch expression="client_secret" />
         <watch expression="client_secret" />
+        <watch expression="contact" />
       </configuration>
     </watches-manager>
   </component>

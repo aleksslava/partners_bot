@@ -56,7 +56,6 @@ async def main():
 
 
 
-
     dp = Dispatcher()
 
     dp.include_router(main_router)

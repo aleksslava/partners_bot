@@ -258,6 +258,7 @@ class AmoCRMWrapper:
 
     def get_contact_by_phone(self, phone_number, with_customer=False) -> tuple:
         phone_number = str(phone_number)[1:]
+        logger.info(f'Получен телефон клиента: {[phone_number]}')
 
         url = '/api/v4/contacts'
         if with_customer:
@@ -280,7 +281,7 @@ class AmoCRMWrapper:
 
     def get_customer_by_phone(self, phone_number) -> tuple:
         contact = self.get_contact_by_phone(phone_number, with_customer=True)
-
+        logger.info(f'Получен ответ от АМО на запрос контакта: {contact}')
         if contact[0]:  # Проверка, что ответ от сервера получен
             contact = contact[1]
             customer_list = contact['_embedded']['customers']
@@ -295,6 +296,7 @@ class AmoCRMWrapper:
             customer = self._base_request(endpoint=url, type='get').json()
 
             return True, customer, contact
+
         else:
             return contact
 
