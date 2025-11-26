@@ -71,7 +71,7 @@ class Order:
         organizationBik = self.raw_json.get('organizationBik', '')
         organizationAccount = self.raw_json.get('organizationAccount', '')
         response_payments = f'Тип оплаты: {payment_type}\n' if payment_type else ''
-        if payment_type == 'Счет на оплату':
+        if payment_type == 'Счет на оплату (без НДС)':
             payment_details = (f'Реквизиты:\n'
                                f'ИНН: {organizationInn}\n'
                                f'Юр.адрес: {organizationAddress}\n'

@@ -493,6 +493,8 @@ class AmoCRMWrapper:
         response = self._base_request(type='post', endpoint=url, data=data)
         return response.json()
 
+
+
     def add_new_note_to_lead(self, lead_id, text):
         url = f'/api/v4/leads/{lead_id}/notes'
         data = [
@@ -580,6 +582,27 @@ class AmoCRMWrapper:
         response = self._base_request(type='get_param', endpoint=url, parameters=filter)
         logger.info(f'Статус код запроса записей покупателя: {response.status_code}')
         return response.json()
+
+    def create_new_contact(self, first_name: str, last_name: str, phone: str):
+        url = '/api/v4/contacts'
+        data = [{
+            'first_name': first_name,
+            'last_name': last_name,
+            'responsible_user_id': 11047749,
+            'custom_fields_values': [
+                {"field_id": 671750,
+                 "values": [
+                     {'enum_code': 'WORK',
+                      "value": str(phone)
+                      },]
+                 }
+            ],
+        }]
+        response = self._base_request(type='post', endpoint=url, data=data)
+        print(response)
+        contact_id = response.json().get('_embedded').get('contacts')[0].get('id')
+        return contact_id
+
 
 
 if __name__ == '__main__':

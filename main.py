@@ -3,6 +3,7 @@ import logging
 import time
 from pprint import pprint
 
+import requests
 from redis.asyncio.client import Redis
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
@@ -54,7 +55,8 @@ async def main():
     )
 
 
-
+    # response = amo_api.get_customer_by_phone(phone_number='79670215847')
+    # pprint(response, indent=4)
 
     dp = Dispatcher()
 
