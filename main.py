@@ -16,7 +16,7 @@ from keybooards.main_keyboards import set_main_menu
 from lexicon.lexicon_ru import start_menu
 
 
-redis = Redis(decode_responses=True, host='localhost')
+
 
 
 # Инициализация логера
@@ -54,9 +54,8 @@ async def main():
         amocrm_refresh_token=config.amo_config.amocrm_refresh_token
     )
 
+    redis = Redis(decode_responses=True, host='localhost')
 
-    # response = amo_api.get_customer_by_phone(phone_number='79670215847')
-    # pprint(response, indent=4)
 
     dp = Dispatcher()
 

@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Смена воронки и этапа на основную">
-      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,14 +215,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Исправлен вывод текстов сообщений">
-      <option name="closed" value="true" />
-      <created>1745249198249</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1745249198249</updated>
     </task>
     <task id="LOCAL-00047" summary="Исправлен вывод текстов сообщений">
       <option name="closed" value="true" />
@@ -611,7 +600,15 @@
       <option name="project" value="LOCAL" />
       <updated>1763632193709</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="Смена воронки и этапа на основную">
+      <option name="closed" value="true" />
+      <created>1764144619525</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1764144619526</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
