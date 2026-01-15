@@ -1,9 +1,8 @@
 import asyncio
 import logging
-import time
-from pprint import pprint
 
-import requests
+
+
 from redis.asyncio.client import Redis
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
@@ -14,7 +13,7 @@ from config_data.amo_api import AmoCRMWrapper
 from outer_middleware.outer_middleware import OuterMiddleware
 from keybooards.main_keyboards import set_main_menu
 from lexicon.lexicon_ru import start_menu
-from fastapi import FastAPI, Request, HTTPException
+
 
 
 
