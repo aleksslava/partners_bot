@@ -3,7 +3,7 @@ import logging
 
 
 
-from redis.asyncio.client import Redis
+from redis import Redis
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
 from aiogram.client.default import DefaultBotProperties
