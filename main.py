@@ -14,6 +14,8 @@ from config_data.amo_api import AmoCRMWrapper
 from outer_middleware.outer_middleware import OuterMiddleware
 from keybooards.main_keyboards import set_main_menu
 from lexicon.lexicon_ru import start_menu
+from fastapi import FastAPI, Request, HTTPException
+
 
 
 
@@ -55,6 +57,7 @@ async def main():
     )
 
     redis = Redis(decode_responses=True, host='localhost')
+
 
 
     dp = Dispatcher()

@@ -494,3 +494,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                     f'<a href="https://hite.amocrm.ru/contacts/detail/{contact_id}">{contact_id}</a>')
 
 
+
+
+
+
