@@ -1,11 +1,10 @@
 import logging
-import time
-from pprint import pprint
+
 from typing import Any, Awaitable, Callable, Dict
-import asyncio
+
 from aiogram import BaseMiddleware, Bot
 from aiogram.types import TelegramObject
-from fastapi import FastAPI
+
 from redis.asyncio import Redis
 from config_data.amo_api import AmoCRMWrapper
 logger = logging.getLogger(__name__)
