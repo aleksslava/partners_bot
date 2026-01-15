@@ -83,12 +83,22 @@ async def manager_button():  # Формирование клавиатуры д�
     return markup
 
 async def support_button(): # Формирование клавиатуры для связи с тех. поддержкой
-    button = InlineKeyboardButton(
+    kb_bl = InlineKeyboardBuilder()
+    button_whatsapp = InlineKeyboardButton(
         text="🟢 WhatsApp",
         url='https://wa.me/79251894560'
     )
-    markup = InlineKeyboardMarkup(inline_keyboard=[[button]])
-    return markup
+    button_telegram = InlineKeyboardButton(
+        text="🔵 Telegram",
+        url='https://t.me/HiTEPRO_Support_bot'
+    )
+    button_MAX = InlineKeyboardButton(
+        text="🟣 MAX",
+        url='https://max.ru/u/f9LHodD0cOKu6SkkFTb3JIOxqA68_5N5bi84uh-eKzyybHz80zQlCuiF3pA'
+    )
+    buttons = [button_whatsapp, button_telegram, button_MAX]
+    kb_bl.row(*buttons, width=1)
+    return kb_bl.as_markup()
 
 async def problem_button():  # Формирование клавиатуры для заполнения формы отзыва на бота
     button = InlineKeyboardButton(
