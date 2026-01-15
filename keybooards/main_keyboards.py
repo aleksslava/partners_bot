@@ -94,7 +94,7 @@ async def support_button(): # Формирование клавиатуры дл
     )
     button_MAX = InlineKeyboardButton(
         text="🟣 MAX",
-        url='https://max.ru/u/f9LHodD0cOKu6SkkFTb3JIOxqA68_5N5bi84uh-eKzyybHz80zQlCuiF3pA'
+        url='https://max.ru/u/f9LHodD0cOLgkmm1pw0Fy8nY2N3E9npARi6-3lC_qZ_FVzXQu8WdfUF0rGs'
     )
     buttons = [button_whatsapp, button_telegram, button_MAX]
     kb_bl.row(*buttons, width=1)
