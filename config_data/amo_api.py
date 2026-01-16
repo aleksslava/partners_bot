@@ -257,7 +257,7 @@ class AmoCRMWrapper:
         return response
 
     def get_contact_by_phone(self, phone_number, with_customer=False) -> tuple:
-        phone_number = str(phone_number)[1:]
+
         logger.info(f'Получен телефон клиента: {[phone_number]}')
 
         url = '/api/v4/contacts'

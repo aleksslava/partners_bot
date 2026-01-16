@@ -1,7 +1,6 @@
 import asyncio
 import logging
-
-
+from pprint import pprint
 
 from redis import Redis
 from aiogram import Bot, Dispatcher
@@ -56,8 +55,6 @@ async def main():
     )
 
     redis = Redis(decode_responses=True, host='localhost')
-
-
 
     dp = Dispatcher()
 
