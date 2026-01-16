@@ -272,7 +272,20 @@ class AmoCRMWrapper:
 
             return True, contacts_list[0]
         elif contact.status_code == 204:
-            return False, 'Контакт не найден'
+            logger.info(f'Номер телефона {[phone_number]} не найден, пробуем найти через 8')
+            phone_number = '8' + phone_number[1:]
+            logger.info(f"Пробуем найти номер {phone_number}")
+            if with_customer:
+                query = str(f'query={phone_number}&with=customers')
+            else:
+                query = str(f'query={phone_number}')
+            contact = self._base_request(endpoint=url, type="get_param", parameters=query)
+            if contact.status_code == 200:
+                contacts_list = contact.json()['_embedded']['contacts']
+                return True, contacts_list[0]
+            else:
+                return False, 'Контакт не найден'
+
         else:
             logger.error('Нет авторизации в AMO_API')
             return False, 'Произошла ошибка на сервере!'
