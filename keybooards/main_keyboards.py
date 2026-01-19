@@ -64,7 +64,7 @@ async def link_to_opt_button(lead_id):
 async def forum_button(): # Формирование клавиатуры перехода на форум
     button = InlineKeyboardButton(
         text='Перейти на форум',
-        url='https://t.me/+IvdQk0oVW8piNTA6'
+        url='https://t.me/+rZKO37Sn33NlNDdi'
     )
 
     return InlineKeyboardMarkup(inline_keyboard=[[button]])
