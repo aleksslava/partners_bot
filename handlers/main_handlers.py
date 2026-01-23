@@ -200,7 +200,7 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
                                           f'id={contact_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(is_persistent=True, keyboard=[[kb_1, ]],
                                                     resize_keyboard=True, one_time_keyboard=True)
-
+            await bot.send_message(chat_id=message.chat.id, text=Lexicon_RU['bonus_message'])
             await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
                                  reply_markup=webapp_keyboard_1)
         else:
@@ -252,7 +252,7 @@ async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrappe
                                       url=f'{web_app_url}?bonus={bonus}&'
                                           f'id={contact_id}&discont={discont}'))
             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
-
+            await bot.send_message(chat_id=callback.message.chat.id, text=Lexicon_RU['bonus_message'])
             await callback.message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
                                           reply_markup=webapp_keyboard_1)
         else:
