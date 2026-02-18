@@ -1,7 +1,6 @@
 import logging
 import json
 import os
-from pprint import pprint
 
 import aiogram.exceptions
 from redis.asyncio.client import Redis

@@ -1,5 +1,5 @@
 from pprint import pprint
-
+from typing import Optional, Any
 import dotenv
 import jwt
 import requests
@@ -524,6 +524,10 @@ class AmoCRMWrapper:
     def add_catalog_elements_to_lead(self, lead_id, catalog_id: int, elements: list[dict,]):
         url = f'/api/v4/leads/{lead_id}/link'
         data = []
+        sl300_70mm_id = 319622
+        sl500_70mm_id = 319626
+        beksetsl300_70mm_id =319614
+        beksetsl500_70mm_id = 319616
         for element in elements:
             element_id = int(element.get('modificationId'))
             quantity = int(element.get('quantity'))
@@ -535,6 +539,26 @@ class AmoCRMWrapper:
                     "catalog_id": catalog_id
                 }
             }
+            if element_id == sl300_70mm_id:
+                komplect_element_to_record = {
+                    'to_entity_id': beksetsl300_70mm_id,
+                    "to_entity_type": "catalog_elements",
+                    "metadata": {
+                        "quantity": quantity,
+                        "catalog_id": catalog_id
+                    }
+                }
+                data.append(komplect_element_to_record)
+            if element_id == sl500_70mm_id:
+                komplect_element_to_record = {
+                    'to_entity_id': beksetsl500_70mm_id,
+                    "to_entity_type": "catalog_elements",
+                    "metadata": {
+                        "quantity": quantity,
+                        "catalog_id": catalog_id
+                    }
+                }
+                data.append(komplect_element_to_record)
             data.append(element_for_record)
         response = self._base_request(type='post', endpoint=url, data=data)
         return response.json()
@@ -616,6 +640,96 @@ class AmoCRMWrapper:
         contact_id = response.json().get('_embedded').get('contacts')[0].get('id')
         return contact_id
 
+
+
+    def find_lead_by_contact_in_pipeline_stage(
+            self,
+            contact_id: str,
+            pipeline_id: str,
+            status_id: str,
+            *,
+            with_entities: bool = True
+    ) -> Optional[dict]:
+        """
+        Найти сделку по ID контакта в конкретной воронке (pipeline_id) и на конкретном этапе (status_id).
+
+        :param contact_id: ID контакта amoCRM
+        :param pipeline_id: ID воронки (pipeline)
+        :param status_id: ID этапа (status)
+        :param with_entities: если True - запросит embedded сущности (contacts и т.п.)
+        :return: dict сделки (lead) или None, если не найдено
+        :raises RuntimeError: если amoCRM вернул ошибку
+        """
+
+        # Сразу фильтруем на стороне amoCRM по контакту, чтобы не тянуть все сделки
+        params = [f"filter[contacts][id]={contact_id}"]
+
+        # Опционально можно сразу сузить по pipeline/status (если вы уверены, что amoCRM принимает эти фильтры у leads)
+        # Обычно работает:
+        params.append(f"filter[pipeline_id]={pipeline_id}")
+        params.append(f"filter[status_id]={status_id}")  # иногда фильтр статуса делают именно так
+
+        if with_entities:
+            params.append("with=contacts")
+
+        response = self._base_request(
+            type="get_param",
+            endpoint="/api/v4/leads",
+            parameters="&".join(params),
+        )
+
+
+        # requests.Response
+        if response.status_code >= 400:
+            # тут можно логировать response.text
+            raise RuntimeError(f"amoCRM error {response.status_code}: {response.text}")
+
+        payload = response.json()
+
+        # Если сделок нет, amoCRM обычно возвращает {} или {"_page":..., "_embedded": {...}}
+        embedded = payload.get("_embedded", {})
+        leads = embedded.get("leads", []) or []
+
+        if not leads:
+            return None
+
+        # На всякий случай делаем "жёсткую" проверку pipeline/status (иногда фильтры отличаются)
+        for lead in leads:
+            if int(lead.get("pipeline_id", -1)) != int(pipeline_id):
+                continue
+            if int(lead.get("status_id", -1)) != int(status_id):
+                continue
+
+            # Доп. проверка, что контакт реально привязан (если with_entities=True)
+            if with_entities:
+                lead_contacts = (
+                        lead.get("_embedded", {}).get("contacts", []) or
+                        lead.get("_embedded", {}).get("contacts", [])
+                # оставлено намеренно, на случай разных форматов
+                )
+                if lead_contacts and all(int(c.get("id", -1)) != int(contact_id) for c in lead_contacts):
+                    continue
+
+            return lead
+
+        return None
+
+    def push_lead_to_status(self, lead_id: str, pipeline_id: int, status_id: int):
+        url = f'/api/v4/leads/{int(lead_id)}'
+        data = {
+            'name': 'Автосделка из бота keyway_education',
+            'pipeline_id': int(pipeline_id),
+            'updated_by': 0,
+            'status_id': int(status_id),
+            'responsible_user_id': 453498,
+
+        }
+        response = self._base_request(type='patch', endpoint=url, data=data)
+
+        if response.status_code == 200:
+            return True
+        else:
+            return False
 
 
 if __name__ == '__main__':

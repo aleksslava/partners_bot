@@ -58,6 +58,11 @@ async def main():
     redis = Redis(decode_responses=True, host='localhost')
 
 
+
+
+
+
+
     dp = Dispatcher()
 
     dp.include_router(main_router)
