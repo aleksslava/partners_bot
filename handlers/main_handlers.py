@@ -420,6 +420,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
     logger.info(f'raw_json: {raw_json}')
     full_price = raw_json.get('total')
     contact_id = raw_json.get('userId')
+    logger.info(f'contact_id: {contact_id}, full_price: {full_price}')
     custom_data = LeadData(raw_json=raw_json, fields_id=fields_id)
     try:
 
