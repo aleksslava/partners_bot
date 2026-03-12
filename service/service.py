@@ -134,9 +134,9 @@ class LeadData: # Класс описывает подготовку и пере
     def get_delivery_type(self):
         deliveryMethod = self.raw_json.get('deliveryMethod', '')
         if deliveryMethod == 'Самовывоз':
-            return 'Офис'
+            return 'ПВЗ (ХПИ)'
         else:
-            return 'Я.Доставка'
+            return 'Доставка ТК'
 
     def get_discount_data(self):
         if self.raw_json.get('type') == 'commercial_offer':
