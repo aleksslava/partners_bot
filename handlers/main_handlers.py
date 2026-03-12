@@ -436,7 +436,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                                 contact_id=int(contact_id),
                                                 price=int(full_price),
                                                 custom_fields_data=custom_data.get_custom_fields_data())
-
+            logger.info(f'Создана сделка {response}')
         else:
             # Создание нового заказа в статусе "Новый заказ"
             response = amo_api.send_lead_to_amo(pipeline_id=fields_id.get('pipeline_id'),
@@ -446,6 +446,7 @@ async def web_app_order(message: Message, amo_api: AmoCRMWrapper, fields_id: dic
                                                 price=int(full_price),
                                                 custom_fields_data=custom_data.get_custom_fields_data())
         lead_id = response.get('_embedded').get('leads')[0].get('id')
+        logger.info(f'lead_id: {lead_id}')
         order_note = Order(raw_json=raw_json, lead_id=lead_id)
 
         # Добавление примечания в сделку
