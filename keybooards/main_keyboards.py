@@ -90,7 +90,7 @@ async def support_button(): # Формирование клавиатуры дл
     )
     button_telegram = InlineKeyboardButton(
         text="🔵 Telegram",
-        url='https://t.me/HiTEPRO_Support_bot'
+        url='https://t.me/+79251894560'
     )
     button_MAX = InlineKeyboardButton(
         text="🟣 MAX",
