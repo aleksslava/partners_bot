@@ -74,7 +74,8 @@ Lexicon_RU = {
         'first_message': '<b>Подписывайтесь на закрытый канал партнеров</b>\n'
                          'Важные новости, прямые эфиры, опросы и акции.\n'
                          'Обязательно подпишитесь, чтобы быть в курсе всех событий HiTE PRO.\n\n'
-                         '<a href="https://t.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров!</a>',
+                         '<a href="https://t.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров в telegram!</a>\n\n'
+                         '<a href="https://max.ru/join/rUDuFWBhDtCfUEMg2Jbi5GvCcSbk9HmeDOPESbtbMU8">Ссылка на канал партнёров в max!</a>',
         'second_message': '<b>Инструкции по устройствам HiTE PRO</b>\n'
                           'Текстовые и видеоинструкции по всем устройствам HiTE PRO и не только доступны на нашем сайте.\n\n'
                           '<a href="https://www.hite-pro.ru/instrukcii">Ссылка на инструкции!</a>',
@@ -93,7 +94,8 @@ Lexicon_RU = {
     'partner_kanal': '<b>Подписывайтесь на закрытый канал партнеров</b>\n'
                      'Важные новости, прямые эфиры, опросы и акции.\n'
                      'Обязательно подпишитесь, чтобы быть в курсе всех событий HiTE PRO.\n\n'
-                     '<a href="https://t.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров!</a>',
+                     '<a href="https://t.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров в telegram!</a>\n\n'
+                     '<a href="https://max.ru/join/rUDuFWBhDtCfUEMg2Jbi5GvCcSbk9HmeDOPESbtbMU8">Ссылка на канал партнёров в max!</a>',
 
     'manager': ('<b>Отдел по работе с партнерами</b>\n'
                 'Работает по будням с 9:00 до 18:00 мск.\n\n'

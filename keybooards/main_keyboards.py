@@ -55,19 +55,24 @@ async def authorized_client(commands: dict):
     return kb_bl.as_markup()
 
 async def link_to_opt_button(lead_id):
-    button = InlineKeyboardButton(
-        text='Сообщить о заказе менеджеру',
+    button_telegram = InlineKeyboardButton(
+        text='🔵 Сообщить о заказе в telegram',
         url=f'https://t.me/+79251930861?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%AF%20%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D0%BB%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%20%E2%84%96%7B{lead_id}%7D%20%D1%87%D0%B5%D1%80%D0%B5%D0%B7%20%D0%9A%D0%B0%D0%B1%D0%B8%D0%BD%D0%B5%D1%82%20%D0%BF%D0%B0%D1%80%D1%82%D0%BD%D0%B5%D1%80%D0%B0%20%D0%B2%20%D0%A2%D0%93.%20%D0%92%D1%8B%20%D0%B2%D0%B8%D0%B4%D0%B8%D1%82%D0%B5%20%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7?'
     )
-    return InlineKeyboardMarkup(inline_keyboard=[[button]])
+
+    return InlineKeyboardMarkup(inline_keyboard=[[button_telegram]])
 
 async def forum_button(): # Формирование клавиатуры перехода на форум
-    button = InlineKeyboardButton(
-        text='Перейти на форум',
+    button_telegram = InlineKeyboardButton(
+        text='Перейти на форум в telegram',
         url='https://t.me/+rZKO37Sn33NlNDdi'
     )
+    button_max = InlineKeyboardButton(
+        text='Перейти на форум в max',
+        url='https://max.ru/join/woDgvK-CGSe5x9DKQ_rZLMGwf9mT_DvvLA6Cv__iq6U'
+    )
 
-    return InlineKeyboardMarkup(inline_keyboard=[[button]])
+    return InlineKeyboardMarkup(inline_keyboard=[[button_telegram], [button_max]])
 
 
 async def manager_button():  # Формирование клавиатуры для связи с менеджером
@@ -79,7 +84,11 @@ async def manager_button():  # Формирование клавиатуры д�
         text='🔵 Telegram',
         url='https://t.me/+79251930861'
     )
-    markup = InlineKeyboardMarkup(inline_keyboard=[[button_whatsapp], [button_telegram]])
+    button_max = InlineKeyboardButton(
+        text='🟣 MAX',
+        url='https://max.ru/u/f9LHodD0cOLRJPZ-Vm5lXdFA6YvPYESWoU7_n6imsgqQorxD9nvTdH9pXxU'
+    )
+    markup = InlineKeyboardMarkup(inline_keyboard=[[button_whatsapp], [button_telegram], [button_max]])
     return markup
 
 async def support_button(): # Формирование клавиатуры для связи с тех. поддержкой
