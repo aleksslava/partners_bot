@@ -1,8 +1,12 @@
 import os.path
 from dataclasses import dataclass
+from pathlib import Path
+
 import dotenv
 import environs
 from environs import Env
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 fields_id = {
     'manager_id_field': 1506979, # Поле отв. менеджер

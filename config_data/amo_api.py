@@ -8,8 +8,10 @@ import logging
 
 from pydantic import json
 from requests.exceptions import JSONDecodeError
+from config_data.config import BASE_DIR
 
 logger = logging.getLogger(__name__)
+
 
 
 
@@ -734,7 +736,7 @@ class AmoCRMWrapper:
 
 if __name__ == '__main__':
     from config_data.config import load_config, Config
-    config: Config = load_config()
+    config: Config = load_config(BASE_DIR / '.env')
 
     amo_api = AmoCRMWrapper(
         path=config.amo_config.path_to_env,

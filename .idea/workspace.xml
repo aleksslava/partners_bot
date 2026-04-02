@@ -7,8 +7,7 @@
     <list default="true" id="b8d3623d-1cd4-4b53-9f7f-714637a95634" name="Changes" comment="Смена ссылок на форум партнёров и канал партнёров">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config_data/amo_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/amo_api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/handlers/main_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/main_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_data/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config_data/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,23 +57,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.amo_api.executor&quot;: &quot;Run&quot;,
-    &quot;Python.jinja_test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test_amo.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/solom/Desktop/Новая папка/script.js&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;http.certificates&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.amo_api.executor": "Run",
+    "Python.jinja_test.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.test_amo.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/solom/Desktop/Новая папка/script.js",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "http.certificates",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\solom\PycharmProjects\partners_bot\config_data" />
@@ -83,7 +88,7 @@
       <recent name="C:\Users\solom\PycharmProjects\partners_bot" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.amo_api">
     <configuration name="amo_api" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="partners_bot" />
       <option name="ENV_FILES" value="" />
@@ -97,6 +102,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/config_data/amo_api.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -119,6 +125,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/templates/jinja_test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -141,6 +148,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -163,6 +171,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -185,6 +194,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/config_data/test_amo.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -196,8 +206,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
         <item itemvalue="Python.amo_api" />
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.test_amo" />
         <item itemvalue="Python.jinja_test" />
@@ -207,7 +217,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
+        <option value="bundled-js-predefined-d6986cc7102b-a71380e98a7c-JavaScript-PY-252.28539.27" />
+        <option value="bundled-python-sdk-07523f343e4f-968fe969f28a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.28539.27" />
       </set>
     </attachedChunks>
   </component>
@@ -219,70 +230,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1743093407769</updated>
-    </task>
-    <task id="LOCAL-00059" summary="Изменёно главное меню бота. канал партнёров выведен в главное меню.">
-      <option name="closed" value="true" />
-      <created>1759481370874</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1759481370874</updated>
-    </task>
-    <task id="LOCAL-00060" summary="Добавлено заполнение контакта - tg_id и username_tg. Теперь в созданную сделку добавляется контакт отправивший заказ, а не основной.">
-      <option name="closed" value="true" />
-      <created>1759847456124</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1759847456124</updated>
-    </task>
-    <task id="LOCAL-00061" summary="Добавлено заполнение контакта - tg_id и username_tg. Теперь в созданную сделку добавляется контакт отправивший заказ, а не основной.">
-      <option name="closed" value="true" />
-      <created>1760006157298</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1760006157298</updated>
-    </task>
-    <task id="LOCAL-00062" summary="Добавлены новые поля при оформлении КП">
-      <option name="closed" value="true" />
-      <created>1760081801500</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1760081801500</updated>
-    </task>
-    <task id="LOCAL-00063" summary="Добавлена обработка пустого поля payment_type">
-      <option name="closed" value="true" />
-      <created>1760082168540</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1760082168540</updated>
-    </task>
-    <task id="LOCAL-00064" summary="Реализовано заполнение полей сделки:&#10;Адрес доставки, склад, оплата картой, реквизиты.">
-      <option name="closed" value="true" />
-      <created>1760093593573</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1760093593573</updated>
-    </task>
-    <task id="LOCAL-00065" summary="Реаилзовано автоматическое выставление КП в чат бот. &#10;Выбор заполнения реквизитов по прошлому заказу.">
-      <option name="closed" value="true" />
-      <created>1760944253266</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1760944253266</updated>
-    </task>
-    <task id="LOCAL-00066" summary="Реаилзовано автоматическое выставление КП в чат бот. &#10;Выбор заполнения реквизитов по прошлому заказу.">
-      <option name="closed" value="true" />
-      <created>1760946588270</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1760946588270</updated>
+      <workItem from="1775117536890" duration="918000" />
     </task>
     <task id="LOCAL-00067" summary="Добавлена передача чекбокса &quot;Заполнить по прошлому заказу&quot; в чат-бот и в сделку АМО. &#10;Клавиатура с запросом контакта сделана нескрываемой.">
       <option name="closed" value="true" />
@@ -612,8 +560,75 @@
       <option name="project" value="LOCAL" />
       <updated>1769161769508</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1771409971960</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1771409971960</updated>
+    </task>
+    <task id="LOCAL-00109" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1773327393972</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1773327393972</updated>
+    </task>
+    <task id="LOCAL-00110" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1773327556806</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1773327556807</updated>
+    </task>
+    <task id="LOCAL-00111" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1773327826917</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1773327826917</updated>
+    </task>
+    <task id="LOCAL-00112" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1773328067777</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1773328067777</updated>
+    </task>
+    <task id="LOCAL-00113" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1773816611386</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1773816611387</updated>
+    </task>
+    <task id="LOCAL-00114" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1774020591956</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1774020591957</updated>
+    </task>
+    <task id="LOCAL-00115" summary="Смена ссылок на форум партнёров и канал партнёров">
+      <option name="closed" value="true" />
+      <created>1774262117262</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1774262117262</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -671,5 +686,8 @@
         <watch expression="contact" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/partners_bot$amo_api.coverage" NAME="amo_api Coverage Results" MODIFIED="1775117758045" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/config_data" />
   </component>
 </project>
