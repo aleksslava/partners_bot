@@ -10,7 +10,7 @@ from service.service import Order, get_kp_pdf
 from aiogram import Router, F, Bot
 from aiogram.filters import Command, CommandStart
 from aiogram.types import Message, CallbackQuery, WebAppInfo, \
-    KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, FSInputFile
+    KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, FSInputFile, InlineKeyboardButton, InlineKeyboardMarkup
 
 from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hide_contacts_list, get_start_keyboard,
                                        forum_button, manager_button, support_button, problem_button,
@@ -219,6 +219,13 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
         await message.answer(text=f'{response}\n\n'
                                   f'👇 Сообщите об этой ошибке в онлайн-форме.',
                              reply_markup=await problem_button())
+
+@main_router.message(Command(commands='new_shop'))
+async def new_shop(message: Message):
+    shop_button = InlineKeyboardButton(text='Открыть магазин', web_app=WebAppInfo(url='https://profi-shop.hite-pro.ru/'))
+    main_menu = InlineKeyboardButton(text='В главное меню', callback_data='/start')
+    webapp_keyboard_1 = InlineKeyboardMarkup(inline_keyboard=[[shop_button], [main_menu]],)
+    await message.answer(text=Lexicon_RU['bonus_message'], reply_markup=webapp_keyboard_1)
 
 
 @main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"

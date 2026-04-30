@@ -57,9 +57,9 @@ async def main():
 
     redis = Redis(decode_responses=True, host='localhost')
 
+    response = amo_api.get_lead_by_id(32770024)
 
-
-
+    pprint(response, indent=4)
 
 
 
