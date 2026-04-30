@@ -221,11 +221,12 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
                              reply_markup=await problem_button())
 
 @main_router.message(Command(commands='new_shop'))
-async def new_shop(message: Message):
+async def new_shop(message: Message, bot: Bot):
     shop_button = InlineKeyboardButton(text='Открыть магазин', web_app=WebAppInfo(url='https://profi-shop.hite-pro.ru/'))
     main_menu = InlineKeyboardButton(text='В главное меню', callback_data='/start')
     webapp_keyboard_1 = InlineKeyboardMarkup(inline_keyboard=[[shop_button], [main_menu]],)
-    await message.answer(text=Lexicon_RU['bonus_message'], reply_markup=webapp_keyboard_1)
+    await bot.send_message(chat_id=message.chat.id,  text=Lexicon_RU['bonus_message'], reply_markup=ReplyKeyboardRemove())
+    await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇', reply_markup=webapp_keyboard_1)
 
 
 @main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"
