@@ -40,7 +40,7 @@ async def get_start_keyboard(commands: dict): # Формирование гла�
     kb_bl = InlineKeyboardBuilder()
     buttons: list = [
         InlineKeyboardButton(text=text,
-                             callback_data=data) for data, text in commands.items() if data != '/start'
+                             callback_data=data) for data, text in commands.items() if data not in ['/start', '/new_shop']
     ]
     kb_bl.row(*buttons, width=2)
     return kb_bl.as_markup()
