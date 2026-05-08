@@ -232,7 +232,7 @@ async def new_shop(message: Message, bot: Bot):
     await bot.send_message(chat_id=message.chat.id,  text=Lexicon_RU['bonus_message'], reply_markup=ReplyKeyboardRemove())
     await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇', reply_markup=webapp_keyboard_1)
 
-@main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "new_shop"
+@main_router.callback_query(F.data == '/new_shop')  # Хэндлер для обработки inline кнопки "new_shop"
 async def command_new_shop_process(callback: CallbackQuery, bot: Bot):
     shop_button = InlineKeyboardButton(text='Открыть магазин',
                                        web_app=WebAppInfo(url='https://profi-shop.hite-pro.ru/'))
