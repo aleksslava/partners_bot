@@ -18,7 +18,7 @@ from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hi
                                        link_to_opt_button, confirm_spam,
                                        )
 from config_data.amo_api import AmoCRMWrapper, Contact
-from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu, helpfull_materials_menu
+from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu, helpfull_materials_menu, new_shop_inline_message
 
 main_router = Router()
 logger = logging.getLogger(__name__)
@@ -230,7 +230,7 @@ async def new_shop(message: Message, bot: Bot):
     main_menu = InlineKeyboardButton(text='В главное меню', callback_data='/start')
     webapp_keyboard_1 = InlineKeyboardMarkup(inline_keyboard=[[shop_button], [main_menu]],)
     await bot.send_message(chat_id=message.chat.id,  text=Lexicon_RU['bonus_message'], reply_markup=ReplyKeyboardRemove())
-    await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇', reply_markup=webapp_keyboard_1)
+    await message.answer(text=new_shop_inline_message, reply_markup=webapp_keyboard_1)
 
 @main_router.callback_query(F.data == '/new_shop')  # Хэндлер для обработки inline кнопки "new_shop"
 async def command_new_shop_process(callback: CallbackQuery, bot: Bot):
@@ -240,7 +240,7 @@ async def command_new_shop_process(callback: CallbackQuery, bot: Bot):
     webapp_keyboard_1 = InlineKeyboardMarkup(inline_keyboard=[[shop_button], [main_menu]], )
     await bot.send_message(chat_id=callback.message.chat.id, text=Lexicon_RU['bonus_message'],
                            reply_markup=ReplyKeyboardRemove())
-    await callback.message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
+    await callback.message.answer(text=new_shop_inline_message,
                          reply_markup=webapp_keyboard_1)
 
 
