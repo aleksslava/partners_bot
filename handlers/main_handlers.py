@@ -33,6 +33,10 @@ async def command_start_process(message: Message):
     await message.answer(text='<b>Основное меню чат-бота HiTE PRO!</b>',
                          reply_markup=await get_start_keyboard(start_menu))
 
+@main_router.callback_query(F.data == '/start')
+async def command_start_inline_process(callback: CallbackQuery):
+    await callback.message.edit_text(text='<b>Основное меню чат-бота HiTE PRO!</b>',
+                                     reply_markup=await get_start_keyboard(start_menu))
 
 @main_router.message(Command(commands=['info']))  # Хэндлер для обработки команды /info
 async def info_handler(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot):
@@ -227,6 +231,17 @@ async def new_shop(message: Message, bot: Bot):
     webapp_keyboard_1 = InlineKeyboardMarkup(inline_keyboard=[[shop_button], [main_menu]],)
     await bot.send_message(chat_id=message.chat.id,  text=Lexicon_RU['bonus_message'], reply_markup=ReplyKeyboardRemove())
     await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇', reply_markup=webapp_keyboard_1)
+
+@main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "new_shop"
+async def command_new_shop_process(callback: CallbackQuery, bot: Bot):
+    shop_button = InlineKeyboardButton(text='Открыть магазин',
+                                       web_app=WebAppInfo(url='https://profi-shop.hite-pro.ru/'))
+    main_menu = InlineKeyboardButton(text='В главное меню', callback_data='/start')
+    webapp_keyboard_1 = InlineKeyboardMarkup(inline_keyboard=[[shop_button], [main_menu]], )
+    await bot.send_message(chat_id=callback.message.chat.id, text=Lexicon_RU['bonus_message'],
+                           reply_markup=ReplyKeyboardRemove())
+    await callback.message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
+                         reply_markup=webapp_keyboard_1)
 
 
 @main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"

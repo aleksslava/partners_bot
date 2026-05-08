@@ -40,7 +40,7 @@ async def get_start_keyboard(commands: dict): # Формирование гла�
     kb_bl = InlineKeyboardBuilder()
     buttons: list = [
         InlineKeyboardButton(text=text,
-                             callback_data=data) for data, text in commands.items() if data not in ['/start', '/new_shop']
+                             callback_data=data) for data, text in commands.items() if data not in ['/start']
     ]
     kb_bl.row(*buttons, width=2)
     return kb_bl.as_markup()
@@ -49,7 +49,7 @@ async def authorized_client(commands: dict):
     kb_bl = InlineKeyboardBuilder()
     buttons: list = [
         InlineKeyboardButton(text=text,
-                             callback_data=data) for data, text in commands.items() if data in ['/shop', '/info']
+                             callback_data=data) for data, text in commands.items() if data in ['/new_shop', '/info']
     ]
     kb_bl.row(*buttons, width=2)
     return kb_bl.as_markup()
