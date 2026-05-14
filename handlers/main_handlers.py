@@ -224,7 +224,7 @@ async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_
                                   f'👇 Сообщите об этой ошибке в онлайн-форме.',
                              reply_markup=await problem_button())
 
-@main_router.message(Command(commands='/new_shop'))
+@main_router.message(Command(commands='new_shop'))
 async def new_shop(message: Message, bot: Bot):
     shop_button = InlineKeyboardButton(text='Открыть магазин', web_app=WebAppInfo(url='https://profi-shop.hite-pro.ru/'))
     main_menu = InlineKeyboardButton(text='В главное меню', callback_data='/start')
