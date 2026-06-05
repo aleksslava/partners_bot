@@ -8,6 +8,7 @@ from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from handlers.admin_handler import admin_router
 from handlers.main_handlers import main_router
 from config_data.amo_api import AmoCRMWrapper
 from outer_middleware.outer_middleware import OuterMiddleware
@@ -65,6 +66,7 @@ async def main():
 
     dp = Dispatcher()
 
+    dp.include_router(admin_router)
     dp.include_router(main_router)
     dp.update.middleware(OuterMiddleware(amo_api, fields_id, bot, redis, config.admin_id))
     logger.info("partners_bot started succesful")
