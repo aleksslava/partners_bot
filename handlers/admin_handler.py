@@ -89,6 +89,8 @@ async def send_interview_spam(bot: Bot, chat_id: int, name: str) -> None:
         video=FSInputFile(SPAM_VIDEO_PATH),
         caption=spam_text(name),
         reply_markup=spam_keyboard(),
+        width=1080,
+        height=1920,
         supports_streaming=True
     )
 
@@ -191,7 +193,8 @@ async def process_admin_broadcast_range(message: Message, bot: Bot, admin_id: st
             continue
 
         total += 1
-        name = str(sheet.cell(row=row_number, column=name_column).value or '').strip()
+        full_name = str(sheet.cell(row=row_number, column=name_column).value or '').strip()
+        name = full_name.split(maxsplit=1)[0] if full_name else ''
 
         try:
             telegram_id = normalize_telegram_id(telegram_id_cell.value)
