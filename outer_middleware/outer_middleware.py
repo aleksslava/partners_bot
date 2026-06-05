@@ -16,11 +16,13 @@ class OuterMiddleware(BaseMiddleware):
                  fields_id: dict,
                  bot: Bot,
                  redis: Redis,
+                 admin_id: str
                  ):
         self.amo_api = amo_api
         self.fields_id = fields_id
         self.bot = bot
         self.redis = redis
+        self.admin_id = admin_id
 
 
     async def __call__(
@@ -34,6 +36,7 @@ class OuterMiddleware(BaseMiddleware):
         data['redis'] = self.redis
         data['amo_api'] = self.amo_api
         data['fields_id'] = self.fields_id
+        data['admin_id'] = self.admin_id
 
         result = await handler(event, data)
 

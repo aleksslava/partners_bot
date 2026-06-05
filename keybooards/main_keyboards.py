@@ -36,13 +36,15 @@ async def hide_contacts_list(customer_id): # Формирование кнопк
 
 
 # Главная inline клавиатура
-async def get_start_keyboard(commands: dict): # Формирование главной инлайн клавиатуры
+async def get_start_keyboard(commands: dict, is_admin=False): # Формирование главной инлайн клавиатуры
     kb_bl = InlineKeyboardBuilder()
     buttons: list = [
         InlineKeyboardButton(text=text,
                              callback_data=data) for data, text in commands.items() if data not in ['/start']
     ]
     kb_bl.row(*buttons, width=2)
+    if is_admin:
+        kb_bl.add(InlineKeyboardButton(text="Меню администратора", callback_data='start_admin'))
     return kb_bl.as_markup()
 
 async def authorized_client(commands: dict):

@@ -70,6 +70,7 @@ class AmoConfig:
 class Config:
     tg_bot: TgBot
     amo_config: AmoConfig
+    admin_id: str
 
 
 # Функция создания экземпляра класса config
@@ -90,7 +91,8 @@ def load_config(path: str | None = os.path.abspath('./.env')):
             amocrm_access_token=env("AMOCRM_ACCESS_TOKEN"),
             amocrm_refresh_token=env("AMOCRM_REFRESH_TOKEN"),
             amocrm_secret_code=env("AMOCRM_SECRET")
-        ))
+        ),
+        admin_id=env("ADMIN_ID"),)
 
 
 
