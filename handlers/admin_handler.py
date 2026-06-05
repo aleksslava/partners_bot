@@ -88,7 +88,8 @@ async def send_interview_spam(bot: Bot, chat_id: int, name: str) -> None:
         chat_id=chat_id,
         video=FSInputFile(SPAM_VIDEO_PATH),
         caption=spam_text(name),
-        reply_markup=spam_keyboard()
+        reply_markup=spam_keyboard(),
+        supports_streaming=True
     )
 
 
