@@ -23,8 +23,8 @@ def account_info(customer: Customer):
 start_menu = {
     '/start': 'Начать работу с чат ботом',
     '/info': 'Мой профиль',
-    '/shop': 'Магазин',
-    '/new_shop': 'Новый магазин Beta',
+    # '/shop': 'Магазин',
+    '/new_shop': 'Магазин',
     '/forum': 'Форум партнеров',
     '/partners': 'Канал партнёров',
     '/materials': 'Полезные материалы',

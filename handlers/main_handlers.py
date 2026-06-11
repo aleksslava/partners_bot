@@ -176,55 +176,55 @@ async def command_contacts_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('contact_message'))
 
 
-@main_router.message(Command(commands='shop'))  # Хэндлер для обработки команды /shop
-async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot,
-                               redis: Redis):
-    tg_id = message.from_user.id
-    user_name = message.from_user.username
-    try:
-        await redis.set(name=str(tg_id), value=user_name)
-    except:
-        logger.error(f'Не получиось записать в бд id: {tg_id}')
-    customer = amo_api.get_customer_by_tg_id(tg_id)
-    contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
-
-    if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
-        if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
-            customer = customer.get('response')
-            customer['manager'] = {'name': None}
-            customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
-            bonus = str(customer_params.bonuses).replace(' ', '')
-            discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
-            web_app_url = fields_id.get('web_app_url')
-            contact = contact.get('response')
-            contact_id = contact.get('id')
-
-            kb_1 = KeyboardButton(text='Открыть магазин',
-                                  web_app=WebAppInfo(
-                                      url=f'{web_app_url}?bonus={bonus}&'
-                                          f'id={contact_id}&discont={discont}'))
-            webapp_keyboard_1 = ReplyKeyboardMarkup(is_persistent=True, keyboard=[[kb_1, ]],
-                                                    resize_keyboard=True, one_time_keyboard=True)
-            await bot.send_message(chat_id=message.chat.id, text=Lexicon_RU['bonus_message'])
-            await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
-                                 reply_markup=webapp_keyboard_1)
-        else:
-            # Если tg_id нет в бд, то ищем по номеру телефона
-            name = message.from_user.first_name
-            file = FSInputFile('image.png')
-            await bot.send_photo(chat_id=message.chat.id, photo=file,
-                                 caption=f'{name}, здравствуйте.\n'
-                                         f'Поделитесь своим номером телефона для использования бота.👇',
-                                 show_caption_above_media=True,
-                                 reply_markup=await reply_phone_number())
-    else:
-        if customer.get('status_code'):
-            response = contact.get('response')
-        else:
-            response = customer.get('response')
-        await message.answer(text=f'{response}\n\n'
-                                  f'👇 Сообщите об этой ошибке в онлайн-форме.',
-                             reply_markup=await problem_button())
+# @main_router.message(Command(commands='shop'))  # Хэндлер для обработки команды /shop
+# async def command_shop_process(message: Message, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot,
+#                                redis: Redis):
+#     tg_id = message.from_user.id
+#     user_name = message.from_user.username
+#     try:
+#         await redis.set(name=str(tg_id), value=user_name)
+#     except:
+#         logger.error(f'Не получиось записать в бд id: {tg_id}')
+#     customer = amo_api.get_customer_by_tg_id(tg_id)
+#     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
+#
+#     if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
+#         if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
+#             customer = customer.get('response')
+#             customer['manager'] = {'name': None}
+#             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
+#             bonus = str(customer_params.bonuses).replace(' ', '')
+#             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
+#             web_app_url = fields_id.get('web_app_url')
+#             contact = contact.get('response')
+#             contact_id = contact.get('id')
+#
+#             kb_1 = KeyboardButton(text='Открыть магазин',
+#                                   web_app=WebAppInfo(
+#                                       url=f'{web_app_url}?bonus={bonus}&'
+#                                           f'id={contact_id}&discont={discont}'))
+#             webapp_keyboard_1 = ReplyKeyboardMarkup(is_persistent=True, keyboard=[[kb_1, ]],
+#                                                     resize_keyboard=True, one_time_keyboard=True)
+#             await bot.send_message(chat_id=message.chat.id, text=Lexicon_RU['bonus_message'])
+#             await message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
+#                                  reply_markup=webapp_keyboard_1)
+#         else:
+#             # Если tg_id нет в бд, то ищем по номеру телефона
+#             name = message.from_user.first_name
+#             file = FSInputFile('image.png')
+#             await bot.send_photo(chat_id=message.chat.id, photo=file,
+#                                  caption=f'{name}, здравствуйте.\n'
+#                                          f'Поделитесь своим номером телефона для использования бота.👇',
+#                                  show_caption_above_media=True,
+#                                  reply_markup=await reply_phone_number())
+#     else:
+#         if customer.get('status_code'):
+#             response = contact.get('response')
+#         else:
+#             response = customer.get('response')
+#         await message.answer(text=f'{response}\n\n'
+#                                   f'👇 Сообщите об этой ошибке в онлайн-форме.',
+#                              reply_markup=await problem_button())
 
 @main_router.message(Command(commands='new_shop'))
 async def new_shop(message: Message, bot: Bot):
@@ -246,58 +246,58 @@ async def command_new_shop_process(callback: CallbackQuery, bot: Bot):
                          reply_markup=webapp_keyboard_1)
 
 
-@main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"
-async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot,
-                                  redis: Redis):
-    tg_id = callback.from_user.id
-    user_name = callback.from_user.username if callback.from_user.username is not None else ''
-    try:
-        await redis.set(name=str(tg_id), value=user_name)
-    except BaseException as error:
-        logger.error(error)
-        logger.error(f'Не получилось записать в бд id: {tg_id}')
-    customer = amo_api.get_customer_by_tg_id(tg_id)
-    contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
-
-    if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
-        if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
-            customer = customer.get('response')
-            customer['manager'] = {'name': None}
-            customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
-
-            bonus = str(customer_params.bonuses).replace(' ', '')
-            discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
-            web_app_url = fields_id.get('web_app_url')
-            contact = contact.get('response')
-            contact_id = contact.get('id')
-
-            kb_1 = KeyboardButton(text='Открыть магазин',
-                                  web_app=WebAppInfo(
-                                      url=f'{web_app_url}?bonus={bonus}&'
-                                          f'id={contact_id}&discont={discont}'))
-            webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
-            await bot.send_message(chat_id=callback.message.chat.id, text=Lexicon_RU['bonus_message'])
-            await callback.message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
-                                          reply_markup=webapp_keyboard_1)
-        else:
-            # Если tg_id нет в бд, то ищем по номеру телефона
-            name = callback.from_user.first_name
-            file = FSInputFile('image.png')
-            await bot.send_photo(chat_id=callback.message.chat.id, photo=file,
-                                 caption=f'{name}, здравствуйте.\n'
-                                         f'Поделитесь своим номером телефона для использования бота.👇',
-                                 show_caption_above_media=True,
-                                 reply_markup=await reply_phone_number())
-    else:
-        if customer.get('status_code'):
-            response = contact.get('response')
-        else:
-            response = customer.get('response')
-        await callback.message.answer(text=f'{response}\n\n'
-                                           f'👇 Сообщите об этой ошибке в онлайн-форме.',
-                                      reply_markup=await problem_button())
-
-    await callback.answer()
+# @main_router.callback_query(F.data == '/shop')  # Хэндлер для обработки inline кнопки "shop"
+# async def command_shop_process_cl(callback: CallbackQuery, amo_api: AmoCRMWrapper, fields_id: dict, bot: Bot,
+#                                   redis: Redis):
+#     tg_id = callback.from_user.id
+#     user_name = callback.from_user.username if callback.from_user.username is not None else ''
+#     try:
+#         await redis.set(name=str(tg_id), value=user_name)
+#     except BaseException as error:
+#         logger.error(error)
+#         logger.error(f'Не получилось записать в бд id: {tg_id}')
+#     customer = amo_api.get_customer_by_tg_id(tg_id)
+#     contact = amo_api.get_contact_by_tg_id(tg_id, fields_id=fields_id.get('contacts_fields_id'))
+#
+#     if customer.get('status_code') and contact.get('status_code'):  # Проверка корректности ответа от амо
+#         if customer.get('tg_id_in_db') and contact.get('tg_id_in_db'):  # Проверка наличия tg_id в базе амо
+#             customer = customer.get('response')
+#             customer['manager'] = {'name': None}
+#             customer_params = amo_api.get_customer_params(customer, fields_id=fields_id)
+#
+#             bonus = str(customer_params.bonuses).replace(' ', '')
+#             discont = ''.join(list(filter(lambda x: x.isdigit(), customer_params.status)))
+#             web_app_url = fields_id.get('web_app_url')
+#             contact = contact.get('response')
+#             contact_id = contact.get('id')
+#
+#             kb_1 = KeyboardButton(text='Открыть магазин',
+#                                   web_app=WebAppInfo(
+#                                       url=f'{web_app_url}?bonus={bonus}&'
+#                                           f'id={contact_id}&discont={discont}'))
+#             webapp_keyboard_1 = ReplyKeyboardMarkup(keyboard=[[kb_1, ]], resize_keyboard=True)
+#             await bot.send_message(chat_id=callback.message.chat.id, text=Lexicon_RU['bonus_message'])
+#             await callback.message.answer(text='Для перехода в магазин воспользуйтесь кнопкой клавиатуры👇',
+#                                           reply_markup=webapp_keyboard_1)
+#         else:
+#             # Если tg_id нет в бд, то ищем по номеру телефона
+#             name = callback.from_user.first_name
+#             file = FSInputFile('image.png')
+#             await bot.send_photo(chat_id=callback.message.chat.id, photo=file,
+#                                  caption=f'{name}, здравствуйте.\n'
+#                                          f'Поделитесь своим номером телефона для использования бота.👇',
+#                                  show_caption_above_media=True,
+#                                  reply_markup=await reply_phone_number())
+#     else:
+#         if customer.get('status_code'):
+#             response = contact.get('response')
+#         else:
+#             response = customer.get('response')
+#         await callback.message.answer(text=f'{response}\n\n'
+#                                            f'👇 Сообщите об этой ошибке в онлайн-форме.',
+#                                       reply_markup=await problem_button())
+#
+#     await callback.answer()
 
 
 @main_router.message(Command(commands='forum'))  # Хэндлер для обработки команды /forum
