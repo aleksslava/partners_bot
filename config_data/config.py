@@ -64,12 +64,21 @@ class AmoConfig:
 
 
 
+@dataclass
+class WebhookConfig:
+    host: str
+    port: int
+    secret: str
+
+
+
 
 # Класс с объектом TGBot
 @dataclass
 class Config:
     tg_bot: TgBot
     amo_config: AmoConfig
+    webhook: WebhookConfig
     admin_id: str
 
 
@@ -91,6 +100,11 @@ def load_config(path: str | None = os.path.abspath('./.env')):
             amocrm_access_token=env("AMOCRM_ACCESS_TOKEN"),
             amocrm_refresh_token=env("AMOCRM_REFRESH_TOKEN"),
             amocrm_secret_code=env("AMOCRM_SECRET")
+        ),
+        webhook=WebhookConfig(
+            host=env("WEBHOOK_HOST", default="0.0.0.0"),
+            port=env.int("WEBHOOK_PORT", default=8080),
+            secret=env("WEBHOOK_SECRET"),
         ),
         admin_id=env("ADMIN_ID"),)
 

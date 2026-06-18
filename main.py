@@ -1,8 +1,10 @@
 import asyncio
 import logging
+from contextlib import suppress
 from http.client import responses
 from pprint import pprint
 
+import uvicorn
 from redis import Redis
 from aiogram import Bot, Dispatcher
 from config_data.config import load_config, Config, fields_id
@@ -14,6 +16,7 @@ from config_data.amo_api import AmoCRMWrapper
 from outer_middleware.outer_middleware import OuterMiddleware
 from keybooards.main_keyboards import set_main_menu
 from lexicon.lexicon_ru import start_menu
+from webhooks.app import create_webhooks_app
 
 
 
@@ -23,6 +26,21 @@ from lexicon.lexicon_ru import start_menu
 
 # Инициализация логера
 logger = logging.getLogger(__name__)
+
+
+async def start_webhook_server(bot: Bot, config: Config) -> None:
+    app = create_webhooks_app(
+        bot=bot,
+        webhook_secret=config.webhook.secret,
+    )
+    server_config = uvicorn.Config(
+        app,
+        host=config.webhook.host,
+        port=config.webhook.port,
+        log_level='info',
+    )
+    server = uvicorn.Server(server_config)
+    await server.serve()
 
 
 async def main():
@@ -72,7 +90,13 @@ async def main():
     logger.info("partners_bot started succesful")
 
     await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
+    webhook_task = asyncio.create_task(start_webhook_server(bot, config))
+    try:
+        await dp.start_polling(bot)
+    finally:
+        webhook_task.cancel()
+        with suppress(asyncio.CancelledError):
+            await webhook_task
 
 
 if __name__ == "__main__":
