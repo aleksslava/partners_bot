@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Новая рассылка · HiTE PRO{% endblock %}
+{% block content %}
+<header class="page-header compact-header">
+    <div>
+        <p class="eyebrow">Новая рассылка</p>
+        <h1>Подготовьте сообщение</h1>
+        <p>Перед запуском вы увидите получателей и итог проверки файла.</p>
+    </div>
+</header>
+
+{% if error %}<div class="alert alert-error" role="alert">{{ error }}</div>{% endif %}
+
+<form action="{{ admin_prefix }}/preview" method="post" enctype="multipart/form-data" class="composer" data-composer>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <section class="form-column">
+        <div class="form-section">
+            <div class="section-number">01</div>
+            <div class="form-section-body">
+                <h2>Сообщение</h2>
+                <label>
+                    <span>Текст</span>
+                    <textarea name="message" rows="9" maxlength="4096" required data-message-input placeholder="Введите текст сообщения">{{ values.get('message', '') }}</textarea>
+                    <small><span data-character-count>0</span> символов. Для персонализации используйте [Имя].</small>
+                </label>
+                <label>
+                    <span>Изображение или видео</span>
+                    <input type="file" name="media_file" accept=".jpg,.jpeg,.png,.mp4" data-media-input>
+                    <small>JPG, PNG или MP4, не больше 20 МБ. С медиа текст ограничен 1 024 символами.</small>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-number">02</div>
+            <div class="form-section-body">
+                <h2>Кнопка</h2>
+                <div class="form-grid">
+                    <label>
+                        <span>Текст кнопки</span>
+                        <input type="text" name="button_text" maxlength="64" value="{{ values.get('button_text', '') }}" placeholder="Подробнее">
+                    </label>
+                    <label>
+                        <span>HTTPS-ссылка</span>
+                        <input type="url" name="button_url" value="{{ values.get('button_url', '') }}" placeholder="https://example.ru">
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <div class="section-number">03</div>
+            <div class="form-section-body">
+                <h2>Получатели и запуск</h2>
+                <label>
+                    <span>Excel со списком получателей</span>
+                    <input type="file" name="recipients_file" accept=".xlsx" required>
+                    <small>Обязательная колонка: telegram_id. Для [Имя] добавьте колонку Имя или Название.</small>
+                </label>
+                <label>
+                    <span>Дата и время по Москве</span>
+                    <input type="datetime-local" name="scheduled_at" value="{{ values.get('scheduled_at', '') }}">
+                    <small>Оставьте пустым, чтобы запустить сразу после подтверждения.</small>
+                </label>
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="primary-button">Проверить и продолжить</button>
+        </div>
+    </section>
+
+    <aside class="preview-column" aria-label="Предпросмотр">
+        <p class="eyebrow">Предпросмотр</p>
+        <div class="telegram-preview">
+            <div class="telegram-avatar">H</div>
+            <div>
+                <strong>HiTE PRO</strong>
+                <p data-message-preview>Текст сообщения появится здесь.</p>
+            </div>
+        </div>
+        <p class="preview-note">В предпросмотре [Имя] заменяется на «Анна».</p>
+    </aside>
+</form>
+{% endblock %}

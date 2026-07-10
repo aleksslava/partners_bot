@@ -32,6 +32,7 @@ async def start_webhook_server(bot: Bot, config: Config) -> None:
     app = create_webhooks_app(
         bot=bot,
         webhook_secret=config.webhook.secret,
+        admin_config=config.admin_web,
     )
     server_config = uvicorn.Config(
         app,

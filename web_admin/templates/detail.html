@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Рассылка №{{ broadcast.id }} · HiTE PRO{% endblock %}
+{% block content %}
+<header class="page-header detail-header">
+    <div>
+        <a href="{{ admin_prefix }}" class="back-link">← История</a>
+        <p class="eyebrow">Рассылка №{{ broadcast.id }}</p>
+        <h1 data-field="status-label">{{ status_labels.get(broadcast.status, broadcast.status) }}</h1>
+        <p>Запуск: {{ broadcast.scheduled_at|moscow }} МСК · {{ broadcast.source_filename }}</p>
+    </div>
+    {% if broadcast.status == 'scheduled' %}
+    <form action="{{ admin_prefix }}/broadcasts/{{ broadcast.id }}/cancel" method="post" data-confirm="Отменить запланированную рассылку?">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <button type="submit" class="secondary-button danger">Отменить рассылку</button>
+    </form>
+    {% endif %}
+</header>
+
+<section class="progress-section" data-broadcast-progress data-status-url="{{ admin_prefix }}/broadcasts/{{ broadcast.id }}/status" data-active="{{ 'true' if broadcast.status in ['scheduled', 'running'] else 'false' }}">
+    {% set processed = broadcast.success_count + broadcast.error_count %}
+    {% set percent = ((processed / broadcast.valid_count * 100)|round|int) if broadcast.valid_count else 100 %}
+    <div class="progress-heading"><span>Прогресс</span><strong><span data-field="processed">{{ processed }}</span> / {{ broadcast.valid_count }}</strong></div>
+    <div class="progress-track"><span data-field="progress-bar" style="width: {{ percent }}%"></span></div>
+    <div class="metrics-line compact-metrics">
+        <div><span>Успешно</span><strong data-field="success">{{ broadcast.success_count }}</strong></div>
+        <div><span>Ошибки</span><strong data-field="errors">{{ broadcast.error_count }}</strong></div>
+        <div><span>Пропуски</span><strong data-field="skipped">{{ broadcast.skipped_count }}</strong></div>
+        <div><span>Всего строк</span><strong>{{ broadcast.total_count }}</strong></div>
+    </div>
+</section>
+
+<section class="message-summary">
+    <div>
+        <p class="eyebrow">Сообщение</p>
+        <p class="message-text">{{ broadcast.message }}</p>
+    </div>
+    <dl>
+        <div><dt>Медиа</dt><dd>{{ broadcast.media_original_name or 'Нет' }}</dd></div>
+        <div><dt>Кнопка</dt><dd>{{ broadcast.button_text or 'Нет' }}</dd></div>
+        <div><dt>Создана</dt><dd>{{ broadcast.created_at|moscow }}</dd></div>
+        <div><dt>Завершена</dt><dd>{{ broadcast.finished_at|moscow }}</dd></div>
+    </dl>
+</section>
+
+<section class="data-section">
+    <div class="section-heading"><h2>Получатели</h2><span>Страница {{ page }} из {{ pages }}</span></div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Строка</th><th>telegram_id</th><th>Имя</th><th>Статус</th><th>Причина</th></tr></thead>
+            <tbody>
+            {% for item in recipients %}
+                <tr>
+                    <td>{{ item.row_number }}</td>
+                    <td>{{ item.telegram_id or item.raw_telegram_id or '—' }}</td>
+                    <td>{{ item.name or '—' }}</td>
+                    <td><span class="status status-{{ item.status }}">{{ status_labels.get(item.status, item.status) }}</span></td>
+                    <td class="error-cell">{{ item.error or '—' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if pages > 1 %}
+    <nav class="pagination" aria-label="Страницы получателей">
+        {% if page > 1 %}<a href="?page={{ page - 1 }}">Назад</a>{% endif %}
+        <span>{{ page }} / {{ pages }}</span>
+        {% if page < pages %}<a href="?page={{ page + 1 }}">Далее</a>{% endif %}
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

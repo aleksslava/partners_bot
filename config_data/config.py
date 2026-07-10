@@ -71,6 +71,17 @@ class WebhookConfig:
     secret: str
 
 
+@dataclass
+class AdminWebConfig:
+    password: str
+    session_secret: str
+    data_dir: Path
+
+    @property
+    def enabled(self) -> bool:
+        return bool(self.password and self.session_secret)
+
+
 
 
 # Класс с объектом TGBot
@@ -79,6 +90,7 @@ class Config:
     tg_bot: TgBot
     amo_config: AmoConfig
     webhook: WebhookConfig
+    admin_web: AdminWebConfig
     admin_id: str
 
 
@@ -105,6 +117,11 @@ def load_config(path: str | None = os.path.abspath('./.env')):
             host=env("WEBHOOK_HOST", default="0.0.0.0"),
             port=env.int("WEBHOOK_PORT", default=8080),
             secret=env("WEBHOOK_SECRET"),
+        ),
+        admin_web=AdminWebConfig(
+            password=env("ADMIN_PANEL_PASSWORD", default=""),
+            session_secret=env("ADMIN_SESSION_SECRET", default=""),
+            data_dir=Path(env("ADMIN_DATA_DIR", default=str(BASE_DIR / "data" / "admin"))),
         ),
         admin_id=env("ADMIN_ID"),)
 

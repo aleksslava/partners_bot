@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Проверка рассылки · HiTE PRO{% endblock %}
+{% block content %}
+<header class="page-header compact-header">
+    <div>
+        <p class="eyebrow">Проверка</p>
+        <h1>Подтвердите рассылку</h1>
+        <p>Файл разобран и сохранён. Проверьте параметры перед постановкой в очередь.</p>
+    </div>
+</header>
+
+<section class="review-layout">
+    <div class="review-main">
+        <div class="telegram-preview review-message">
+            <div class="telegram-avatar">H</div>
+            <div>
+                <strong>HiTE PRO</strong>
+                <p>{{ preview_message }}</p>
+                {% if broadcast.button_text %}<span class="telegram-button">{{ broadcast.button_text }}</span>{% endif %}
+            </div>
+        </div>
+
+        <section class="data-section">
+            <div class="section-heading"><h2>Первые получатели</h2><span>до 5</span></div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Строка</th><th>telegram_id</th><th>Имя</th></tr></thead>
+                    <tbody>
+                    {% for item in recipients %}
+                        <tr><td>{{ item.row_number }}</td><td>{{ item.telegram_id }}</td><td>{{ item.name or '—' }}</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <aside class="review-summary">
+        <p class="eyebrow">Итог проверки</p>
+        <dl>
+            <div><dt>Файл</dt><dd>{{ broadcast.source_filename }}</dd></div>
+            <div><dt>Корректных получателей</dt><dd>{{ broadcast.valid_count }}</dd></div>
+            <div><dt>Пропущено</dt><dd>{{ broadcast.skipped_count }}</dd></div>
+            <div><dt>Дубликатов</dt><dd>{{ broadcast.duplicate_count }}</dd></div>
+            <div><dt>Запуск</dt><dd>{{ broadcast.scheduled_at|moscow }} МСК</dd></div>
+            <div><dt>Медиа</dt><dd>{{ broadcast.media_original_name or 'Нет' }}</dd></div>
+        </dl>
+        <form action="{{ admin_prefix }}/broadcasts/{{ broadcast.id }}/confirm" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button type="submit" class="primary-button full-width">Подтвердить запуск</button>
+        </form>
+        <form action="{{ admin_prefix }}/broadcasts/{{ broadcast.id }}/discard" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button type="submit" class="text-button danger full-width">Отменить и удалить</button>
+        </form>
+    </aside>
+</section>
+{% endblock %}
