@@ -17,11 +17,21 @@
         <div class="form-section">
             <div class="section-number">01</div>
             <div class="form-section-body">
-                <h2>Сообщение</h2>
+                <h2>Каналы и сообщение</h2>
+                <div class="channel-selector" role="group" aria-label="Боты для рассылки">
+                    <label class="channel-option">
+                        <input type="checkbox" name="send_telegram" value="1" data-target-input="telegram" {% if values.get('send_telegram') %}checked{% endif %}>
+                        <span><strong>Telegram</strong><small>Отправка по telegram_id</small></span>
+                    </label>
+                    <label class="channel-option {% if not max_enabled %}disabled{% endif %}">
+                        <input type="checkbox" name="send_max" value="1" data-target-input="max" {% if values.get('send_max') %}checked{% endif %} {% if not max_enabled %}disabled{% endif %}>
+                        <span><strong>MAX</strong><small>{% if max_enabled %}Отправка по max_id{% else %}Интеграция не настроена{% endif %}</small></span>
+                    </label>
+                </div>
                 <label>
                     <span>Текст</span>
                     <textarea name="message" rows="9" maxlength="4096" required data-message-input placeholder="Введите текст сообщения">{{ values.get('message', '') }}</textarea>
-                    <small><span data-character-count>0</span> символов. Для персонализации используйте [Имя].</small>
+                    <small><span data-character-count>0</span> символов, лимит <span data-character-limit>4 096</span>. Для персонализации используйте [Имя].</small>
                 </label>
                 <label>
                     <span>Изображение или видео</span>
@@ -55,7 +65,7 @@
                 <label>
                     <span>Excel со списком получателей</span>
                     <input type="file" name="recipients_file" accept=".xlsx" required>
-                    <small>Обязательная колонка: telegram_id. Для [Имя] добавьте колонку Имя или Название.</small>
+                    <small>Обязательные колонки: telegram_id и max_id. Для [Имя] добавьте колонку Имя или Название.</small>
                 </label>
                 <label>
                     <span>Дата и время по Москве</span>
@@ -71,6 +81,7 @@
 
     <aside class="preview-column" aria-label="Предпросмотр">
         <p class="eyebrow">Предпросмотр</p>
+        <div class="channel-badges" data-preview-channels></div>
         <div class="telegram-preview">
             <div class="telegram-avatar">H</div>
             <div>

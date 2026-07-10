@@ -40,11 +40,23 @@
                     <td>
                         <a class="table-link" href="{{ admin_prefix }}/broadcasts/{{ item.id }}">№{{ item.id }} · {{ item.message|truncate(52) }}</a>
                         <small>{{ item.source_filename }}</small>
+                        <span class="channel-badges table-channels">
+                            {% if item.send_telegram %}<span class="channel-badge telegram">Telegram</span>{% endif %}
+                            {% if item.send_max %}<span class="channel-badge max">MAX</span>{% endif %}
+                        </span>
                     </td>
                     <td>{{ item.scheduled_at|moscow }}</td>
                     <td><span class="status status-{{ item.status }}">{{ status_labels.get(item.status, item.status) }}</span></td>
-                    <td>{{ item.success_count }} / {{ item.valid_count }}</td>
-                    <td>{{ item.error_count }}</td>
+                    <td>
+                        {{ item.success_count }} / {{ item.valid_count }}
+                        {% if item.send_telegram %}<small>Telegram: {{ item.platform_stats.telegram.success_count }}</small>{% endif %}
+                        {% if item.send_max %}<small>MAX: {{ item.platform_stats.max.success_count }}</small>{% endif %}
+                    </td>
+                    <td>
+                        {{ item.error_count }}
+                        {% if item.send_telegram %}<small>Telegram: {{ item.platform_stats.telegram.error_count }}</small>{% endif %}
+                        {% if item.send_max %}<small>MAX: {{ item.platform_stats.max.error_count }}</small>{% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

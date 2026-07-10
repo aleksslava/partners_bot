@@ -8,6 +8,7 @@ from starlette.staticfiles import StaticFiles
 
 from config_data.config import AdminWebConfig
 from web_admin.auth import LoginRateLimiter
+from web_admin.max_client import MaxBroadcastClient
 from web_admin.routes import ADMIN_PREFIX, router as admin_web_router
 from web_admin.service import BroadcastService
 from web_admin.storage import BroadcastStorage
@@ -25,9 +26,16 @@ def create_webhooks_app(
 
     admin_service = None
     if admin_config is not None and admin_config.enabled:
+        max_client = None
+        if admin_config.max_enabled:
+            max_client = MaxBroadcastClient(
+                base_url=admin_config.max_bot_api_url,
+                secret=admin_config.max_bot_api_secret,
+            )
         admin_service = BroadcastService(
             storage=BroadcastStorage(admin_config.data_dir),
             bot=bot,
+            max_client=max_client,
         )
 
     @asynccontextmanager

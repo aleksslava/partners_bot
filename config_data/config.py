@@ -76,10 +76,16 @@ class AdminWebConfig:
     password: str
     session_secret: str
     data_dir: Path
+    max_bot_api_url: str = 'http://127.0.0.1:8105'
+    max_bot_api_secret: str = ''
 
     @property
     def enabled(self) -> bool:
         return bool(self.password and self.session_secret)
+
+    @property
+    def max_enabled(self) -> bool:
+        return bool(self.max_bot_api_url and self.max_bot_api_secret)
 
 
 
@@ -122,6 +128,8 @@ def load_config(path: str | None = os.path.abspath('./.env')):
             password=env("ADMIN_PANEL_PASSWORD", default=""),
             session_secret=env("ADMIN_SESSION_SECRET", default=""),
             data_dir=Path(env("ADMIN_DATA_DIR", default=str(BASE_DIR / "data" / "admin"))),
+            max_bot_api_url=env("MAX_BOT_API_URL", default="http://127.0.0.1:8105"),
+            max_bot_api_secret=env("MAX_BOT_API_SECRET", default=""),
         ),
         admin_id=env("ADMIN_ID"),)
 

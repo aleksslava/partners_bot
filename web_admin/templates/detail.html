@@ -7,6 +7,10 @@
         <p class="eyebrow">Рассылка №{{ broadcast.id }}</p>
         <h1 data-field="status-label">{{ status_labels.get(broadcast.status, broadcast.status) }}</h1>
         <p>Запуск: {{ broadcast.scheduled_at|moscow }} МСК · {{ broadcast.source_filename }}</p>
+        <div class="channel-badges detail-channels">
+            {% if broadcast.send_telegram %}<span class="channel-badge telegram">Telegram</span>{% endif %}
+            {% if broadcast.send_max %}<span class="channel-badge max">MAX</span>{% endif %}
+        </div>
     </div>
     {% if broadcast.status == 'scheduled' %}
     <form action="{{ admin_prefix }}/broadcasts/{{ broadcast.id }}/cancel" method="post" data-confirm="Отменить запланированную рассылку?">
@@ -27,6 +31,22 @@
         <div><span>Пропуски</span><strong data-field="skipped">{{ broadcast.skipped_count }}</strong></div>
         <div><span>Всего строк</span><strong>{{ broadcast.total_count }}</strong></div>
     </div>
+    <div class="platform-progress-grid">
+        {% if broadcast.send_telegram %}
+        <div class="platform-progress" data-platform="telegram">
+            <span class="channel-badge telegram">Telegram</span>
+            <strong><span data-platform-field="success">{{ broadcast.platform_stats.telegram.success_count }}</span> успешно</strong>
+            <small><span data-platform-field="errors">{{ broadcast.platform_stats.telegram.error_count }}</span> ошибок · <span data-platform-field="skipped">{{ broadcast.platform_stats.telegram.skipped_count }}</span> пропусков</small>
+        </div>
+        {% endif %}
+        {% if broadcast.send_max %}
+        <div class="platform-progress" data-platform="max">
+            <span class="channel-badge max">MAX</span>
+            <strong><span data-platform-field="success">{{ broadcast.platform_stats.max.success_count }}</span> успешно</strong>
+            <small><span data-platform-field="errors">{{ broadcast.platform_stats.max.error_count }}</span> ошибок · <span data-platform-field="skipped">{{ broadcast.platform_stats.max.skipped_count }}</span> пропусков</small>
+        </div>
+        {% endif %}
+    </div>
 </section>
 
 <section class="message-summary">
@@ -46,15 +66,26 @@
     <div class="section-heading"><h2>Получатели</h2><span>Страница {{ page }} из {{ pages }}</span></div>
     <div class="table-wrap">
         <table>
-            <thead><tr><th>Строка</th><th>telegram_id</th><th>Имя</th><th>Статус</th><th>Причина</th></tr></thead>
+            <thead><tr><th>Строка</th><th>Имя</th><th>Telegram</th><th>MAX</th></tr></thead>
             <tbody>
             {% for item in recipients %}
                 <tr>
                     <td>{{ item.row_number }}</td>
-                    <td>{{ item.telegram_id or item.raw_telegram_id or '—' }}</td>
                     <td>{{ item.name or '—' }}</td>
-                    <td><span class="status status-{{ item.status }}">{{ status_labels.get(item.status, item.status) }}</span></td>
-                    <td class="error-cell">{{ item.error or '—' }}</td>
+                    <td>
+                        {% if item.telegram_delivery %}
+                        <strong class="recipient-id">{{ item.telegram_id or item.raw_telegram_id or '—' }}</strong>
+                        <span class="status status-{{ item.telegram_delivery.status }}">{{ status_labels.get(item.telegram_delivery.status, item.telegram_delivery.status) }}</span>
+                        {% if item.telegram_delivery.error %}<small class="error-cell">{{ item.telegram_delivery.error }}</small>{% endif %}
+                        {% else %}—{% endif %}
+                    </td>
+                    <td>
+                        {% if item.max_delivery %}
+                        <strong class="recipient-id">{{ item.max_id or item.raw_max_id or '—' }}</strong>
+                        <span class="status status-{{ item.max_delivery.status }}">{{ status_labels.get(item.max_delivery.status, item.max_delivery.status) }}</span>
+                        {% if item.max_delivery.error %}<small class="error-cell">{{ item.max_delivery.error }}</small>{% endif %}
+                        {% else %}—{% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

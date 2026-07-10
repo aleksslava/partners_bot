@@ -15,10 +15,9 @@ from fastapi.templating import Jinja2Templates
 from web_admin.auth import client_key, get_csrf_token, is_authenticated, valid_csrf
 from web_admin.service import (
     ALLOWED_MEDIA,
-    CAPTION_LIMIT,
     MAX_MEDIA_SIZE,
-    TEXT_LIMIT,
     UploadValidationError,
+    message_limit,
     parse_recipients,
     render_message,
 )
@@ -100,8 +99,9 @@ def _validate_button(button_text: str, button_url: str) -> tuple[str | None, str
         raise UploadValidationError('Для кнопки нужно указать и текст, и ссылку.')
     if len(text) > 64:
         raise UploadValidationError('Текст кнопки должен быть не длиннее 64 символов.')
-    if url and urlparse(url).scheme != 'https':
-        raise UploadValidationError('Ссылка кнопки должна начинаться с https://.')
+    parsed_url = urlparse(url)
+    if url and (parsed_url.scheme != 'https' or not parsed_url.netloc):
+        raise UploadValidationError('Укажите корректную HTTPS-ссылку кнопки.')
     return text or None, url or None
 
 
@@ -182,7 +182,15 @@ async def new_broadcast(request: Request):
     return templates.TemplateResponse(
         request=request,
         name='new.html',
-        context=_base_context(request, error=None, values={}),
+        context=_base_context(
+            request,
+            error=None,
+            values={
+                'send_telegram': True,
+                'send_max': request.app.state.admin_config.max_enabled,
+            },
+            max_enabled=request.app.state.admin_config.max_enabled,
+        ),
     )
 
 
@@ -191,6 +199,8 @@ async def preview_broadcast(
     request: Request,
     csrf_token: Annotated[str, Form()],
     message: Annotated[str, Form()],
+    send_telegram: Annotated[str | None, Form()] = None,
+    send_max: Annotated[str | None, Form()] = None,
     scheduled_at: Annotated[str, Form()] = '',
     button_text: Annotated[str, Form()] = '',
     button_url: Annotated[str, Form()] = '',
@@ -203,12 +213,23 @@ async def preview_broadcast(
     _require_csrf(request, csrf_token)
     values = {
         'message': message,
+        'send_telegram': bool(send_telegram),
+        'send_max': bool(send_max),
         'scheduled_at': scheduled_at,
         'button_text': button_text,
         'button_url': button_url,
     }
     media_path: Path | None = None
     try:
+        targets = set()
+        if send_telegram:
+            targets.add('telegram')
+        if send_max:
+            targets.add('max')
+        if not targets:
+            raise UploadValidationError('Выберите хотя бы одного бота.')
+        if 'max' in targets and not request.app.state.admin_config.max_enabled:
+            raise UploadValidationError('Интеграция MAX не настроена на сервере.')
         message = message.strip()
         if not message:
             raise UploadValidationError('Введите текст сообщения.')
@@ -233,18 +254,19 @@ async def preview_broadcast(
             if not media_content:
                 raise UploadValidationError('Медиафайл пуст.')
 
-        message_limit = CAPTION_LIMIT if media_kind else TEXT_LIMIT
-        if len(message) > message_limit:
+        text_limit = message_limit(targets, bool(media_kind))
+        if len(message) > text_limit:
             raise UploadValidationError(
-                f'Сообщение должно быть не длиннее {message_limit} символов.'
+                f'Сообщение должно быть не длиннее {text_limit} символов.'
             )
 
         excel_content = await recipients_file.read(10 * 1024 * 1024 + 1)
-        recipients, duplicate_count, invalid_count = await asyncio.to_thread(
+        recipients, validation_stats = await asyncio.to_thread(
             parse_recipients,
             excel_content,
             message,
-            message_limit=message_limit,
+            targets=targets,
+            message_limit_value=text_limit,
         )
 
         service = request.app.state.admin_service
@@ -262,11 +284,15 @@ async def preview_broadcast(
             button_url=button_url_value,
             scheduled_at=schedule_value,
             recipients=recipients,
-            duplicate_count=duplicate_count,
-            invalid_count=invalid_count,
+            targets=targets,
+            validation_stats=validation_stats,
         )
         broadcast = service.storage.get_broadcast(broadcast_id)
-        sample = [item for item in recipients if item['status'] == 'pending'][:5]
+        sample = [
+            item
+            for item in recipients
+            if any(delivery['status'] == 'pending' for delivery in item['deliveries'])
+        ][:5]
         preview_message = render_message(message, sample[0].get('name', '')) if sample else message
         return templates.TemplateResponse(
             request=request,
@@ -275,6 +301,7 @@ async def preview_broadcast(
                 request,
                 broadcast=broadcast,
                 recipients=sample,
+                validation_stats=validation_stats,
                 preview_message=preview_message,
             ),
         )
@@ -284,7 +311,12 @@ async def preview_broadcast(
         return templates.TemplateResponse(
             request=request,
             name='new.html',
-            context=_base_context(request, error=str(error), values=values),
+            context=_base_context(
+                request,
+                error=str(error),
+                values=values,
+                max_enabled=request.app.state.admin_config.max_enabled,
+            ),
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
         )
 
@@ -399,4 +431,5 @@ async def broadcast_status(request: Request, broadcast_id: int):
         'processed_count': processed,
         'valid_count': valid_count,
         'progress': min(progress, 100),
+        'platforms': broadcast['platform_stats'],
     }

@@ -20,14 +20,19 @@
             </div>
         </div>
 
+        <div class="channel-badges review-channels">
+            {% if broadcast.send_telegram %}<span class="channel-badge telegram">Telegram</span>{% endif %}
+            {% if broadcast.send_max %}<span class="channel-badge max">MAX</span>{% endif %}
+        </div>
+
         <section class="data-section">
             <div class="section-heading"><h2>Первые получатели</h2><span>до 5</span></div>
             <div class="table-wrap">
                 <table>
-                    <thead><tr><th>Строка</th><th>telegram_id</th><th>Имя</th></tr></thead>
+                    <thead><tr><th>Строка</th><th>telegram_id</th><th>max_id</th><th>Имя</th></tr></thead>
                     <tbody>
                     {% for item in recipients %}
-                        <tr><td>{{ item.row_number }}</td><td>{{ item.telegram_id }}</td><td>{{ item.name or '—' }}</td></tr>
+                        <tr><td>{{ item.row_number }}</td><td>{{ item.telegram_id or '—' }}</td><td>{{ item.max_id or '—' }}</td><td>{{ item.name or '—' }}</td></tr>
                     {% endfor %}
                     </tbody>
                 </table>
@@ -38,9 +43,14 @@
         <p class="eyebrow">Итог проверки</p>
         <dl>
             <div><dt>Файл</dt><dd>{{ broadcast.source_filename }}</dd></div>
-            <div><dt>Корректных получателей</dt><dd>{{ broadcast.valid_count }}</dd></div>
-            <div><dt>Пропущено</dt><dd>{{ broadcast.skipped_count }}</dd></div>
-            <div><dt>Дубликатов</dt><dd>{{ broadcast.duplicate_count }}</dd></div>
+            {% if broadcast.send_telegram %}
+            <div><dt>Telegram</dt><dd>{{ validation_stats.telegram.ready }} готово · {{ validation_stats.telegram.skipped }} пропущено</dd></div>
+            <div><dt>Дубли Telegram</dt><dd>{{ validation_stats.telegram.duplicates }}</dd></div>
+            {% endif %}
+            {% if broadcast.send_max %}
+            <div><dt>MAX</dt><dd>{{ validation_stats.max.ready }} готово · {{ validation_stats.max.skipped }} пропущено</dd></div>
+            <div><dt>Дубли MAX</dt><dd>{{ validation_stats.max.duplicates }}</dd></div>
+            {% endif %}
             <div><dt>Запуск</dt><dd>{{ broadcast.scheduled_at|moscow }} МСК</dd></div>
             <div><dt>Медиа</dt><dd>{{ broadcast.media_original_name or 'Нет' }}</dd></div>
         </dl>
