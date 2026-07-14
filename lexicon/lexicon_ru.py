@@ -52,7 +52,7 @@ Lexicon_RU = {
                         f'🟢 <b>WhatsApp</b> :\n'
                         f'<a href="https://wa.me/79251930861">Ссылка на whatsapp</a>\n\n'
                         f'🔵 <b>Telegram</b> :\n'
-                        f'<a href="https://t.me/+79251930861">Ссылка на telegram</a>'
+                        f'<a href="https://telegram.me/+79251930861">Ссылка на telegram</a>'
                         ),
 
     'message_in_dev': ('Данный раздел  находится в разработке.\n'
@@ -75,7 +75,7 @@ Lexicon_RU = {
         'first_message': '<b>Подписывайтесь на закрытый канал партнеров</b>\n'
                          'Важные новости, прямые эфиры, опросы и акции.\n'
                          'Обязательно подпишитесь, чтобы быть в курсе всех событий HiTE PRO.\n\n'
-                         '<a href="https://t.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров в telegram!</a>\n\n'
+                         '<a href="https://telegram.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров в telegram!</a>\n\n'
                          '<a href="https://max.ru/join/rUDuFWBhDtCfUEMg2Jbi5GvCcSbk9HmeDOPESbtbMU8">Ссылка на канал партнёров в max!</a>',
         'second_message': '<b>Инструкции по устройствам HiTE PRO</b>\n'
                           'Текстовые и видеоинструкции по всем устройствам HiTE PRO и не только доступны на нашем сайте.\n\n'
@@ -95,7 +95,7 @@ Lexicon_RU = {
     'partner_kanal': '<b>Подписывайтесь на закрытый канал партнеров</b>\n'
                      'Важные новости, прямые эфиры, опросы и акции.\n'
                      'Обязательно подпишитесь, чтобы быть в курсе всех событий HiTE PRO.\n\n'
-                     '<a href="https://t.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров в telegram!</a>\n\n'
+                     '<a href="https://telegram.me/+1ZyI62n0m7lmNTQy">Ссылка на канал партнёров в telegram!</a>\n\n'
                      '<a href="https://max.ru/join/rUDuFWBhDtCfUEMg2Jbi5GvCcSbk9HmeDOPESbtbMU8">Ссылка на канал партнёров в max!</a>',
 
     'manager': ('<b>Отдел по работе с партнерами</b>\n'
