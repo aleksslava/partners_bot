@@ -76,6 +76,14 @@ async def forum_button(): # Формирование клавиатуры пер
 
     return InlineKeyboardMarkup(inline_keyboard=[[button_telegram], [button_max]])
 
+async def evolution_button(): # Формирование клавиатуры перехода на сообщение evolution
+    button_evolution = InlineKeyboardButton(
+        text='ПОДАТЬ ЗАЯВКУ',
+        url='https://forms.amocrm.ru/rztlrxz'
+    )
+
+    return InlineKeyboardMarkup(inline_keyboard=[[button_evolution]])
+
 
 async def manager_button():  # Формирование клавиатуры для связи с менеджером
     button_whatsapp = InlineKeyboardButton(

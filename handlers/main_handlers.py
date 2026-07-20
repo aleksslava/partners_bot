@@ -15,7 +15,7 @@ from aiogram.types import Message, CallbackQuery, WebAppInfo, \
 from keybooards.main_keyboards import (reply_phone_number, get_contacts_list, hide_contacts_list, get_start_keyboard,
                                        forum_button, manager_button, support_button, problem_button,
                                        helpfull_materials_keyboard, back_button, answer_for_user, authorized_client,
-                                       link_to_opt_button, confirm_spam,
+                                       link_to_opt_button, confirm_spam, evolution_button,
                                        )
 from config_data.amo_api import AmoCRMWrapper, Contact
 from lexicon.lexicon_ru import account_info, Lexicon_RU, start_menu, helpfull_materials_menu, new_shop_inline_message
@@ -308,6 +308,22 @@ async def command_forum_process(message: Message):
 @main_router.callback_query(F.data == '/forum')  # Хэндлер для обработки inline кнопки "forum"
 async def command_forum_process_cl(callback: CallbackQuery):
     await callback.message.edit_text(text=Lexicon_RU.get('forum_message'), reply_markup=await forum_button())
+
+@main_router.message(Command(commands='evolution'))  # Хэндлер для обработки команды /evolution
+async def evolution_process(message: Message):
+    await message.answer_video(video=FSInputFile('media/video/hp_evolution.mp4'),
+                               caption=Lexicon_RU.get('evolution_message'),
+                               width=1920,
+                               height=1080,
+                               reply_markup=await evolution_button())
+
+@main_router.callback_query(F.data == '/evolution')  # Хэндлер для обработки inline кнопки "evolution"
+async def command_evolution_process_cl(callback: CallbackQuery):
+    await callback.message.answer_video(video=FSInputFile('media/video/hp_evolution.mp4'),
+                                        caption=Lexicon_RU.get('evolution_message'),
+                                        width=1920,
+                                        height=1080,
+                                        reply_markup=await evolution_button())
 
 
 @main_router.message(Command(commands='materials'))  # Хэндлер для обработки команды /materials
